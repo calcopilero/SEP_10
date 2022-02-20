@@ -44,5 +44,4 @@ public class ZonaPostalRunner implements CommandLineRunner {
 		logger.info("{}", zpostalesSorted); 
 		logger.info("------------------------");
 		}
-
 }
