@@ -66,6 +66,5 @@ public class AgenciaRunner implements CommandLineRunner {
 		
 		agenciaRepository.save(age);
 	}
-
 }
 
