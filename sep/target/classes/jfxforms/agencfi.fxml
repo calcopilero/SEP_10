@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="501.0" prefWidth="603.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.AgencfiController">
+   <children>
+      <Label fx:id="lbnombre" layoutX="25.0" layoutY="22.0" text="Nombre:" />
+      <TextField fx:id="txnombre" layoutX="25.0" layoutY="40.0" prefHeight="25.0" prefWidth="350.0" />
+      <Label fx:id="lbcifnif" layoutX="390.0" layoutY="22.0" text="CIF/NIF:" />
+      <TextField fx:id="txcifnif" layoutX="390.0" layoutY="40.0" prefHeight="25.0" prefWidth="194.0" />
+      <Label fx:id="lblocal" layoutX="25.0" layoutY="77.0" text="Localidad:" />
+      <TextField fx:id="txlocal" layoutX="25.0" layoutY="95.0" prefHeight="25.0" prefWidth="479.0" />
+      <Label fx:id="lbprov" layoutX="25.0" layoutY="136.0" text="Provincia:" />      
+      <ComboBox fx:id="cbprov" layoutX="25.0" layoutY="154.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbpais" layoutX="273.0" layoutY="136.0" text="Pais:" />
+      <ComboBox fx:id="cbpais" layoutX="273.0" layoutY="154.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbzpost" layoutX="25.0" layoutY="194.0" text="Zona postal:" />
+      <ComboBox fx:id="cbzpost" layoutX="25.0" layoutY="211.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbemail" layoutX="25.0" layoutY="251.0" text="Email:" />
+      <TextField fx:id="txemail" layoutX="25.0" layoutY="269.0" prefHeight="25.0" prefWidth="350.0" />
+      <Label fx:id="lbtelefono" layoutX="389.0" layoutY="251.0" text="Teléfono:" />
+      <TextField fx:id="txtelefono" layoutX="389.0" layoutY="269.0" prefHeight="25.0" prefWidth="194.0" />
+      <Label fx:id="lbpcont" layoutX="25.0" layoutY="310.0" text="Persona de contacto:" />
+      <TextField fx:id="txpcont" layoutX="25.0" layoutY="328.0" prefHeight="25.0" prefWidth="476.0" />
+      <Button fx:id="bfilter" layoutX="25.0" layoutY="460.0" mnemonicParsing="false" onAction="#bfilterOnAction" prefHeight="25.0" prefWidth="75.0" text="Filtrar" AnchorPane.leftAnchor="25.0" />
+      <Button fx:id="bclean" layoutX="105.0" layoutY="460.0" mnemonicParsing="false" onAction="#bcleanOnAction" prefHeight="25.0" prefWidth="75.0" text="Limpiar" />
+      <Button fx:id="bclose" layoutX="509.0" layoutY="460.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Label fx:id="lbmsg1" layoutX="25.0" layoutY="402.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
+      <Label fx:id="lbmsg2" layoutX="25.0" layoutY="431.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
+   </children>
+</AnchorPane>

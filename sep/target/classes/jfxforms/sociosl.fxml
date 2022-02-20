@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="581.0" prefWidth="1093.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.SocioslController">
+   <children>
+      <TableView fx:id="tsocios" layoutX="19.0" layoutY="15.0" prefHeight="485.0" prefWidth="1059.0">
+         <columns>
+            <TableColumn fx:id="tcnsoc" prefWidth="75.0" text="Nº Socio" />
+            <TableColumn fx:id="tcnombre" prefWidth="210.0" text="Nombre" />
+            <TableColumn fx:id="tcapellidos" minWidth="0.0" prefWidth="219.0" text="Apellidos" />
+            <TableColumn fx:id="tcagencia" minWidth="0.0" prefWidth="218.0" text="Agencia" />
+            <TableColumn fx:id="tcfalta" prefWidth="75.0" text="Fecha alta" />
+            <TableColumn fx:id="tcmod" prefWidth="130.0" text="Modalidad" />
+            <TableColumn fx:id="tcmacces" prefWidth="130.0" text="Modo acceso" />
+            <TableColumn fx:id="tcfpago" prefWidth="130.0" text="Forma de pago" />
+            <TableColumn fx:id="tcfact" prefWidth="75.0" text="Factura" />
+            <TableColumn fx:id="tcldist" prefWidth="100.0" text="Lista de distrib." />
+            <TableColumn fx:id="tcprov" prefWidth="110.0" text="Provincia" />
+            <TableColumn fx:id="tcpais" prefWidth="110.0" text="País" />
+            <TableColumn fx:id="tccjdir" prefWidth="130.0" text="Cargos en JD" />
+            <TableColumn fx:id="tcjdiract" prefWidth="100.0" text="JD actual" />
+            <TableColumn fx:id="tcfbaja" prefWidth="75.0" text="Fecha baja" />
+         </columns>
+      </TableView>
+      <Label fx:id="lbmsg" layoutX="19.0" layoutY="517.0" prefHeight="17.0" prefWidth="621.0" />
+      <Button fx:id="badd" layoutX="19.0" layoutY="547.0" mnemonicParsing="false" onAction="#baddOnAction" prefHeight="25.0" prefWidth="75.0" text="Nuevo" />
+      <Button fx:id="bedit" layoutX="100.0" layoutY="547.0" mnemonicParsing="false" onAction="#beditOnAction" prefWidth="75.0" text="Editar" />
+      <Button fx:id="bdelete" layoutX="181.0" layoutY="547.0" mnemonicParsing="false" onAction="#bdeleteOnAction" prefWidth="75.0" text="Borrar" />
+      <Button fx:id="fxview" layoutX="262.0" layoutY="547.0" mnemonicParsing="false" onAction="#bviewOnAction" prefWidth="75.0" text="Ver" />
+      <Button fx:id="bfilter" layoutX="343.0" layoutY="546.0" mnemonicParsing="false" onAction="#bfilterOnAction" prefWidth="75.0" text="Filtrar" />
+      <Button fx:id="bprint" layoutX="425.0" layoutY="547.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="105.0" text="Imprimir listado" />
+      <Button fx:id="bprintlab" layoutX="537.0" layoutY="547.0" mnemonicParsing="false" onAction="#bprintlabOnAction" prefHeight="25.0" prefWidth="124.0" text="Imprimir etiquetas" />
+      <Button fx:id="bcmod" layoutX="668.0" layoutY="546.0" mnemonicParsing="false" onAction="#bcmodOnAction" prefHeight="25.0" prefWidth="148.0" text="Cambiar de modalidad" />
+      <Button fx:id="bclose" layoutX="1003.0" layoutY="546.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+   </children>
+</AnchorPane>

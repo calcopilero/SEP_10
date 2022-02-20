@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factl" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="2a7e050c-c35c-4613-8274-c9f5d5dd8e43">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="titular" class="java.lang.String"/>
+	<field name="fechaFactura" class="java.util.Date"/>
+	<field name="numeroCompuesto" class="java.lang.String"/>
+	<field name="cifnif" class="java.lang.String"/>
+	<field name="importeTotal" class="java.lang.Double"/>
+	<variable name="sumaImportes" class="java.lang.Double" calculation="Sum">
+		<variableExpression><![CDATA[$F{importeTotal}]]></variableExpression>
+	</variable>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<pageHeader>
+		<band height="40" splitType="Stretch">
+			<staticText>
+				<reportElement x="-6" y="8" width="566" height="30" uuid="cbe2fcc2-09d2-4d98-9451-2ac459378c60"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Listado de facturas]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="45" splitType="Stretch">
+			<staticText>
+				<reportElement x="76" y="8" width="180" height="30" uuid="67fd83ce-fe85-4065-99b0-667e94bf7f50">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Titular]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="354" y="8" width="76" height="30" uuid="4f0b1daa-4f09-4cdc-b147-e64555b24526">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Fecha factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="8" width="76" height="30" uuid="0e1e004b-bcc2-48e1-bcb5-6e777e6e88f1"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nº Factura]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="260" y="8" width="90" height="30" uuid="695d6387-a889-4c95-be6a-04fbfdc0295e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<text><![CDATA[CIF/NIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="432" y="8" width="76" height="30" uuid="85c245cb-1632-4805-884e-5def1fb733d8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Importe]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="22" splitType="Stretch">
+			<textField>
+				<reportElement x="80" y="2" width="176" height="16" uuid="2959b917-4829-425b-b6e8-1cb80db09b7f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
+					<printWhenExpression><![CDATA[!$F{titular}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{titular}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yy">
+				<reportElement x="354" y="2" width="76" height="16" isRemoveLineWhenBlank="true" uuid="a73971aa-0b1e-46e4-bc61-0c55a7101ec2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
+					<printWhenExpression><![CDATA[!$F{fechaFactura}.equals( null )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{fechaFactura}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="10" y="3" width="62" height="14" uuid="aea0dd66-e354-412f-9fcd-8f138e246338">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b3875b4-00e1-4a8f-a4be-6680ea771639"/>
+					<printWhenExpression><![CDATA[!$F{numeroCompuesto}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA[$F{numeroCompuesto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="3" width="90" height="14" uuid="5b9a2654-2f7e-4cfe-8dd6-004f60a1a8b3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e0a01ec5-7304-4f4a-8822-c9b8376cb17a"/>
+					<printWhenExpression><![CDATA[!$F{cifnif}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textFieldExpression><![CDATA[$F{cifnif}]]></textFieldExpression>
+			</textField>
+			<textField pattern="#,##0.00">
+				<reportElement x="432" y="3" width="76" height="14" uuid="f832c631-938d-460c-99b5-a519f9d9dee7">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2b9fffe-75c2-4c93-866f-7d7d9e93c54d"/>
+				</reportElement>
+				<textElement textAlignment="Right" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{importeTotal}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="29">
+			<textField pattern="#,##0.00">
+				<reportElement x="432" y="7" width="76" height="13" uuid="c44a6cee-8e2e-4691-ad4d-ecf9fe32237d"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$V{sumaImportes}]]></textFieldExpression>
+			</textField>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="41" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="10" width="180" height="17" uuid="f16bba08-241f-425d-a4e0-f830bd23859f"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
