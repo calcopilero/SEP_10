@@ -44,5 +44,4 @@ public class TipoIVARunner implements CommandLineRunner {
 		logger.info("------------------------");
 
 	}
-
 }
