@@ -26,12 +26,12 @@
 			<property name="com.jaspersoft.studio.unit.height" value="px"/>
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<textField isBlankWhenNull="false">
-				<reportElement x="17" y="20" width="263" height="90" uuid="b2a6b52f-e5ca-49a6-8c15-37d564e9a39a">
+				<reportElement x="50" y="20" width="200" height="90" uuid="b2a6b52f-e5ca-49a6-8c15-37d564e9a39a">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="net.sf.jasperreports.consume.space.on.overflow" value="true"/>
 				</reportElement>
 				<textElement textAlignment="Left">
-					<font fontName="Calibri" size="10"/>
+					<font fontName="Calibri" size="9"/>
 				</textElement>
 				<textFieldExpression><![CDATA[($F{nombre} == null ? "" : $F{nombre}.strip() + " ") +($F{apellidos} == null ? "" : $F{apellidos}.strip()) + "\n" +($F{domicilio} == null ? "" : $F{domicilio}.strip()) + "\n" + ($F{cp} == null ? "" : $F{cp}.strip() + " ") +($F{localidad} == null ? "" : $F{localidad}.strip()) + " - " + ($F{provincia} == null ? " " : $F{provincia}.getDescripcion().strip()) + " (" + ($F{pais} == null ? " " : $F{pais}.getDescripcion().strip()) + ")"]]></textFieldExpression>
 			</textField>
