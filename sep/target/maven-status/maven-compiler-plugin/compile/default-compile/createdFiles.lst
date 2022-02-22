@@ -133,6 +133,7 @@ com\ammgroup\sep\jreports\config\enums\ReportFormat.class
 com\ammgroup\sep\model\EstadoReclamacion_.class
 com\ammgroup\sep\repository\ProvinciaRepository.class
 com\ammgroup\sep\controller\PaisdtController.class
+com\ammgroup\sep\controller\CamodController$2.class
 com\ammgroup\sep\repository\specifications\SociosSpecifications$1.class
 com\ammgroup\sep\SEPSpringBootApplication.class
 com\ammgroup\sep\controller\FactdtController$3.class
@@ -182,6 +183,7 @@ com\ammgroup\sep\controller\ReclamlController$2.class
 com\ammgroup\sep\controller\AgencdtController$2.class
 com\ammgroup\sep\model\Factura.class
 com\ammgroup\sep\model\Oldsocio_.class
+com\ammgroup\sep\controller\CamodController.class
 com\ammgroup\sep\controller\FactdtController$8.class
 com\ammgroup\sep\controller\HfactController.class
 com\ammgroup\sep\repository\ZonaPostalRepository.class
@@ -221,12 +223,14 @@ com\ammgroup\sep\controller\HfactController$2.class
 com\ammgroup\sep\controller\SocioslController.class
 com\ammgroup\sep\repository\specifications\ReclamacionesSpecifications$1.class
 com\ammgroup\sep\model\Pais_.class
+com\ammgroup\sep\controller\CamodController$1$1.class
 com\ammgroup\sep\controller\ReclamlController$3.class
 com\ammgroup\sep\runners\data\ModalidadSocioRunner.class
 com\ammgroup\sep\controller\DescudtController.class
 com\ammgroup\sep\controller\SociosdtController$2.class
 com\ammgroup\sep\runners\data\OldsocioRunner$4.class
 com\ammgroup\sep\controller\FpagodtController$3.class
+com\ammgroup\sep\controller\CamodController$1.class
 com\ammgroup\sep\controller\SocioslController$11.class
 com\ammgroup\sep\service\ModuloUtilidades$2.class
 com\ammgroup\sep\controller\ReclamfiController.class
