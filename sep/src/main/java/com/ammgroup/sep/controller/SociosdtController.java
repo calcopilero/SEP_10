@@ -484,7 +484,6 @@ public class SociosdtController implements Initializable {
 				x.setAnotaciones(obtainText(txaranot));
 			
 			});
-
 	}
 	
 	

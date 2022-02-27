@@ -25,6 +25,8 @@
             <TableColumn fx:id="tccjdir" prefWidth="130.0" text="Cargos en JD" />
             <TableColumn fx:id="tcjdiract" prefWidth="100.0" text="JD actual" />
             <TableColumn fx:id="tcfbaja" prefWidth="75.0" text="Fecha baja" />
+            <TableColumn fx:id="tcmbaja" prefWidth="100.0" text="Motivo baja" />
+            <TableColumn fx:id="tccsep" prefWidth="100.0" text="Contacto SEP" />
          </columns>
       </TableView>
       <Label fx:id="lbmsg" layoutX="19.0" layoutY="517.0" prefHeight="17.0" prefWidth="621.0" />

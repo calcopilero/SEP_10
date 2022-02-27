@@ -23,7 +23,7 @@ public class Agencia {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name="NOMBRE", length=70, nullable=false, unique=false)
+    @Column(name="NOMBRE", length=95, nullable=false, unique=false)
     private String nombre;
     
     @Column(name="CIFNIF", length=12, nullable=false, unique=true)

@@ -10,9 +10,9 @@
 <AnchorPane prefHeight="574.0" prefWidth="836.0" stylesheets="@sep.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.AgencdtController">
    <children>
       <Label fx:id="lbnombre" layoutX="25.0" layoutY="22.0" text="Nombre:" />
-      <TextField fx:id="txnombre" layoutX="25.0" layoutY="40.0" prefHeight="25.0" prefWidth="350.0" />
-      <Label fx:id="lbcifnif" layoutX="390.0" layoutY="22.0" text="CIF/NIF:" />
-      <TextField fx:id="txcifnif" layoutX="390.0" layoutY="40.0" prefHeight="25.0" prefWidth="194.0" />
+      <TextField fx:id="txnombre" layoutX="25.0" layoutY="40.0" prefHeight="25.0" prefWidth="495.0" />
+      <Label fx:id="lbcifnif" layoutX="535.0" layoutY="22.0" text="CIF/NIF:" />
+      <TextField fx:id="txcifnif" layoutX="535.0" layoutY="40.0" prefHeight="25.0" prefWidth="194.0" />
       <Label fx:id="lbdomic" layoutX="25.0" layoutY="78.0" text="Domicilio:" />
       <TextArea fx:id="txardomic" layoutX="25.0" layoutY="95.0" prefHeight="74.0" prefWidth="350.0" />
       <Label fx:id="lbcp" layoutX="390.0" layoutY="78.0" text="CP:" />

@@ -9,6 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 
 import com.ammgroup.sep.controller.config.crud.CrudDAOAgen;
+import com.ammgroup.sep.controller.config.crud.enums.CrudAction;
 import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
@@ -343,7 +344,7 @@ public class AgencdtController implements Initializable {
 	    }
 	    
 	    //Setting the maximum number of characters
-	    txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(95));
 	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
 	    txcp.addEventFilter(KeyEvent.KEY_TYPED, maxLength(5));
 	    txlocal.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
@@ -368,7 +369,7 @@ public class AgencdtController implements Initializable {
 		lbmsg2.setText("Utilizada en " + String.valueOf(rfac) + " facturas");
 
 		//Disable execute button
-		if ((rsoc > 0)  || (rfac > 0)) bexec.setDisable(true);
+		if (((rsoc > 0)  || (rfac > 0)) && agcrud.getAction().equals(CrudAction.DELETE)) bexec.setDisable(true);
 	}
 	
 	private EventHandler<KeyEvent> maxLength(final Integer i) {

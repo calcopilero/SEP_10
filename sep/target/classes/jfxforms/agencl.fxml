@@ -10,8 +10,9 @@
    <children>
       <TableView fx:id="tagencias" layoutX="19.0" layoutY="15.0" prefHeight="485.0" prefWidth="830.0">
          <columns>
-            <TableColumn fx:id="tcnombre" prefWidth="426.0" text="Nombre" />
+            <TableColumn fx:id="tcnombre" prefWidth="350.0" text="Nombre" />
             <TableColumn fx:id="tccifnif" minWidth="0.0" prefWidth="122.0" text="CIF/NIF" />
+            <TableColumn fx:id="tcdomic" prefWidth="250.0" text="Domicilio" />
             <TableColumn fx:id="tcprov" prefWidth="110.0" text="Provincia" />
             <TableColumn fx:id="tcpais" prefWidth="110.0" text="País" />
          </columns>

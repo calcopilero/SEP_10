@@ -64,6 +64,9 @@ public class AgenclController implements Initializable {
 	private TableColumn<Agencia, String> tccifnif;
 	
 	@FXML
+	private TableColumn<Agencia, String> tcdomic;
+	
+	@FXML
 	private TableColumn<Agencia, String> tcprov;
 	
 	@FXML
@@ -220,6 +223,7 @@ public class AgenclController implements Initializable {
 		// Set up the columns in the table
 		tcnombre.setCellValueFactory(new PropertyValueFactory<Agencia, String>("nombre"));
 		tccifnif.setCellValueFactory(new PropertyValueFactory<Agencia, String>("cifnif"));
+		tcdomic.setCellValueFactory(new PropertyValueFactory<Agencia, String>("domicilio"));
 		
 		// Accessing repository indirectly through spring application context, not autowiring
 		//SocioRepository socioRepository = springContext.getBean(SocioRepository.class);

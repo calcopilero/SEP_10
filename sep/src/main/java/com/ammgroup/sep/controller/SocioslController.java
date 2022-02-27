@@ -20,6 +20,7 @@ import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.FormaPago;
 import com.ammgroup.sep.model.ModalidadSocio;
 import com.ammgroup.sep.model.ModoAcceso;
+import com.ammgroup.sep.model.MotivoBaja;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
 import com.ammgroup.sep.model.Socio;
@@ -110,7 +111,13 @@ public class SocioslController implements Initializable {
 	
 	@FXML
 	private TableColumn<Socio, String> tcfbaja;
-
+	
+	@FXML
+	private TableColumn<Socio, String> tcmbaja;
+	
+	@FXML
+	private TableColumn<Socio, String> tccsep;
+	
 	@FXML
 	private Button badd;
 	
@@ -322,7 +329,7 @@ public class SocioslController implements Initializable {
 			
 			Optional<Date> dateOpt = Optional.ofNullable(c.getValue().getFechaAlta());
 			dateOpt.ifPresentOrElse((x) -> {
-				strwrapper.falta = mutils.getStringFromDate(x, mutils.DATE_FORMAT);	
+				strwrapper.falta = mutils.getStringFromDate(x, mutils.DATE_FORMATL);	
 			}, () -> {
 				strwrapper.falta = "";
 			} );
@@ -484,7 +491,7 @@ public class SocioslController implements Initializable {
 			
 			Optional<Date> dateOpt = Optional.ofNullable(c.getValue().getFechaBaja());
 				dateOpt.ifPresentOrElse((x) -> {
-					strwrapper.fbaja = mutils.getStringFromDate(x, mutils.DATE_FORMAT);	
+					strwrapper.fbaja = mutils.getStringFromDate(x, mutils.DATE_FORMATL);	
 				}, () -> {
 					strwrapper.fbaja = "";
 				} );
@@ -492,6 +499,23 @@ public class SocioslController implements Initializable {
 			return new ReadOnlyStringWrapper(strwrapper.fbaja);
 				
 		});
+		
+		tcmbaja.setCellValueFactory(c-> {
+			
+			var strwrapper = new Object(){ String mbaja; };
+			
+			Optional<MotivoBaja> mbajaOpt = Optional.ofNullable(c.getValue().getMotivoBaja());
+				mbajaOpt.ifPresentOrElse((x) -> {
+					strwrapper.mbaja = x.toString();	
+				}, () -> {
+					strwrapper.mbaja = "";
+				} );
+			
+			return new ReadOnlyStringWrapper(strwrapper.mbaja);
+				
+		});
+		
+		tccsep.setCellValueFactory(new PropertyValueFactory<Socio, String>("contactoSep"));
 		
     	// Populating the table automatically
 		//tsocios.setItems(FXCollections.observableList(socioRepository.findAll()));

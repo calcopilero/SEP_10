@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sociosl" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a7e050c-c35c-4613-8274-c9f5d5dd8e43">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="sociosl" printOrder="Horizontal" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="2a7e050c-c35c-4613-8274-c9f5d5dd8e43">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
+	<import value="com.ammgroup.sep.model.*"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -8,15 +18,20 @@
 	<field name="apellidos" class="java.lang.String"/>
 	<field name="codigoSocio" class="java.lang.Integer"/>
 	<field name="cifnif" class="java.lang.String"/>
+	<field name="agencia" class="com.ammgroup.sep.model.Agencia"/>
+	<field name="modalidad" class="com.ammgroup.sep.model.ModalidadSocio"/>
+	<field name="formaPago" class="com.ammgroup.sep.model.FormaPago"/>
+	<field name="modoAcceso" class="com.ammgroup.sep.model.ModoAcceso"/>
+	<field name="factura" class="java.lang.Boolean"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
 		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="-6" y="8" width="566" height="30" uuid="cbe2fcc2-09d2-4d98-9451-2ac459378c60"/>
+				<reportElement x="-6" y="8" width="806" height="30" uuid="cbe2fcc2-09d2-4d98-9451-2ac459378c60"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font size="18" isBold="true"/>
+					<font fontName="Calibri" size="18" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Listado de socios]]></text>
 			</staticText>
@@ -25,77 +40,138 @@
 	<columnHeader>
 		<band height="45" splitType="Stretch">
 			<staticText>
-				<reportElement x="76" y="8" width="180" height="30" uuid="67fd83ce-fe85-4065-99b0-667e94bf7f50">
+				<reportElement x="63" y="8" width="197" height="30" uuid="67fd83ce-fe85-4065-99b0-667e94bf7f50">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Calibri" size="9" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Nombre]]></text>
+				<text><![CDATA[Nombre y apellidos]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="261" y="8" width="194" height="30" uuid="4f0b1daa-4f09-4cdc-b147-e64555b24526">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
-				</reportElement>
+				<reportElement x="0" y="8" width="60" height="30" uuid="0e1e004b-bcc2-48e1-bcb5-6e777e6e88f1"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
-				</textElement>
-				<text><![CDATA[Apellidos]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="0" y="8" width="76" height="30" uuid="0e1e004b-bcc2-48e1-bcb5-6e777e6e88f1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font isBold="true"/>
+					<font fontName="Calibri" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº Socio]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="460" y="8" width="90" height="30" uuid="695d6387-a889-4c95-be6a-04fbfdc0295e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<reportElement x="263" y="8" width="74" height="30" uuid="695d6387-a889-4c95-be6a-04fbfdc0295e"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
 				<text><![CDATA[CIF/NIF]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="339" y="8" width="148" height="30" uuid="a38b3e2d-5d9c-4606-92d7-34b61b4d8f3b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<text><![CDATA[Agencia]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="484" y="8" width="96" height="30" uuid="f1026333-9304-4219-8eec-466f0594d890"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<text><![CDATA[Modalidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="580" y="8" width="80" height="30" uuid="08f23bb2-f2f7-48d1-a62d-ff161a45c53b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<text><![CDATA[Acceso]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="660" y="8" width="90" height="30" uuid="959c5502-66e2-4c5f-87d2-b4dfe7001338"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<text><![CDATA[Forma de pago]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="750" y="8" width="50" height="30" uuid="fdabe92e-858e-4b93-8fdf-e9bab06a432f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<text><![CDATA[Factura]]></text>
 			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="21" splitType="Stretch">
+		<band height="20" splitType="Stretch">
 			<textField>
-				<reportElement x="80" y="2" width="176" height="16" uuid="2959b917-4829-425b-b6e8-1cb80db09b7f">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
-					<printWhenExpression><![CDATA[!$F{nombre}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="261" y="2" width="194" height="16" isRemoveLineWhenBlank="true" uuid="a73971aa-0b1e-46e4-bc61-0c55a7101ec2">
-					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
-					<printWhenExpression><![CDATA[!$F{apellidos}.isEmpty()]]></printWhenExpression>
-				</reportElement>
-				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{apellidos}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="10" y="3" width="62" height="14" uuid="aea0dd66-e354-412f-9fcd-8f138e246338">
+				<reportElement x="10" y="3" width="50" height="14" uuid="aea0dd66-e354-412f-9fcd-8f138e246338">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="6b3875b4-00e1-4a8f-a4be-6680ea771639"/>
 					<printWhenExpression><![CDATA[$F{codigoSocio}.intValue() != 0]]></printWhenExpression>
 				</reportElement>
-				<textElement textAlignment="Right"/>
+				<textElement textAlignment="Right">
+					<font fontName="Calibri" size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{codigoSocio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="460" y="3" width="90" height="14" uuid="5b9a2654-2f7e-4cfe-8dd6-004f60a1a8b3">
+				<reportElement x="267" y="3" width="70" height="14" uuid="5b9a2654-2f7e-4cfe-8dd6-004f60a1a8b3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e0a01ec5-7304-4f4a-8822-c9b8376cb17a"/>
 					<printWhenExpression><![CDATA[!$F{cifnif}.isEmpty()]]></printWhenExpression>
 				</reportElement>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{cifnif}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="73" y="3" width="187" height="14" uuid="98f8bdb4-64b6-49a1-a04f-b4113a3b9596"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nombre}.strip() +" " + $F{apellidos}.strip()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="343" y="3" width="144" height="14" uuid="7fa468aa-5284-444f-84d8-2ac64ad72ef5"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{agencia}.getNombre()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="490" y="3" width="90" height="14" uuid="ccce723d-405b-4f93-9b5a-262495699098"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modalidad}.getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="590" y="3" width="70" height="14" uuid="39836920-4aec-4f9b-b8d3-a4ec369414fd"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{modoAcceso}.getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="670" y="3" width="80" height="14" uuid="eccba23e-4cd7-4ccc-9adc-3f2cb2e68d46"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{formaPago}.getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="760" y="3" width="40" height="14" uuid="737d1f9b-4de6-4114-b7df-3d5dba42b215"/>
+				<textElement>
+					<font fontName="Calibri" size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[($F{factura} == true ? "Si" : "No")]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<pageFooter>
-		<band height="41" splitType="Stretch">
+		<band height="29" splitType="Stretch">
 			<textField>
 				<reportElement x="0" y="10" width="180" height="17" uuid="f16bba08-241f-425d-a4e0-f830bd23859f"/>
-				<textElement textAlignment="Left"/>
+				<textElement textAlignment="Left">
+					<font fontName="Calibri"/>
+				</textElement>
 				<textFieldExpression><![CDATA["Page " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>

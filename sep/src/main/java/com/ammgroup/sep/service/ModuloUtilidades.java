@@ -39,6 +39,7 @@ import javafx.util.StringConverter;
 public class ModuloUtilidades {
 	
 	public final String DATE_FORMAT = "dd-MM-yyyy";
+	public final String DATE_FORMATL = "yyyy-MM-dd";
 	
 	public final String CURRENCY_FORMAT = "#,##0.00";
 	public final String CURRENCY_ZERO = "0.00";
