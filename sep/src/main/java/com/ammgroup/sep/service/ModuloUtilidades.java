@@ -35,6 +35,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
+@SuppressWarnings(value = { "unused" })
 @Component
 public class ModuloUtilidades {
 	
@@ -369,6 +370,20 @@ public class ModuloUtilidades {
 		} else {
 			return null;
 		}
+	}
+	
+	public static boolean isNumeric(String strNum) {
 		
+	    if (strNum == null) {
+	        return false;
+	    }
+	    
+	    try {
+	        double d = Double.parseDouble(strNum);
+	    } catch (NumberFormatException nfe) {
+	        return false;
+	    }
+	    
+	    return true;
 	}
 }
