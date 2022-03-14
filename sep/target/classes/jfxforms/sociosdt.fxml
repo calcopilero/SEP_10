@@ -79,6 +79,8 @@
       <CheckBox fx:id="chjdiract" layoutX="397.0" layoutY="561.0" mnemonicParsing="false" text="Junta actual" />
       <Label fx:id="lbanot" layoutX="515.0" layoutY="490.0" text="Anotaciones:" />
       <TextArea fx:id="txaranot" layoutX="515.0" layoutY="507.0" prefHeight="91.0" prefWidth="558.0" />
+      <Label fx:id="lbultact_" layoutX="26.0" layoutY="603.0" text="Ultima actualización:" />
+      <Label fx:id="lbultact" layoutX="141.0" layoutY="603.0" minWidth="103.0" prefHeight="17.0" prefWidth="120.0" />
       <Label fx:id="lbmsg1" layoutX="349.0" layoutY="611.0" minWidth="350.0" prefHeight="17.0" prefWidth="630.0" />
       <Label fx:id="lbmsg2" layoutX="349.0" layoutY="636.0" minWidth="350.0" prefHeight="17.0" prefWidth="630.0" />
       <Button fx:id="bexec" layoutX="25.0" layoutY="632.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" AnchorPane.leftAnchor="25.0" />

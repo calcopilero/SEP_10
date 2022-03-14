@@ -28,6 +28,7 @@ import com.ammgroup.sep.repository.SocioRepository;
 import com.ammgroup.sep.repository.specifications.SociosSpecifications;
 import com.ammgroup.sep.service.ModuloUtilidades;
 
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
@@ -68,7 +69,7 @@ public class SocioslController implements Initializable {
 	private TableView<Socio> tsocios;
 	
 	@FXML
-	private TableColumn<Socio, String> tcnsoc;
+	private TableColumn<Socio, Integer> tcnsoc;
 	
 	@FXML
 	private TableColumn<Socio, String> tcnombre;
@@ -80,7 +81,7 @@ public class SocioslController implements Initializable {
 	private TableColumn<Socio, String> tcagencia;
 	
 	@FXML
-	private TableColumn<Socio, String> tcfalta;
+	private TableColumn<Socio, Date> tcfalta;
 	
 	@FXML
 	private TableColumn<Socio, String> tcmod;
@@ -110,13 +111,16 @@ public class SocioslController implements Initializable {
 	private TableColumn<Socio, String> tcjdiract;
 	
 	@FXML
-	private TableColumn<Socio, String> tcfbaja;
+	private TableColumn<Socio, Date> tcfbaja;
 	
 	@FXML
 	private TableColumn<Socio, String> tcmbaja;
 	
 	@FXML
 	private TableColumn<Socio, String> tccsep;
+	
+	@FXML
+	private TableColumn<Socio, Date> tcultact;
 	
 	@FXML
 	private Button badd;
@@ -291,16 +295,16 @@ public class SocioslController implements Initializable {
 		// Set up the columns in the table
 		tcnsoc.setCellValueFactory(c-> {
 			
-			var strwrapper = new Object(){ String nsoc; };
+			var strwrapper = new Object(){ Integer nsoc; };
 			
 			Optional<Integer> nsocOpt = Optional.ofNullable(c.getValue().getCodigoSocio());
 				nsocOpt.ifPresentOrElse((x) -> {
-					strwrapper.nsoc = x.toString();	
+					strwrapper.nsoc = x;	
 				}, () -> {
-					strwrapper.nsoc = "";
+					strwrapper.nsoc = 0;
 				} );
 			
-			return new ReadOnlyStringWrapper(strwrapper.nsoc);
+			return new ReadOnlyObjectWrapper<>(strwrapper.nsoc);
 				
 		});
 		tcnsoc.setStyle("-fx-alignment: CENTER-RIGHT;");
@@ -323,20 +327,22 @@ public class SocioslController implements Initializable {
 				
 		});
 		
-		tcfalta.setCellValueFactory(c-> {
-			
-			var strwrapper = new Object(){ String falta; };
-			
-			Optional<Date> dateOpt = Optional.ofNullable(c.getValue().getFechaAlta());
-			dateOpt.ifPresentOrElse((x) -> {
-				strwrapper.falta = mutils.getStringFromDate(x, mutils.DATE_FORMATL);	
-			}, () -> {
-				strwrapper.falta = "";
-			} );
-			
-			return new ReadOnlyStringWrapper(strwrapper.falta);
-				
-		});
+		tcfalta.setCellValueFactory(new PropertyValueFactory<Socio, Date>("fechaAlta"));
+		mutils.configureColumnForDate(tcfalta);
+//		tcfalta.setCellValueFactory(c-> {
+//			
+//			var strwrapper = new Object(){ String falta; };
+//			
+//			Optional<Date> dateOpt = Optional.ofNullable(c.getValue().getFechaAlta());
+//			dateOpt.ifPresentOrElse((x) -> {
+//				strwrapper.falta = mutils.getStringFromDate(x, mutils.DATE_FORMATL);	
+//			}, () -> {
+//				strwrapper.falta = "";
+//			} );
+//			
+//			return new ReadOnlyStringWrapper(strwrapper.falta);
+//				
+//		});
 		
 		tcmod.setCellValueFactory(c-> {
 			
@@ -485,20 +491,22 @@ public class SocioslController implements Initializable {
 				
 		});
 		
-		tcfbaja.setCellValueFactory(c-> {
-			
-			var strwrapper = new Object(){ String fbaja; };
-			
-			Optional<Date> dateOpt = Optional.ofNullable(c.getValue().getFechaBaja());
-				dateOpt.ifPresentOrElse((x) -> {
-					strwrapper.fbaja = mutils.getStringFromDate(x, mutils.DATE_FORMATL);	
-				}, () -> {
-					strwrapper.fbaja = "";
-				} );
-			
-			return new ReadOnlyStringWrapper(strwrapper.fbaja);
-				
-		});
+		tcfbaja.setCellValueFactory(new PropertyValueFactory<Socio, Date>("fechaBaja"));
+		mutils.configureColumnForDate(tcfbaja);
+//		tcfbaja.setCellValueFactory(c-> {
+//			
+//			var strwrapper = new Object(){ String fbaja; };
+//			
+//			Optional<Date> dateOpt = Optional.ofNullable(c.getValue().getFechaBaja());
+//				dateOpt.ifPresentOrElse((x) -> {
+//					strwrapper.fbaja = mutils.getStringFromDate(x, mutils.DATE_FORMATL);	
+//				}, () -> {
+//					strwrapper.fbaja = "";
+//				} );
+//			
+//			return new ReadOnlyStringWrapper(strwrapper.fbaja);
+//				
+//		});
 		
 		tcmbaja.setCellValueFactory(c-> {
 			
@@ -516,6 +524,24 @@ public class SocioslController implements Initializable {
 		});
 		
 		tccsep.setCellValueFactory(new PropertyValueFactory<Socio, String>("contactoSep"));
+		
+		tcultact.setCellValueFactory(new PropertyValueFactory<Socio, Date>("ultimaActualizacion"));
+		mutils.configureColumnForDate(tcultact);
+//		//The DateFormatter used in other columns is automatically used here
+//		tcultact.setCellValueFactory(c-> {
+//			
+//			var strwrapper = new Object(){ Date ultact; };
+//			
+//			Optional<Date> uactOpt = Optional.ofNullable(c.getValue().getUltimaActualizacion());
+//				uactOpt.ifPresentOrElse((x) -> {
+//					strwrapper.ultact = x;	
+//				}, () -> {
+//					strwrapper.ultact = null;
+//				} );
+//			
+//			return new ReadOnlyObjectWrapper<>(strwrapper.ultact);
+//				
+//		});
 		
     	// Populating the table automatically
 		//tsocios.setItems(FXCollections.observableList(socioRepository.findAll()));

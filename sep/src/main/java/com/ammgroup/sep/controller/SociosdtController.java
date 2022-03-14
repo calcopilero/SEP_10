@@ -204,6 +204,9 @@ public class SociosdtController implements Initializable {
 
 	@FXML
 	private TextArea txaranot;
+	
+	@FXML
+	private Label lbultact;
 
 	@FXML
 	private Label lbmsg1;
@@ -482,6 +485,8 @@ public class SociosdtController implements Initializable {
 				x.setJuntaDirectivaActual(chjdiract.isSelected());
 
 				x.setAnotaciones(obtainText(txaranot));
+				
+				x.setUltimaActualizacion(new Date());
 			
 			});
 	}
@@ -905,7 +910,11 @@ public class SociosdtController implements Initializable {
 						txaranot.setText(y);
 					}, () -> {
 						txaranot.setText("");
-					});		
+					});
+				
+				optDate = Optional.ofNullable(x.getUltimaActualizacion());
+					optDate.ifPresent((y) -> lbultact.setText(mutils.getStringFromDate(y, mutils.DATE_FORMAT)));
+
 			});
 
 	}

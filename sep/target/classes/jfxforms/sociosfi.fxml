@@ -8,7 +8,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="682.0" prefWidth="594.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.SociosfiController">
+<AnchorPane prefHeight="627.0" prefWidth="766.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.SociosfiController">
    <children>
       <Label fx:id="lbffacti_" layoutX="19.0" layoutY="14.0" text="Fecha de alta (inicial):" />
       <DatePicker fx:id="dpfaltai" layoutX="19.0" layoutY="33.0" prefHeight="25.0" prefWidth="162.0" />
@@ -28,31 +28,33 @@
       <ComboBox fx:id="cbprov" layoutX="20.0" layoutY="202.0" prefHeight="25.0" prefWidth="234.0" />
       <Label fx:id="lbpais_" layoutX="268.0" layoutY="184.0" text="Pais:" />
       <ComboBox fx:id="cbpais" layoutX="268.0" layoutY="202.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbzpost_" layoutX="20.0" layoutY="242.0" text="Zona postal:" />
-      <ComboBox fx:id="cbzpost" layoutX="20.0" layoutY="259.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbemail_" layoutX="20.0" layoutY="299.0" text="Email:" />
-      <TextField fx:id="txemail" layoutX="20.0" layoutY="317.0" prefHeight="25.0" prefWidth="350.0" />
-      <Label fx:id="lbtelefono_" layoutX="384.0" layoutY="299.0" text="Teléfono:" />
-      <TextField fx:id="txtelefono" layoutX="384.0" layoutY="317.0" prefHeight="25.0" prefWidth="194.0" />
-      <Label fx:id="lbmsoc_" layoutX="20.0" layoutY="356.0" text="Modalidad de socio:" />
-      <ComboBox fx:id="cbmod" layoutX="20.0" layoutY="374.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbagencia_" layoutX="269.0" layoutY="356.0" text="Agencia:" />
-      <ComboBox fx:id="cbagencia" layoutX="267.0" layoutY="374.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbmarc_" layoutX="20.0" layoutY="416.0" text="Marcador:" />
-      <TextField fx:id="txmarc" layoutX="20.0" layoutY="434.0" prefHeight="25.0" prefWidth="194.0" />
-      <CheckBox fx:id="chfactura" layoutX="233.0" layoutY="438.0" mnemonicParsing="false" text="Hacer factura" />
-      <CheckBox fx:id="chldist" layoutX="339.0" layoutY="438.0" mnemonicParsing="false" text="Lista de distrib." />
-      <Label fx:id="lbcjdir_" layoutX="20.0" layoutY="471.0" text="Cargos en Junta Directiva:" />
-      <TextField fx:id="txcjdir" layoutX="20.0" layoutY="488.0" prefHeight="25.0" prefWidth="350.0" />
-      <CheckBox fx:id="chjdiract" layoutX="388.0" layoutY="488.0" mnemonicParsing="false" text="Junta actual" />
-      <Label fx:id="lbfbajaini_" layoutX="20.0" layoutY="526.0" text="Fecha de baja (inicial):" />
-      <DatePicker fx:id="dpfbajaini" layoutX="20.0" layoutY="545.0" prefHeight="25.0" prefWidth="162.0" />
-      <Label fx:id="lbfbajaini_" layoutX="195.0" layoutY="526.0" text="Fecha de baja (final):" />
-      <DatePicker fx:id="dpfbajafin" layoutX="195.0" layoutY="545.0" prefHeight="25.0" prefWidth="162.0" />
-      <Label fx:id="lbmsg1" layoutX="20.0" layoutY="585.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
-      <Label fx:id="lbmsg2" layoutX="20.0" layoutY="614.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
-      <Button fx:id="bfilter" layoutX="20.0" layoutY="643.0" mnemonicParsing="false" onAction="#bfilterOnAction" prefHeight="25.0" prefWidth="75.0" text="Filtrar" AnchorPane.leftAnchor="20.0" />
-      <Button fx:id="bclean" layoutX="100.0" layoutY="643.0" mnemonicParsing="false" onAction="#bcleanOnAction" prefHeight="25.0" prefWidth="75.0" text="Limpiar" />
-      <Button fx:id="bclose" layoutX="504.0" layoutY="643.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Label fx:id="lbzpost_" layoutX="516.0" layoutY="184.0" text="Zona postal:" />
+      <ComboBox fx:id="cbzpost" layoutX="515.0" layoutY="202.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbemail_" layoutX="20.0" layoutY="242.0" text="Email:" />
+      <TextField fx:id="txemail" layoutX="20.0" layoutY="260.0" prefHeight="25.0" prefWidth="350.0" />
+      <Label fx:id="lbtelefono_" layoutX="384.0" layoutY="242.0" text="Teléfono:" />
+      <TextField fx:id="txtelefono" layoutX="384.0" layoutY="260.0" prefHeight="25.0" prefWidth="194.0" />
+      <Label fx:id="lbmsoc_" layoutX="20.0" layoutY="299.0" text="Modalidad de socio:" />
+      <ComboBox fx:id="cbmod" layoutX="20.0" layoutY="317.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbagencia_" layoutX="269.0" layoutY="299.0" text="Agencia:" />
+      <ComboBox fx:id="cbagencia" layoutX="267.0" layoutY="317.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbmacc" layoutX="515.0" layoutY="299.0" text="Modo de acceso:" />
+      <ComboBox fx:id="cbmacc" layoutX="515.0" layoutY="317.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbmarc_" layoutX="20.0" layoutY="359.0" text="Marcador:" />
+      <TextField fx:id="txmarc" layoutX="20.0" layoutY="377.0" prefHeight="25.0" prefWidth="194.0" />
+      <CheckBox fx:id="chfactura" layoutX="233.0" layoutY="381.0" mnemonicParsing="false" text="Hacer factura" />
+      <CheckBox fx:id="chldist" layoutX="339.0" layoutY="381.0" mnemonicParsing="false" text="Lista de distrib." />
+      <Label fx:id="lbcjdir_" layoutX="20.0" layoutY="414.0" text="Cargos en Junta Directiva:" />
+      <TextField fx:id="txcjdir" layoutX="20.0" layoutY="431.0" prefHeight="25.0" prefWidth="350.0" />
+      <CheckBox fx:id="chjdiract" layoutX="388.0" layoutY="431.0" mnemonicParsing="false" text="Junta actual" />
+      <Label fx:id="lbfbajaini_" layoutX="20.0" layoutY="469.0" text="Fecha de baja (inicial):" />
+      <DatePicker fx:id="dpfbajaini" layoutX="20.0" layoutY="488.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label fx:id="lbfbajaini_" layoutX="195.0" layoutY="469.0" text="Fecha de baja (final):" />
+      <DatePicker fx:id="dpfbajafin" layoutX="195.0" layoutY="488.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label fx:id="lbmsg1" layoutX="20.0" layoutY="528.0" minWidth="350.0" prefHeight="17.0" prefWidth="725.0" />
+      <Label fx:id="lbmsg2" layoutX="20.0" layoutY="557.0" minWidth="350.0" prefHeight="17.0" prefWidth="725.0" />
+      <Button fx:id="bfilter" layoutX="20.0" layoutY="586.0" mnemonicParsing="false" onAction="#bfilterOnAction" prefHeight="25.0" prefWidth="75.0" text="Filtrar" AnchorPane.leftAnchor="20.0" />
+      <Button fx:id="bclean" layoutX="100.0" layoutY="586.0" mnemonicParsing="false" onAction="#bcleanOnAction" prefHeight="25.0" prefWidth="75.0" text="Limpiar" />
+      <Button fx:id="bclose" layoutX="670.0" layoutY="586.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
    </children>
 </AnchorPane>

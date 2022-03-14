@@ -13,11 +13,13 @@ import org.springframework.stereotype.Component;
 import com.ammgroup.sep.controller.config.filter.SocioFilter;
 import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.ModalidadSocio;
+import com.ammgroup.sep.model.ModoAcceso;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
 import com.ammgroup.sep.model.ZonaPostal;
 import com.ammgroup.sep.repository.AgenciaRepository;
 import com.ammgroup.sep.repository.ModalidadSocioRepository;
+import com.ammgroup.sep.repository.ModoAccesoRepository;
 import com.ammgroup.sep.repository.PaisRepository;
 import com.ammgroup.sep.repository.ProvinciaRepository;
 import com.ammgroup.sep.repository.ZonaPostalRepository;
@@ -60,6 +62,9 @@ public class SociosfiController implements Initializable {
 	
 	@Autowired
 	AgenciaRepository agenciaRepository;
+	
+	@Autowired
+	ModoAccesoRepository maccesoRepository;
 	
 	@FXML
 	private DatePicker dpfaltai;
@@ -105,6 +110,9 @@ public class SociosfiController implements Initializable {
 	
 	@FXML
 	private ComboBox<Agencia> cbagencia;
+	
+	@FXML
+	private ComboBox<ModoAcceso> cbmacc;
 	
 	@FXML
 	private TextField txmarc;
@@ -156,6 +164,8 @@ public class SociosfiController implements Initializable {
 		cbmod.getItems().add(null);
 		cbagencia.setItems(FXCollections.observableList(agenciaRepository.findAll()));
 		cbagencia.getItems().add(null);
+		cbmacc.setItems(FXCollections.observableList(maccesoRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
+		cbmacc.getItems().add(null);
 		
 	    //Setting the maximum number of characters of TextField
 		txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
@@ -197,6 +207,8 @@ public class SociosfiController implements Initializable {
 					optMsoc.ifPresent((y) -> { cbmod.getSelectionModel().select(mutils.searchIdInCombo(cbmod, y)); });
 				Optional<Agencia> optAge = Optional.ofNullable(socfilter.getAgencia());
 					optAge.ifPresent((y) -> { cbagencia.getSelectionModel().select(mutils.searchIdInCombo(cbagencia, y)); });
+				Optional<ModoAcceso> optMacc = Optional.ofNullable(socfilter.getModoAcceso());
+					optMacc.ifPresent((y) -> { cbmacc.getSelectionModel().select(mutils.searchIdInCombo(cbmacc, y)); });
 				txmarc.setText(socfilter.getMarcador());
 				boolOpt = Optional.ofNullable(x.getFactura());
 					boolOpt.ifPresent((y) -> chfactura.setSelected(y));
@@ -279,6 +291,7 @@ public class SociosfiController implements Initializable {
 		txmarc.setText("");
 		cbmod.getSelectionModel().clearSelection();
 		cbagencia.getSelectionModel().clearSelection();
+		cbmacc.getSelectionModel().clearSelection();
 		chfactura.setSelected(false);
 		chldist.setSelected(false);
 		txcjdir.setText("");
@@ -357,6 +370,7 @@ public class SociosfiController implements Initializable {
 				x.setTelefono(txtelefono.getText());
 				x.setModalidad(cbmod.getValue());
 				x.setAgencia(cbagencia.getValue());
+				x.setModoAcceso(cbmacc.getValue());
 				x.setMarcador(txmarc.getText());
 				x.setCargosJuntaDirectiva(txcjdir.getText());
 				x.setJuntaDirectivaActual(chjdiract.isSelected());

@@ -8,6 +8,9 @@ import org.springframework.context.annotation.PropertySource;
 @PropertySource("file:${SEP_DIR}/config/sep.properties")
 public class SEPPropertiesFile {
 	
+	@Value( "${db.file}" )
+	private String dbFile;
+	
 	@Value( "${pdf.location}" )
 	private String pdfLocation;
 	
@@ -45,6 +48,14 @@ public class SEPPropertiesFile {
 		super();
 	}
 
+	public String getDbFile() {
+		return dbFile;
+	}
+
+	public void setDbFile(String dbFile) {
+		this.dbFile = dbFile;
+	}
+	
 	public String getPdfLocation() {
 		return pdfLocation;
 	}

@@ -80,7 +80,7 @@ public class ModuloUtilidades {
 		
 		tcol.setCellFactory(tc -> new TableCell<T, Date>() {
 			
-	        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMAT);
+	        SimpleDateFormat format = new SimpleDateFormat(DATE_FORMATL);
 
 	        @Override
 	        protected void updateItem(Date item, boolean empty) {
@@ -89,7 +89,14 @@ public class ModuloUtilidades {
 	                setText(null);
 	            }
 	            else {
-	                setText(format.format(item));
+	            	
+	            	Optional<Date> optDate = Optional.ofNullable(item);
+	            	optDate.ifPresentOrElse((x) -> {
+	            		setText(format.format(item));
+	            	}, () -> {
+	            		setText(null);
+	            	});
+	                
 	            }
 	        }
 		});
@@ -275,6 +282,7 @@ public class ModuloUtilidades {
 		
 		Parent root = loader.load();
 		stage.setScene(new Scene(root));
+		stage.setResizable(false);
 		stage.setTitle(ptitle);
         //stage.getIcons().add(new Image("/icons/" + formIcon));
         stage.initModality(Modality.APPLICATION_MODAL);

@@ -327,7 +327,10 @@ public class SocioFilter {
 		
 		Optional<Agencia> optAge = Optional.ofNullable(agencia);
 			optAge.ifPresent((x) -> { cfwrapper.cf++; });
-			
+		
+		Optional<ModoAcceso> optMacc = Optional.ofNullable(modoAcceso);
+			optMacc.ifPresent((x) -> { cfwrapper.cf++; });
+		
 		Optional<String> optMarc = Optional.ofNullable(marcador);
 			optMarc.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
 			

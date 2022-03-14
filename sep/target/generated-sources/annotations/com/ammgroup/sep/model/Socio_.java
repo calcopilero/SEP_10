@@ -36,6 +36,7 @@ public abstract class Socio_ {
 	public static volatile SingularAttribute<Socio, String> email;
 	public static volatile SetAttribute<Socio, Reclamacion> reclamaciones;
 	public static volatile SingularAttribute<Socio, String> apellidos;
+	public static volatile SingularAttribute<Socio, Date> ultimaActualizacion;
 	public static volatile SingularAttribute<Socio, Date> fechaAlta;
 	public static volatile SingularAttribute<Socio, Integer> codigoSocio;
 	public static volatile SingularAttribute<Socio, Descuento> descuento;
@@ -77,6 +78,7 @@ public abstract class Socio_ {
 	public static final String EMAIL = "email";
 	public static final String RECLAMACIONES = "reclamaciones";
 	public static final String APELLIDOS = "apellidos";
+	public static final String ULTIMA_ACTUALIZACION = "ultimaActualizacion";
 	public static final String FECHA_ALTA = "fechaAlta";
 	public static final String CODIGO_SOCIO = "codigoSocio";
 	public static final String DESCUENTO = "descuento";

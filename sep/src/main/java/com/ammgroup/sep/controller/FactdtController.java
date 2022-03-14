@@ -634,6 +634,8 @@ public class FactdtController implements Initializable {
 				
 				x.setAnotaciones(obtainText(taanot));
 				
+				x.setUltimaActualizacion(new Date());
+				
 			});
 		
 	}

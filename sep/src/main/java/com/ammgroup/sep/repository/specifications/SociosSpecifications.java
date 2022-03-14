@@ -15,6 +15,7 @@ import com.ammgroup.sep.config.SEPPropertiesFile;
 import com.ammgroup.sep.controller.config.filter.SocioFilter;
 import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.ModalidadSocio;
+import com.ammgroup.sep.model.ModoAcceso;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
 import com.ammgroup.sep.model.Socio;
@@ -175,6 +176,17 @@ public class SociosSpecifications {
 					spwrapper.firstsp = false;
 				} else {
 					spwrapper.spsoc = (spwrapper.spsoc).and(socioAgenciaIs(x));
+				}
+			});
+		
+		Optional<ModoAcceso> optMacc = Optional.ofNullable(socfilter.getModoAcceso());
+			optMacc.ifPresent((x) -> {
+				
+				if (spwrapper.firstsp) {
+					spwrapper.spsoc = where(socioModoAccesoIs(x));
+					spwrapper.firstsp = false;
+				} else {
+					spwrapper.spsoc = (spwrapper.spsoc).and(socioModoAccesoIs(x));
 				}
 			});
 			
@@ -388,6 +400,12 @@ public class SociosSpecifications {
 
 		return (root, query, criteriaBuilder)
 				-> criteriaBuilder.equal(root.get(Socio_.AGENCIA), ag);
+	}
+	
+	private Specification<Socio> socioModoAccesoIs(ModoAcceso ms) {
+
+		return (root, query, criteriaBuilder)
+				-> criteriaBuilder.equal(root.get(Socio_.MODO_ACCESO), ms);
 	}
 	
 	private Specification<Socio> fechaAltaBetweenDates(Date dtini, Date dtfin) {

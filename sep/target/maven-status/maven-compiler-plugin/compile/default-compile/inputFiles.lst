@@ -7,6 +7,7 @@ C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\config\c
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\model\Provincia.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\runners\data\FacturaRunner.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\ReclagesoclController.java
+C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\config\GlobalSpringExceptionHandler.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\ModoAccesoRepository.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\AgenclController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\runners\data\ZonaPostalRunner.java
@@ -39,6 +40,7 @@ C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\SocioRep
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\model\TipoIVA.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\DescudtController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\ZonaPostalRepository.java
+C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\config\DataSourceConfig.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\config\crud\CrudDAO.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\config\SEPPropertiesFile.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\AgencdtController.java
@@ -53,6 +55,7 @@ C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\FormaPag
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\FpagodtController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\model\EstadoFactura.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\DescuentoRepository.java
+C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\runners\data\CPSocioRunner.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\ModalidadSocioRepository.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\config\filter\ReclamacionFilter.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\FacagesoclController.java

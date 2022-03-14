@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="581.0" prefWidth="866.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.AgenclController">
+<AnchorPane prefHeight="581.0" prefWidth="960.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.AgenclController">
    <children>
-      <TableView fx:id="tagencias" layoutX="19.0" layoutY="15.0" prefHeight="485.0" prefWidth="830.0">
+      <TableView fx:id="tagencias" layoutX="19.0" layoutY="15.0" prefHeight="485.0" prefWidth="925.0">
          <columns>
             <TableColumn fx:id="tcnombre" prefWidth="350.0" text="Nombre" />
             <TableColumn fx:id="tccifnif" minWidth="0.0" prefWidth="122.0" text="CIF/NIF" />
@@ -24,6 +24,6 @@
       <Button fx:id="bview" layoutX="262.0" layoutY="545.0" mnemonicParsing="false" onAction="#bviewOnAction" prefWidth="75.0" text="Ver" />
       <Button fx:id="bfilter" layoutX="342.0" layoutY="545.0" mnemonicParsing="false" onAction="#bfilterOnAction" prefWidth="75.0" text="Filtrar" />
       <Button fx:id="bprint" layoutX="423.0" layoutY="545.0" mnemonicParsing="false" onAction="#bprintOnAction" prefWidth="105.0" text="Imprimir listado" />
-      <Button fx:id="bclose" layoutX="774.0" layoutY="545.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Button fx:id="bclose" layoutX="869.0" layoutY="545.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
    </children>
 </AnchorPane>

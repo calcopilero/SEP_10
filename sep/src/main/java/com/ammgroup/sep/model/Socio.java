@@ -148,6 +148,10 @@ public class Socio {
     @Column(name="JUNTADIR_ACTUAL", nullable=false, unique=false)
     private boolean juntaDirectivaActual;
     
+    @Column(name="ULTIMA_ACTUALIZACION", nullable=true, unique=false)
+    @Temporal(TemporalType.DATE)
+    private Date ultimaActualizacion;
+    
     @OneToMany(targetEntity=Factura.class, mappedBy="socio", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<Factura> facturas;
     
@@ -456,6 +460,14 @@ public class Socio {
 
 	public void setJuntaDirectivaActual(boolean juntaDirectivaActual) {
 		this.juntaDirectivaActual = juntaDirectivaActual;
+	}
+	
+	public Date getUltimaActualizacion() {
+		return ultimaActualizacion;
+	}
+
+	public void setUltimaActualizacion(Date ultimaActualizacion) {
+		this.ultimaActualizacion = ultimaActualizacion;
 	}
 
 	@Override
