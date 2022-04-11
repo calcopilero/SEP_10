@@ -27,6 +27,7 @@
             <TableColumn fx:id="tcfbaja" prefWidth="75.0" text="Fecha baja" />
             <TableColumn fx:id="tcmbaja" prefWidth="100.0" text="Motivo baja" />
             <TableColumn fx:id="tccsep" prefWidth="100.0" text="Contacto SEP" />
+            <TableColumn fx:id="tcdbanc" prefWidth="160.0" text="Datos bancarios" />
             <TableColumn fx:id="tcultact" prefWidth="75.0" text="Ult. Actualización" />
          </columns>
       </TableView>

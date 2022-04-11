@@ -130,7 +130,7 @@ public class Factura {
     @Column(name="TEXTO_COMPLEMENTARIO", length=250, nullable=true, unique=true)
     private String textoComplementario;
     
-    @Column(name="TEXTO_FORMA_PAGO", length=70, nullable=false, unique=true)
+    @Column(name="TEXTO_FORMA_PAGO", length=150, nullable=false, unique=true)
     private String textoFormaPago;
     
     @Column(name="FACTURA_FIRMADA", nullable=false, unique=false)

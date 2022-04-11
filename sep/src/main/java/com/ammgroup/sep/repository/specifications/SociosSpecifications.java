@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import com.ammgroup.sep.config.SEPPropertiesFile;
 import com.ammgroup.sep.controller.config.filter.SocioFilter;
 import com.ammgroup.sep.model.Agencia;
+import com.ammgroup.sep.model.FormaPago;
 import com.ammgroup.sep.model.ModalidadSocio;
 import com.ammgroup.sep.model.ModoAcceso;
 import com.ammgroup.sep.model.Pais;
@@ -96,6 +97,20 @@ public class SociosSpecifications {
 				}
 			});
 		
+		Optional<String> optDomic = Optional.ofNullable(socfilter.getDomicilio());
+			optDomic.ifPresent((x) -> {
+				
+				if (x.length() > 0) {
+					
+					if (spwrapper.firstsp) {
+						spwrapper.spsoc = where(domicilioLike(x));
+						spwrapper.firstsp = false;
+					} else {
+						spwrapper.spsoc = (spwrapper.spsoc).and(domicilioLike(x));
+					}
+				}
+			});
+			
 		Optional<Provincia> optProv = Optional.ofNullable(socfilter.getProvincia());
 			optProv.ifPresent((x) -> {
 				
@@ -179,6 +194,20 @@ public class SociosSpecifications {
 				}
 			});
 		
+		Optional<String> optRef = Optional.ofNullable(socfilter.getReferencia());
+			optRef.ifPresent((x) -> {
+				
+				if (x.length() > 0) {
+					
+					if (spwrapper.firstsp) {
+						spwrapper.spsoc = where(referenciaLike(x));
+						spwrapper.firstsp = false;
+					} else {
+						spwrapper.spsoc = (spwrapper.spsoc).and(referenciaLike(x));
+					}
+				}	
+			});
+			
 		Optional<ModoAcceso> optMacc = Optional.ofNullable(socfilter.getModoAcceso());
 			optMacc.ifPresent((x) -> {
 				
@@ -263,6 +292,31 @@ public class SociosSpecifications {
 					}
 				}
 			});
+		
+		Optional<FormaPago> optFpago = Optional.ofNullable(socfilter.getFormaPago());
+			optFpago.ifPresent((x) -> {
+				
+				if (spwrapper.firstsp) {
+					spwrapper.spsoc = where(socioFormaPagoIs(x));
+					spwrapper.firstsp = false;
+				} else {
+					spwrapper.spsoc = (spwrapper.spsoc).and(socioFormaPagoIs(x));
+				}
+			});
+		
+		Optional<String> optIccc = Optional.ofNullable(socfilter.getIbanccc());
+			optIccc.ifPresent((x) -> {
+				
+				if (x.length() > 0) {
+					
+					if (spwrapper.firstsp) {
+						spwrapper.spsoc = where(ibancccLike(x));
+						spwrapper.firstsp = false;
+					} else {
+						spwrapper.spsoc = (spwrapper.spsoc).and(ibancccLike(x));
+					}
+				}	
+			});
 			
 		Optional<Boolean> optLdis = Optional.ofNullable(socfilter.getListaDistribucion());
 			optLdis.ifPresent((x) -> {
@@ -306,6 +360,20 @@ public class SociosSpecifications {
 						spwrapper.spsoc = (spwrapper.spsoc).and(socioIsJuntaDirectivaActual());
 					}
 				}
+			});
+			
+		Optional<String> optAnot = Optional.ofNullable(socfilter.getAnotaciones());
+			optAnot.ifPresent((x) -> {
+				
+				if (x.length() > 0) {
+					
+					if (spwrapper.firstsp) {
+						spwrapper.spsoc = where(anotacionesLike(x));
+						spwrapper.firstsp = false;
+					} else {
+						spwrapper.spsoc = (spwrapper.spsoc).and(anotacionesLike(x));
+					}
+				}	
 			});
 			
 		Optional<Date> optDatefbIni = Optional.ofNullable(socfilter.getFechaBajaInicial());
@@ -352,6 +420,12 @@ public class SociosSpecifications {
 	
 		return (root, query, criteriaBuilder)
 				-> criteriaBuilder.like(root.get(Socio_.CIFNIF), "%"+cifnif+"%");
+	}
+	
+	private Specification<Socio> domicilioLike(String domic) {
+		
+		return (root, query, criteriaBuilder) 
+				-> criteriaBuilder.like(root.get(Socio_.DOMICILIO), "%"+domic+"%");
 	}
 	
 	private Specification<Socio> localidadLike(String loc) {
@@ -402,6 +476,12 @@ public class SociosSpecifications {
 				-> criteriaBuilder.equal(root.get(Socio_.AGENCIA), ag);
 	}
 	
+	private Specification<Socio> referenciaLike(String ref) {
+		
+		return (root, query, criteriaBuilder) 
+				-> criteriaBuilder.like(root.get(Socio_.REFERENCIA), "%"+ref+"%");
+	}
+	
 	private Specification<Socio> socioModoAccesoIs(ModoAcceso ms) {
 
 		return (root, query, criteriaBuilder)
@@ -441,6 +521,18 @@ public class SociosSpecifications {
 				//-> criteriaBuilder.equal(root.get(Socio_.BAJA), false);
 	}
 
+	private Specification<Socio> socioFormaPagoIs(FormaPago fp) {
+
+		return (root, query, criteriaBuilder)
+				-> criteriaBuilder.equal(root.get(Socio_.FORMA_PAGO), fp);
+	}
+	
+	private Specification<Socio> ibancccLike(String iccc) {
+		
+		return (root, query, criteriaBuilder) 
+				-> criteriaBuilder.like(root.get(Socio_.IBANCCC), "%"+iccc+"%");
+	}
+	
 	private Specification<Socio> socioIsListaDistribucion() {
 
 		return (root, query, criteriaBuilder)
@@ -459,6 +551,12 @@ public class SociosSpecifications {
 		return (root, query, criteriaBuilder)
 				-> criteriaBuilder.isTrue(root.get(Socio_.JUNTA_DIRECTIVA_ACTUAL));
 				//-> criteriaBuilder.equal(root.get(Socio_.BAJA), false);
+	}
+	
+	private Specification<Socio>anotacionesLike(String anot) {
+		
+		return (root, query, criteriaBuilder) 
+				-> criteriaBuilder.like(root.get(Socio_.ANOTACIONES), "%"+anot+"%");
 	}
 	
 	private Specification<Socio> fechaBajaBetweenDates(Date dtini, Date dtfin) {

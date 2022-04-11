@@ -158,6 +158,12 @@ public class HfactController implements Initializable {
 	
     @FXML
     private TextField txmarc;
+    
+	@FXML
+	private Label lbdafact_;
+	
+	@FXML
+	private TextArea txardafact;
 	
     @FXML
     private Label lbmsg1;
@@ -198,13 +204,15 @@ public class HfactController implements Initializable {
 		cbfpago.setVisible(!chfauto.isSelected());
 		lbmarc_.setVisible(!chfauto.isSelected());
 		txmarc.setVisible(!chfauto.isSelected());
+		lbdafact_.setVisible(!chfauto.isSelected());
+		txardafact.setVisible(!chfauto.isSelected());
     		
     }
 	
 	@FXML
     void bexecOnAction(ActionEvent event) {
 		
-    	var fdatawrapper = new Object(){ Date ffact = new Date(); SerieFacturas sfact = null; Boolean ffirmada = null; Agencia age = null; String refer = ""; String concep = ""; Double impitems = 0D; Descuento desc = null; TipoIVA tiva = null; Double genv = 0D; FormaPago fpago = null; String marc = ""; int errors = 0; String errorstext = ""; };
+    	var fdatawrapper = new Object(){ Date ffact = new Date(); SerieFacturas sfact = null; Boolean ffirmada = null; Agencia age = null; String refer = ""; String concep = ""; Double impitems = 0D; Descuento desc = null; TipoIVA tiva = null; Double genv = 0D; FormaPago fpago = null; String marc = ""; String dafact = ""; int errors = 0; String errorstext = ""; };
 
     	Optional<LocalDate> dtOpt = Optional.ofNullable(dpffact.getValue());
 			dtOpt.ifPresentOrElse((y) -> {
@@ -297,6 +305,11 @@ public class HfactController implements Initializable {
 				marcOpt.ifPresent((y) -> {
 					fdatawrapper.marc = y;
 				});
+				
+			Optional<String> dafactOpt = Optional.ofNullable(txardafact.getText());
+				dafactOpt.ifPresent((y) -> {
+					fdatawrapper.dafact = y;
+				});
 		}
 			
 		if (fdatawrapper.errors > 0) {
@@ -310,12 +323,12 @@ public class HfactController implements Initializable {
 				//In automatic only ffact is needed
 				generateFactura(fdatawrapper.ffact, fdatawrapper.ffirmada, null, null, null, null, 
 						null, null, null, 
-						null, null, null);
+						null, null, null, null);
 			} else {
 				
 				generateFactura(fdatawrapper.ffact, fdatawrapper.ffirmada, fdatawrapper.sfact, fdatawrapper.age, fdatawrapper.refer, fdatawrapper.concep, 
 						fdatawrapper.impitems, fdatawrapper.desc, fdatawrapper.tiva, 
-						fdatawrapper.genv, fdatawrapper.fpago, fdatawrapper.marc);
+						fdatawrapper.genv, fdatawrapper.fpago, fdatawrapper.marc, fdatawrapper.dafact);
 			}
 			
 			closeForm();
@@ -376,7 +389,9 @@ public class HfactController implements Initializable {
 	    
 	    //Setting the maximum number of characters of TextArea
 	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
-    		change.getControlNewText().length() <= 180 ? change : null));
+    		change.getControlNewText().length() <= 250 ? change : null));
+	    txardafact.setTextFormatter(new TextFormatter<String>(change -> 
+	    	change.getControlNewText().length() <= 200 ? change : null)); 
 	    
 		Optional<Socio> socOpt = Optional.ofNullable(socrud.getDao());
 			socOpt.ifPresent((x) -> {
@@ -422,7 +437,7 @@ public class HfactController implements Initializable {
 
     }
 	
-	private void generateFactura(Date pffact, boolean pffirm, SerieFacturas psfact, Agencia page, String pref, String pconcep, Double pimpitems, Descuento pdesc, TipoIVA ptiva, Double pgenv, FormaPago pfpago, String pmarc) {
+	private void generateFactura(Date pffact, boolean pffirm, SerieFacturas psfact, Agencia page, String pref, String pconcep, Double pimpitems, Descuento pdesc, TipoIVA ptiva, Double pgenv, FormaPago pfpago, String pmarc, String dafact) {
 		
     	var tfwrapper = new Object(){ String ttitular = ""; String tcifnif = ""; String tdireccion = ""; String tcomp = ""; };
     	var numwrapper = new Object(){ String numInic = ""; Integer num = 0; int year = 0; };
@@ -594,6 +609,15 @@ public class HfactController implements Initializable {
 						strOpt.ifPresent((y) -> tfwrapper.ttitular = y);
 					strOpt = Optional.ofNullable(x.getApellidos());
 						strOpt.ifPresent((y) -> tfwrapper.ttitular += (" " + y));
+					//Check if Datos adicionales para factura have been passed as parameter
+					//wich only happend in facturacion manual 
+					strOpt = Optional.ofNullable(dafact);
+						strOpt.ifPresentOrElse((y) -> {
+									tfwrapper.ttitular += ("\n" + y);
+								}, () -> {
+									Optional<String> dafOpt = Optional.ofNullable(x.getDatosAdicionalesFactura());
+										dafOpt.ifPresent((z) -> tfwrapper.ttitular += ("\n" + z));
+								});
 
 					strOpt = Optional.ofNullable(x.getCifnif());
 						strOpt.ifPresent((y) -> tfwrapper.tcifnif = y);

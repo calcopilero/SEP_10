@@ -182,6 +182,9 @@ public class SociosdtController implements Initializable {
 	private CheckBox chfirfact;
 	
 	@FXML
+	private TextArea txardafact;
+	
+	@FXML
 	private ComboBox<Agencia> cbagencia;
 	
 	@FXML
@@ -457,6 +460,8 @@ public class SociosdtController implements Initializable {
 				x.setFactura(chfact.isSelected());
 				x.setFirmarFactura(chfirfact.isSelected());
 				
+				x.setDatosAdicionalesFactura(obtainText(txardafact));
+				
 				Optional<Agencia> optAge = Optional.ofNullable(cbagencia.getSelectionModel().getSelectedItem());
 					optAge.ifPresentOrElse((y) -> {
 						x.setAgencia(y);
@@ -557,6 +562,7 @@ public class SociosdtController implements Initializable {
 		cbmbaja.getItems().add(null);
 	    
 		final String ipattern = mutils.INTEGER_PATTERN;
+		final String cppattern = mutils.CP_PATTERN;
 	    
 		//Setting a filter to allow only numbers
 		UnaryOperator<Change> integerFilter = (change -> {
@@ -568,9 +574,19 @@ public class SociosdtController implements Initializable {
 		    return null;
 		});
 		
+		//Setting a filter to allow only numbers (the first number could be a 0)
+		UnaryOperator<Change> cpFilter = (change -> {
+		    String newText = change.getControlNewText();
+
+		    if (newText.matches(cppattern)) {
+		        return change;
+		    }
+		    return null;
+		});
+		
 		//Setting the formatters
 		txcod.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		txcp.setTextFormatter(new TextFormatter<String>(integerFilter));
+		txcp.setTextFormatter(new TextFormatter<String>(cpFilter));
 		txtelefono.setTextFormatter(new TextFormatter<String>(integerFilter));
 
 		switch (socrud.getAction()) {
@@ -639,7 +655,7 @@ public class SociosdtController implements Initializable {
 		
 	    //Setting the maximum number of characters of TextField
 		txojs.addEventFilter(KeyEvent.KEY_TYPED, maxLength(50));
-	    txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
 	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
 	    txcp.addEventFilter(KeyEvent.KEY_TYPED, maxLength(5));
 	    txlocal.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
@@ -660,7 +676,8 @@ public class SociosdtController implements Initializable {
 	    	change.getControlNewText().length() <= 100 ? change : null));
 	    txaranot.setTextFormatter(new TextFormatter<String>(change -> 
 	    	change.getControlNewText().length() <= 250 ? change : null));
-	    
+	    txardafact.setTextFormatter(new TextFormatter<String>(change -> 
+    		change.getControlNewText().length() <= 200 ? change : null));
 	    
 	}
 	
@@ -867,6 +884,13 @@ public class SociosdtController implements Initializable {
 					optBool.ifPresent((y) -> {
 						chfirfact.setSelected(y);
 					});
+					
+				optStr = Optional.ofNullable(x.getDatosAdicionalesFactura());
+					optStr.ifPresentOrElse((y) -> {
+						txardafact.setText(y);
+					}, () -> {
+						txardafact.setText("");
+					});
 				
 				Optional<Agencia> optAge = Optional.ofNullable(x.getAgencia());
 					optAge.ifPresent((y) -> {
@@ -952,6 +976,7 @@ public class SociosdtController implements Initializable {
 		disableControl(cbdesc);
 		disableControl(chfact);
 		disableControl(chfirfact);
+		disableControl(txardafact);
 		disableControl(cbagencia);
 		disableControl(txref);
 		disableControl(chbaja);
@@ -990,7 +1015,9 @@ public class SociosdtController implements Initializable {
 			checkwrapper.checks = false;  
 		}
 		
-		if (obtainText(txcifnif).length() == 0) {
+		//CIF is not mandatory when an Agencia is selected
+		Optional<Agencia> ageOpt = Optional.ofNullable(cbagencia.getValue());
+		if ((obtainText(txcifnif).length() == 0) && (ageOpt.isEmpty())) {
 			checkwrapper.errorstext += "El CIF/NIF no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}

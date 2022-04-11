@@ -115,6 +115,15 @@ public class JReportsService {
 		BufferedImage logo = ImageIO.read(logofile);
 		map.put("pmLogo", logo );
 		
+		optStr = Optional.ofNullable(sepprop.getAddress());
+			optStr.ifPresentOrElse((x) -> map.put("pmSepDireccion", x), () -> map.put("pmSepDireccion", ""));
+		optStr = Optional.ofNullable(sepprop.getEmail());
+			optStr.ifPresentOrElse((x) -> map.put("pmSepEmail", x), () -> map.put("pmSepEmail", ""));
+		optStr = Optional.ofNullable(sepprop.getEmail());
+			optStr.ifPresentOrElse((x) -> map.put("pmSepWeb", x), () -> map.put("pmSepWeb", ""));
+		optStr = Optional.ofNullable(sepprop.getPhone());
+			optStr.ifPresentOrElse((x) -> map.put("pmSepTels", x), () -> map.put("pmSepTels", ""));
+			
 		if (fact.isFacturaFirmada()) {
 			File firmafile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + "firma.png");
 			BufferedImage firma = ImageIO.read(firmafile);

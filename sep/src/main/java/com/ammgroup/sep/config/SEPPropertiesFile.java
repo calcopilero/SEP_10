@@ -44,6 +44,18 @@ public class SEPPropertiesFile {
 	@Value( "${mainform.backcolor}" )
 	private String mainformBackcolor;
 	
+	@Value( "${sep.address}" )
+	private String address;
+	
+	@Value( "${sep.phone}" )
+	private String phone;
+	
+	@Value( "${sep.email}" )
+	private String email;
+	
+	@Value( "${sep.web}" )
+	private String web;
+	
 	public SEPPropertiesFile() {
 		super();
 	}
@@ -142,5 +154,37 @@ public class SEPPropertiesFile {
 
 	public void setMainformBackcolor(String mainformBackcolor) {
 		this.mainformBackcolor = mainformBackcolor;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getWeb() {
+		return web;
+	}
+
+	public void setWeb(String web) {
+		this.web = web;
 	}
 }

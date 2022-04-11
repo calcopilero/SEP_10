@@ -134,7 +134,7 @@ public class FpagodtController implements Initializable {
 		
 	    //Setting the maximum number of characters of TextField
 	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    ttfact.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    ttfact.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
 
 	    switch (fpagcrud.getAction()) {
         case ADD :

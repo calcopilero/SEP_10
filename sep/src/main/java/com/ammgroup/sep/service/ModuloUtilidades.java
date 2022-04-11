@@ -46,6 +46,7 @@ public class ModuloUtilidades {
 	public final String CURRENCY_ZERO = "0.00";
 	public final String CURRENCY_PATTERN = "-?\\d*(\\.\\d{0,2})?";
 	public final String INTEGER_PATTERN = "-?([1-9][0-9]*)?";
+	public final String CP_PATTERN = "([0-9]*)?";
 	
 	public final String RESOURCE_REPORTS_DIR = "/jreports/";
 	public final String RESOURCE_FXFORMS_DIR = "/jfxforms/";

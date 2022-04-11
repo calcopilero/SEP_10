@@ -10,7 +10,8 @@
    <children>
       <TableView fx:id="tfpago" layoutX="19.0" layoutY="15.0" prefHeight="328.0" prefWidth="646.0">
          <columns>
-            <TableColumn fx:id="tcdescripcion" prefWidth="450.0" text="Descripción" />
+            <TableColumn fx:id="tcdescripcion" prefWidth="250.0" text="Descripción" />
+            <TableColumn fx:id="tctfactura" prefWidth="350.0" text="Texto en factura" />
          </columns>
       </TableView>
       <Label fx:id="lbmsg" layoutX="19.0" layoutY="359.0" prefHeight="17.0" prefWidth="591.0" />

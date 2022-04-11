@@ -152,6 +152,9 @@ public class Socio {
     @Temporal(TemporalType.DATE)
     private Date ultimaActualizacion;
     
+    @Column(name="DATOS_ADIC_FACTURA", length=200, nullable=true, unique=false)
+    private String datosAdicionalesFactura;
+    
     @OneToMany(targetEntity=Factura.class, mappedBy="socio", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<Factura> facturas;
     
@@ -468,6 +471,14 @@ public class Socio {
 
 	public void setUltimaActualizacion(Date ultimaActualizacion) {
 		this.ultimaActualizacion = ultimaActualizacion;
+	}
+
+	public String getDatosAdicionalesFactura() {
+		return datosAdicionalesFactura;
+	}
+
+	public void setDatosAdicionalesFactura(String datosAdicionalesFactura) {
+		this.datosAdicionalesFactura = datosAdicionalesFactura;
 	}
 
 	@Override

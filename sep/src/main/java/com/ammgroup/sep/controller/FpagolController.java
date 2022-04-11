@@ -42,6 +42,9 @@ public class FpagolController implements Initializable {
 	
 	@FXML
 	private TableColumn<FormaPago, String> tcdescripcion;
+	
+	@FXML
+	private TableColumn<FormaPago, String> tctfactura;
 
 	@FXML
 	private Button badd;
@@ -158,6 +161,7 @@ public class FpagolController implements Initializable {
 		
 		// Set up the columns in the table
 		tcdescripcion.setCellValueFactory(new PropertyValueFactory<FormaPago, String>("descripcion"));
+		tctfactura.setCellValueFactory(new PropertyValueFactory<FormaPago, String>("textoFactura"));
 		
 		// Accessing repository indirectly through spring application context, not autowiring
 		//SocioRepository socioRepository = springContext.getBean(SocioRepository.class);

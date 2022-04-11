@@ -27,6 +27,7 @@ public class SocioFilter {
 	private String nombre;
 	private String apellidos;
 	private String cifnif;
+    private String domicilio;
 	private String localidad;
 	private Provincia provincia;
 	private Pais pais;
@@ -46,6 +47,9 @@ public class SocioFilter {
 	private Boolean juntaDirectivaActual;
     private Date fechaBajaInicial;
     private Date fechaBajaFinal;
+    private String referencia;
+    private String anotaciones;
+    private String ibanccc;
 	
 	public SocioFilter() {
 		super();
@@ -275,6 +279,38 @@ public class SocioFilter {
 		this.fechaBajaFinal = fechaBajaFinal;
 	}
 
+	public String getDomicilio() {
+		return domicilio;
+	}
+
+	public void setDomicilio(String domicilio) {
+		this.domicilio = domicilio;
+	}
+
+	public String getReferencia() {
+		return referencia;
+	}
+
+	public void setReferencia(String referencia) {
+		this.referencia = referencia;
+	}
+
+	public String getAnotaciones() {
+		return anotaciones;
+	}
+
+	public void setAnotaciones(String anotaciones) {
+		this.anotaciones = anotaciones;
+	}
+
+	public String getIbanccc() {
+		return ibanccc;
+	}
+
+	public void setIbanccc(String ibanccc) {
+		this.ibanccc = ibanccc;
+	}
+
 	public int containsFilters() {
 		
 		var cfwrapper = new Object(){ int cf = 0; };
@@ -303,7 +339,10 @@ public class SocioFilter {
 		
 		Optional<String> optCifnif = Optional.ofNullable(cifnif);
 			optCifnif.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
-
+		
+		Optional<String> optDomic = Optional.ofNullable(domicilio);
+			optDomic.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
+			
 		Optional<String> optLoc = Optional.ofNullable(localidad);
 			optLoc.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
 
@@ -328,6 +367,9 @@ public class SocioFilter {
 		Optional<Agencia> optAge = Optional.ofNullable(agencia);
 			optAge.ifPresent((x) -> { cfwrapper.cf++; });
 		
+		Optional<String> optRef = Optional.ofNullable(referencia);
+			optRef.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
+			
 		Optional<ModoAcceso> optMacc = Optional.ofNullable(modoAcceso);
 			optMacc.ifPresent((x) -> { cfwrapper.cf++; });
 		
@@ -337,12 +379,27 @@ public class SocioFilter {
 		Optional<Boolean> optFact = Optional.ofNullable(factura);
 			optFact.ifPresent((x) -> { if (x) cfwrapper.cf++; });
 			
+		Optional<FormaPago> optFpago = Optional.ofNullable(formaPago);
+			optFpago.ifPresent((x) -> { cfwrapper.cf++; });
+		
+		Optional<String> optDbanc = Optional.ofNullable(ibanccc);
+			optDbanc.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
+			
 		Optional<Boolean> optLdis = Optional.ofNullable(listaDistribucion);
 			optLdis.ifPresent((x) -> { if (x) cfwrapper.cf++; });
+		
+		Optional<String> optCjdir = Optional.ofNullable(cargosJuntaDirectiva);
+			optCjdir.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
+			
+		Optional<Boolean> optJdir = Optional.ofNullable(juntaDirectivaActual);
+			optJdir.ifPresent((x) -> { if (x) cfwrapper.cf++; });
+		
+		Optional<String> optAnot = Optional.ofNullable(anotaciones);
+			optAnot.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
 			
 		Optional<Date> optDatefbIni = Optional.ofNullable(fechaBajaInicial);
 		Optional<Date> optDatefbFin = Optional.ofNullable(fechaBajaFinal);
-
+		
 		//Check if both dates are set
 		if (optDatefbIni.isPresent() && optDatefbFin.isPresent()) {
 			cfwrapper.cf++;

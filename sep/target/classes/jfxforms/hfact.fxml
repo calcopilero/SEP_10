@@ -9,7 +9,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="605.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.HfactController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="673.0" prefWidth="542.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.HfactController">
    <children>
       <Label fx:id="lbcp1" layoutX="20.0" layoutY="13.0" text="Cód Socio:" />
       <Label fx:id="lbcsoc" layoutX="83.0" layoutY="13.0" prefHeight="17.0" prefWidth="75.0" />
@@ -38,9 +38,11 @@
       <ComboBox fx:id="cbfpago" layoutX="20.0" layoutY="485.0" prefHeight="25.0" prefWidth="243.0" stylesheets="@sep.css" />
       <Label fx:id="lbmarc_" layoutX="290.0" layoutY="466.0" text="Marcador:" />
       <TextField fx:id="txmarc" layoutX="291.0" layoutY="485.0" prefHeight="25.0" prefWidth="156.0" />
-      <Label fx:id="lbmsg1" layoutX="22.0" layoutY="534.0" minWidth="194.0" prefHeight="17.0" prefWidth="443.0" />
-      <Button fx:id="bexec" layoutX="17.0" layoutY="567.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" />
-      <CheckBox fx:id="chvscreen" layoutX="105.0" layoutY="571.0" mnemonicParsing="false" text="Mostrar en pantalla" />
-      <Button fx:id="bclose" layoutX="451.0" layoutY="567.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Label fx:id="lbdafact_" layoutX="20.0" layoutY="521.0" text="Datos adicionales para facturación (Titular):" />
+      <TextArea fx:id="txardafact" layoutX="20.0" layoutY="538.0" prefHeight="52.0" prefWidth="502.0" />
+      <Label fx:id="lbmsg1" layoutX="22.0" layoutY="602.0" minWidth="194.0" prefHeight="17.0" prefWidth="443.0" />
+      <Button fx:id="bexec" layoutX="20.0" layoutY="635.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" />
+      <CheckBox fx:id="chvscreen" layoutX="108.0" layoutY="639.0" mnemonicParsing="false" text="Mostrar en pantalla" />
+      <Button fx:id="bclose" layoutX="451.0" layoutY="635.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
    </children>
 </AnchorPane>

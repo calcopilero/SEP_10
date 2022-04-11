@@ -12,12 +12,14 @@ import org.springframework.stereotype.Component;
 
 import com.ammgroup.sep.controller.config.filter.SocioFilter;
 import com.ammgroup.sep.model.Agencia;
+import com.ammgroup.sep.model.FormaPago;
 import com.ammgroup.sep.model.ModalidadSocio;
 import com.ammgroup.sep.model.ModoAcceso;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
 import com.ammgroup.sep.model.ZonaPostal;
 import com.ammgroup.sep.repository.AgenciaRepository;
+import com.ammgroup.sep.repository.FormaPagoRepository;
 import com.ammgroup.sep.repository.ModalidadSocioRepository;
 import com.ammgroup.sep.repository.ModoAccesoRepository;
 import com.ammgroup.sep.repository.PaisRepository;
@@ -66,6 +68,9 @@ public class SociosfiController implements Initializable {
 	@Autowired
 	ModoAccesoRepository maccesoRepository;
 	
+	@Autowired
+	FormaPagoRepository fpagoRepository;
+	
 	@FXML
 	private DatePicker dpfaltai;
 	
@@ -91,6 +96,9 @@ public class SociosfiController implements Initializable {
 	private TextField txcifnif;
 	
 	@FXML
+	private TextField txdomic;
+	
+	@FXML
 	private ComboBox<Provincia> cbprov;
 
 	@FXML
@@ -112,6 +120,9 @@ public class SociosfiController implements Initializable {
 	private ComboBox<Agencia> cbagencia;
 	
 	@FXML
+	private TextField txref;
+	
+	@FXML
 	private ComboBox<ModoAcceso> cbmacc;
 	
 	@FXML
@@ -119,6 +130,12 @@ public class SociosfiController implements Initializable {
 	
     @FXML
     private CheckBox chfactura;
+    
+	@FXML
+	private ComboBox<FormaPago> cbfpago;
+	
+	@FXML
+	private TextField txdbanc;
     
     @FXML
     private CheckBox chldist;
@@ -128,6 +145,9 @@ public class SociosfiController implements Initializable {
 	
 	@FXML
 	private CheckBox chjdiract;
+	
+	@FXML
+	private TextField txanot;
 	
 	@FXML
 	private DatePicker dpfbajaini;
@@ -166,6 +186,8 @@ public class SociosfiController implements Initializable {
 		cbagencia.getItems().add(null);
 		cbmacc.setItems(FXCollections.observableList(maccesoRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbmacc.getItems().add(null);
+		cbfpago.setItems(FXCollections.observableList(fpagoRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
+		cbfpago.getItems().add(null);
 		
 	    //Setting the maximum number of characters of TextField
 		txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
@@ -176,6 +198,10 @@ public class SociosfiController implements Initializable {
 		txemail.addEventFilter(KeyEvent.KEY_TYPED, maxLength(80));
 		txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 		txcjdir.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
+		txref.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
+		txdomic.addEventFilter(KeyEvent.KEY_TYPED, maxLength(100));
+		txdbanc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
+		txanot.addEventFilter(KeyEvent.KEY_TYPED, maxLength(100));
 
 		//Shove filters from Filter object into controls
 		Optional<SocioFilter> optSocfilter = Optional.ofNullable(socfilter);
@@ -194,6 +220,7 @@ public class SociosfiController implements Initializable {
 				txnombre.setText(socfilter.getNombre());
 				txapell.setText(socfilter.getApellidos());
 				txcifnif.setText(socfilter.getCifnif());
+				txdomic.setText(socfilter.getDomicilio());
 				txlocal.setText(socfilter.getLocalidad());
 				Optional<Provincia> optProv = Optional.ofNullable(socfilter.getProvincia());
 					optProv.ifPresent((y) -> { cbprov.getSelectionModel().select(mutils.searchIdInCombo(cbprov,y)); });
@@ -207,15 +234,20 @@ public class SociosfiController implements Initializable {
 					optMsoc.ifPresent((y) -> { cbmod.getSelectionModel().select(mutils.searchIdInCombo(cbmod, y)); });
 				Optional<Agencia> optAge = Optional.ofNullable(socfilter.getAgencia());
 					optAge.ifPresent((y) -> { cbagencia.getSelectionModel().select(mutils.searchIdInCombo(cbagencia, y)); });
+				txref.setText(socfilter.getReferencia());
 				Optional<ModoAcceso> optMacc = Optional.ofNullable(socfilter.getModoAcceso());
 					optMacc.ifPresent((y) -> { cbmacc.getSelectionModel().select(mutils.searchIdInCombo(cbmacc, y)); });
 				txmarc.setText(socfilter.getMarcador());
 				boolOpt = Optional.ofNullable(x.getFactura());
 					boolOpt.ifPresent((y) -> chfactura.setSelected(y));
+				Optional<FormaPago> optFpago = Optional.ofNullable(socfilter.getFormaPago());
+					optFpago.ifPresent((y) -> { cbfpago.getSelectionModel().select(mutils.searchIdInCombo(cbfpago, y)); });
+				txdbanc.setText(socfilter.getIbanccc());
 				boolOpt = Optional.ofNullable(x.getListaDistribucion());
 					boolOpt.ifPresent((y) -> chldist.setSelected(y));
 				boolOpt = Optional.ofNullable(x.getJuntaDirectivaActual());
 					boolOpt.ifPresent((y) -> chjdiract.setSelected(y));
+				txanot.setText(socfilter.getAnotaciones());
 				//Datepicker is blank if Fecha alta is null 
 				optDate = Optional.ofNullable(x.getFechaBajaInicial());
 					optDate.ifPresent((y) -> dpfbajaini.setValue(mutils.obtainLocalDate(y)));
@@ -282,6 +314,7 @@ public class SociosfiController implements Initializable {
 		txnombre.setText("");
 		txapell.setText("");
 		txcifnif.setText("");
+		txdomic.setText("");
 		txlocal.setText("");
 		cbprov.getSelectionModel().clearSelection();
 		cbpais.getSelectionModel().clearSelection();
@@ -291,10 +324,14 @@ public class SociosfiController implements Initializable {
 		txmarc.setText("");
 		cbmod.getSelectionModel().clearSelection();
 		cbagencia.getSelectionModel().clearSelection();
+		txref.setText("");
 		cbmacc.getSelectionModel().clearSelection();
 		chfactura.setSelected(false);
+		cbfpago.getSelectionModel().clearSelection();
+		txdbanc.setText("");
 		chldist.setSelected(false);
 		txcjdir.setText("");
+		txanot.setText("");
 		chjdiract.setSelected(false);
 		dpfbajaini.setValue(null);
 		dpfbajafin.setValue(null);
@@ -361,6 +398,7 @@ public class SociosfiController implements Initializable {
 				x.setNombre(txnombre.getText());
 				x.setApellidos(txapell.getText());
 				x.setCifnif(txcifnif.getText());
+				x.setDomicilio(txdomic.getText());
 				x.setLocalidad(txlocal.getText());
 				x.setProvincia(cbprov.getValue());
 				x.setPais(cbpais.getValue());
@@ -370,12 +408,16 @@ public class SociosfiController implements Initializable {
 				x.setTelefono(txtelefono.getText());
 				x.setModalidad(cbmod.getValue());
 				x.setAgencia(cbagencia.getValue());
+				x.setReferencia(txref.getText());
 				x.setModoAcceso(cbmacc.getValue());
 				x.setMarcador(txmarc.getText());
 				x.setCargosJuntaDirectiva(txcjdir.getText());
 				x.setJuntaDirectivaActual(chjdiract.isSelected());
+				x.setAnotaciones(txanot.getText());
 				
 				x.setFactura(chfactura.isSelected());
+				x.setFormaPago(cbfpago.getValue());
+				x.setIbanccc(txdbanc.getText());
 				x.setListaDistribucion(chldist.isSelected());
 				
 				optDate = Optional.ofNullable(dpfbajaini.getValue());

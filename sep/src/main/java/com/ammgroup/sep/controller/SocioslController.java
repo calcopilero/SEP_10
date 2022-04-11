@@ -120,6 +120,9 @@ public class SocioslController implements Initializable {
 	private TableColumn<Socio, String> tccsep;
 	
 	@FXML
+	private TableColumn<Socio, String> tcdbanc;
+	
+	@FXML
 	private TableColumn<Socio, Date> tcultact;
 	
 	@FXML
@@ -524,6 +527,8 @@ public class SocioslController implements Initializable {
 		});
 		
 		tccsep.setCellValueFactory(new PropertyValueFactory<Socio, String>("contactoSep"));
+		
+		tcdbanc.setCellValueFactory(new PropertyValueFactory<Socio, String>("ibanccc"));
 		
 		tcultact.setCellValueFactory(new PropertyValueFactory<Socio, Date>("ultimaActualizacion"));
 		mutils.configureColumnForDate(tcultact);

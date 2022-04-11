@@ -12,6 +12,7 @@ public abstract class Socio_ {
 
 	public static volatile SingularAttribute<Socio, String> centroTrabajo;
 	public static volatile SingularAttribute<Socio, Date> fechaBaja;
+	public static volatile SingularAttribute<Socio, String> datosAdicionalesFactura;
 	public static volatile SingularAttribute<Socio, String> movil;
 	public static volatile SingularAttribute<Socio, Boolean> lopd;
 	public static volatile SetAttribute<Socio, Factura> facturas;
@@ -54,6 +55,7 @@ public abstract class Socio_ {
 
 	public static final String CENTRO_TRABAJO = "centroTrabajo";
 	public static final String FECHA_BAJA = "fechaBaja";
+	public static final String DATOS_ADICIONALES_FACTURA = "datosAdicionalesFactura";
 	public static final String MOVIL = "movil";
 	public static final String LOPD = "lopd";
 	public static final String FACTURAS = "facturas";
