@@ -31,7 +31,7 @@
             <TableColumn fx:id="tcultact" prefWidth="75.0" text="Ult. Actualización" />
          </columns>
       </TableView>
-      <Label fx:id="lbmsg" layoutX="19.0" layoutY="517.0" prefHeight="17.0" prefWidth="621.0" />
+      <Label fx:id="lbmsg" layoutX="19.0" layoutY="517.0" prefHeight="17.0" prefWidth="951.0" />
       <Button fx:id="badd" layoutX="19.0" layoutY="547.0" mnemonicParsing="false" onAction="#baddOnAction" prefHeight="25.0" prefWidth="75.0" text="Nuevo" />
       <Button fx:id="bedit" layoutX="100.0" layoutY="547.0" mnemonicParsing="false" onAction="#beditOnAction" prefWidth="75.0" text="Editar" />
       <Button fx:id="bdelete" layoutX="181.0" layoutY="547.0" mnemonicParsing="false" onAction="#bdeleteOnAction" prefWidth="75.0" text="Borrar" />
@@ -40,6 +40,7 @@
       <Button fx:id="bprint" layoutX="425.0" layoutY="547.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="105.0" text="Imprimir listado" />
       <Button fx:id="bprintlab" layoutX="537.0" layoutY="547.0" mnemonicParsing="false" onAction="#bprintlabOnAction" prefHeight="25.0" prefWidth="124.0" text="Imprimir etiquetas" />
       <Button fx:id="bcmod" layoutX="668.0" layoutY="546.0" mnemonicParsing="false" onAction="#bcmodOnAction" prefHeight="25.0" prefWidth="148.0" text="Cambiar de modalidad" />
+      <Button fx:id="bfemail" layoutX="822.0" layoutY="547.0" mnemonicParsing="false" onAction="#bfemailOnAction" prefHeight="25.0" prefWidth="148.0" text="Fichero de emails" />
       <Button fx:id="bclose" layoutX="1073.0" layoutY="546.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
    </children>
 </AnchorPane>

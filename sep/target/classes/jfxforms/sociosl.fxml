@@ -40,6 +40,7 @@
       <Button fx:id="bprint" layoutX="425.0" layoutY="547.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="105.0" text="Imprimir listado" />
       <Button fx:id="bprintlab" layoutX="537.0" layoutY="547.0" mnemonicParsing="false" onAction="#bprintlabOnAction" prefHeight="25.0" prefWidth="124.0" text="Imprimir etiquetas" />
       <Button fx:id="bcmod" layoutX="668.0" layoutY="546.0" mnemonicParsing="false" onAction="#bcmodOnAction" prefHeight="25.0" prefWidth="148.0" text="Cambiar de modalidad" />
+      <Button fx:id="bfemail" layoutX="822.0" layoutY="547.0" mnemonicParsing="false" onAction="#bfemailOnAction" prefHeight="25.0" prefWidth="148.0" text="Fichero de emails" />
       <Button fx:id="bclose" layoutX="1073.0" layoutY="546.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
    </children>
 </AnchorPane>

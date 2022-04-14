@@ -14,6 +14,12 @@ public class SEPPropertiesFile {
 	@Value( "${pdf.location}" )
 	private String pdfLocation;
 	
+	@Value( "${email_file.location}" )
+	private String emailFileLocation;
+	
+	@Value( "${email_file.separator}" )
+	private String emailSeparator;
+	
 //	@Value( "${images.location}" )
 //	private String imagesLocation;
 	
@@ -186,5 +192,21 @@ public class SEPPropertiesFile {
 
 	public void setWeb(String web) {
 		this.web = web;
+	}
+
+	public String getEmailFileLocation() {
+		return emailFileLocation;
+	}
+
+	public void setEmailFileLocation(String emailFileLocation) {
+		this.emailFileLocation = emailFileLocation;
+	}
+
+	public String getEmailSeparator() {
+		return emailSeparator;
+	}
+
+	public void setEmailSeparator(String emailSeparator) {
+		this.emailSeparator = emailSeparator;
 	}
 }

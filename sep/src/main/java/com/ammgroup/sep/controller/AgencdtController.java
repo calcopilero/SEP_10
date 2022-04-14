@@ -3,6 +3,7 @@ package com.ammgroup.sep.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -32,6 +33,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -294,6 +296,32 @@ public class AgencdtController implements Initializable {
 
 		cbzpost.setItems(FXCollections.observableList(zpostRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbzpost.getItems().add(null);
+		
+	    final String ipattern = mutils.INTEGER_PATTERN;
+	    final String cppattern = mutils.CP_PATTERN;
+	    
+		//Setting a filter to allow only numbers
+		UnaryOperator<Change> integerFilter = (change -> {
+		    String newText = change.getControlNewText();
+
+		    if (newText.matches(ipattern)) {
+		        return change;
+		    }
+		    return null;
+		});
+	    
+		//Setting a filter to allow only numbers (the first number could be a 0)
+		UnaryOperator<Change> cpFilter = (change -> {
+		    String newText = change.getControlNewText();
+
+		    if (newText.matches(cppattern)) {
+		        return change;
+		    }
+		    return null;
+		});
+		
+		txcp.setTextFormatter(new TextFormatter<String>(cpFilter));
+		txtelefono.setTextFormatter(new TextFormatter<String>(integerFilter));
 
 	    switch (agcrud.getAction()) {
         case ADD :
@@ -358,6 +386,7 @@ public class AgencdtController implements Initializable {
 	    txaranot.setTextFormatter(new TextFormatter<String>(change -> 
 	    	change.getControlNewText().length() <= 250 ? change : null));
 	    
+
 	}
 	
 	private void showRelatedEntities() {
