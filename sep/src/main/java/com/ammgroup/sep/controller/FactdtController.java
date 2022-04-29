@@ -552,7 +552,7 @@ public class FactdtController implements Initializable {
 	    //Setting the maximum number of characters of TextField
 	    txrefer.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-	    txfpago.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    txfpago.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
 	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 	    tximpitems.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
 	    txgenv.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));

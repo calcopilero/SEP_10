@@ -62,16 +62,36 @@ public class JReportsService {
 		Optional<String> optStr = Optional.ofNullable(fact.getNumeroCompuesto());
 			optStr.ifPresentOrElse((x) -> map.put("pmNumFactura", x), () -> map.put("pmNumFactura", ""));
 		optStr = Optional.ofNullable(fact.getTitular());
-			optStr.ifPresentOrElse((x) -> map.put("pmTitular", x), () -> map.put("pmTitular", ""));
+			optStr.ifPresentOrElse((x) -> {
+				//New lines codes are replaced by <br> when markup is html and are multiline sections 
+				String htmlText = x.replace("\n", "<br>");
+				map.put("pmTitular", htmlText);
+			}, 
+				() -> map.put("pmTitular", "")
+			);
 		optStr = Optional.ofNullable(fact.getDireccion());
-			optStr.ifPresentOrElse((x) -> map.put("pmDireccion", x), () -> map.put("pmDireccion", ""));
+			optStr.ifPresentOrElse((x) -> {
+				//New lines codes are replaced by <br> when markup is html and are multiline sections 
+				String htmlText = x.replace("\n", "<br>");
+				map.put("pmDireccion", htmlText);
+			}, 
+				() -> map.put("pmDireccion", "")
+			);
 		optStr = Optional.ofNullable(fact.getCifnif());
 			optStr.ifPresentOrElse((x) -> map.put("pmCifnif", x), () -> map.put("pmCifnif", ""));
 		optStr = Optional.ofNullable(fact.getTextoFormaPago());
 			optStr.ifPresentOrElse((x) -> map.put("pmFormaPago", x), () -> map.put("pmFormaPago", ""));
 		optStr = Optional.ofNullable(fact.getReferencia());
 			optStr.ifPresentOrElse((x) -> map.put("pmReferencia", x), () -> map.put("pmReferencia", ""));
-
+		optStr = Optional.ofNullable(fact.getTextoComplementario());
+			optStr.ifPresentOrElse((x) -> {
+				String htmlText = x.replace("\n", "<br>");
+				//New lines codes are replaced by <br> when markup is html and are multiline sections 
+				map.put("pmTextoComplementario", htmlText);
+			}, 
+				() -> map.put("pmTextoComplementario", "")
+			);
+			
 		map.put("pmFechaFactura", mutils.getStringFromDate(fact.getFechaFactura(), mutils.DATE_FORMAT));
 
 		Optional<Descuento> optDesc = Optional.ofNullable(fact.getDescuento());
@@ -119,7 +139,7 @@ public class JReportsService {
 			optStr.ifPresentOrElse((x) -> map.put("pmSepDireccion", x), () -> map.put("pmSepDireccion", ""));
 		optStr = Optional.ofNullable(sepprop.getEmail());
 			optStr.ifPresentOrElse((x) -> map.put("pmSepEmail", x), () -> map.put("pmSepEmail", ""));
-		optStr = Optional.ofNullable(sepprop.getEmail());
+		optStr = Optional.ofNullable(sepprop.getWeb());
 			optStr.ifPresentOrElse((x) -> map.put("pmSepWeb", x), () -> map.put("pmSepWeb", ""));
 		optStr = Optional.ofNullable(sepprop.getPhone());
 			optStr.ifPresentOrElse((x) -> map.put("pmSepTels", x), () -> map.put("pmSepTels", ""));
@@ -140,6 +160,17 @@ public class JReportsService {
         //JasperReport jreport = JasperCompileManager.compileReport(jd);
 		
 		List<ItemFactura> items = factRepository.findItemsOfFactura(fact);
+		
+		for (ItemFactura it: items) {
+			
+			optStr = Optional.ofNullable(it.getConcepto());
+				optStr.ifPresent((x) -> {
+					String htmlText = x.replace("\n", "<br>");
+					//New lines codes are replaced by <br> when markup is html and are multiline sections 
+					it.setConcepto(htmlText);
+				});
+		}
+		
 		JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(items);
 		
 		JasperPrint jprint = JasperFillManager.fillReport(jreport, map, jrds);

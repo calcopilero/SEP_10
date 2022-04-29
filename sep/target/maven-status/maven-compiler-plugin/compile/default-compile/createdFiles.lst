@@ -142,6 +142,7 @@ com\ammgroup\sep\repository\specifications\SociosSpecifications.class
 com\ammgroup\sep\runners\data\OldsocioRunner$10.class
 com\ammgroup\sep\controller\ReclamdtController$1.class
 com\ammgroup\sep\model\Provincia.class
+com\ammgroup\sep\controller\SocioslController$15.class
 com\ammgroup\sep\service\ModuloUtilidades$3.class
 com\ammgroup\sep\controller\DesculController.class
 com\ammgroup\sep\controller\FpagolController.class

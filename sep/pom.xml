@@ -48,6 +48,12 @@
 		<artifactId>javafx-graphics</artifactId>
 		<version>${javafx.version}</version>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+	<dependency>
+	    <groupId>org.openjfx</groupId>
+	    <artifactId>javafx-swing</artifactId>
+	    <version>18-ea+7</version>
+	</dependency>
 	<!-- This 5.6.2.Final version overrides 5.4.Final version in Spring Data JPA -->
 	<!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-jpamodelgen -->
 	<dependency>
@@ -67,11 +73,11 @@
 	    <artifactId>jasperreports</artifactId>
 	    <version>6.18.1</version>
 	</dependency>
-	<!-- https://mvnrepository.com/artifact/org.openjfx/javafx-swing -->
+	<!-- https://mvnrepository.com/artifact/net.sf.jasperreports/jasperreports-fonts -->
 	<dependency>
-	    <groupId>org.openjfx</groupId>
-	    <artifactId>javafx-swing</artifactId>
-	    <version>18-ea+7</version>
+	    <groupId>net.sf.jasperreports</groupId>
+	    <artifactId>jasperreports-fonts</artifactId>
+	    <version>6.18.1</version>
 	</dependency>
 
   </dependencies>
@@ -97,6 +103,8 @@
 <!-- 	                <exclude>config/**</exclude> -->
 <!-- 	                <exclude>images/**</exclude> -->
 <!-- 	                <exclude>jreports/**</exclude> -->
+<!--					<exclude>fonts/**</exclude> -->
+<!--					<exclude>jasperreports_extension.properties</exclude> -->
 <!-- 	            </excludes> -->
 <!-- 	            <filtering>false</filtering> -->
 <!-- 	        </resource> -->
