@@ -22,7 +22,7 @@ public class ItemFactura {
 	@JoinColumn(name="FACTURA_ID", nullable=true)
     private Factura factura;
     
-    @Column(name="CONCEPTO", length=250, nullable=false, unique=true)
+    @Column(name="CONCEPTO", length=400, nullable=false, unique=true)
     private String concepto;
     
     @Column(name="IMPORTE", precision=8, scale=2, nullable=false, unique=false)

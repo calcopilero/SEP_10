@@ -53,6 +53,9 @@ public class ModuloUtilidades {
 	public final String RESOURCE_FXFORMS_DIR = "/jfxforms/";
 	public final String RESOURCE_IMAGES_DIR = "/images/";
 	
+	public final String NL_TEXT = "\n";
+	public final String NL_HTML = "<br>";
+	
 	@Autowired
 	ApplicationContext springContext;
 	

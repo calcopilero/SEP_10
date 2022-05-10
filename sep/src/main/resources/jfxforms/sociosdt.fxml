@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -22,16 +25,20 @@
       <Label fx:id="lbcojs" layoutX="805.0" layoutY="12.0" text="Ojs:" />
       <TextField fx:id="txojs" layoutX="805.0" layoutY="30.0" prefHeight="25.0" prefWidth="194.0" />
       <Label fx:id="lbnombre" layoutX="25.0" layoutY="61.0" text="Nombre:" />
+      <Label fx:id="lbnomlen" alignment="CENTER_RIGHT" layoutX="442.0" layoutY="61.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
       <TextField fx:id="txnombre" layoutX="25.0" layoutY="79.0" prefHeight="25.0" prefWidth="527.0" />
       <Label fx:id="lbapell" layoutX="568.0" layoutY="61.0" text="Apellidos:" />
+      <Label fx:id="lbapelen" alignment="CENTER_RIGHT" layoutX="754.0" layoutY="61.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
       <TextField fx:id="txapell" layoutX="568.0" layoutY="79.0" prefHeight="25.0" prefWidth="296.0" />
-      <Label fx:id="lbcifnif" layoutX="879.0" layoutY="61.0" text="CIF/NIF:" />
+      <Label fx:id="lbcifnif" layoutX="879.0" layoutY="61.0" text="NIF/VAT:" />
       <TextField fx:id="txcifnif" layoutX="879.0" layoutY="79.0" prefHeight="25.0" prefWidth="194.0" />
       <Label fx:id="lbdomic" layoutX="25.0" layoutY="111.0" text="Domicilio:" />
+      <Label fx:id="lbdomlen" alignment="CENTER_RIGHT" layoutX="264.0" layoutY="111.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
       <TextArea fx:id="txardomic" layoutX="25.0" layoutY="128.0" prefHeight="74.0" prefWidth="350.0" />
       <Label fx:id="lbcp" layoutX="390.0" layoutY="111.0" text="CP:" />
       <TextField fx:id="txcp" layoutX="390.0" layoutY="128.0" prefHeight="25.0" prefWidth="66.0" />
       <Label fx:id="lblocal" layoutX="488.0" layoutY="111.0" text="Localidad:" />
+      <Label fx:id="lblocalen" alignment="CENTER_RIGHT" layoutX="853.0" layoutY="111.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
       <TextField fx:id="txlocal" layoutX="487.0" layoutY="128.0" prefHeight="25.0" prefWidth="476.0" />
       <Label fx:id="lbprov" layoutX="391.0" layoutY="159.0" text="Provincia:" />      
       <ComboBox fx:id="cbprov" layoutX="391.0" layoutY="177.0" prefHeight="25.0" prefWidth="216.0" />
@@ -57,30 +64,58 @@
       <CheckBox fx:id="chldist" layoutX="462.0" layoutY="332.0" mnemonicParsing="false" text="Lista de distribución" />
       <Label fx:id="lbcifnif1" layoutX="629.0" layoutY="311.0" text="Marcador:" />
       <TextField fx:id="txmarc" layoutX="629.0" layoutY="328.0" prefHeight="25.0" prefWidth="156.0" />
-      <Label fx:id="lbfpago" layoutX="25.0" layoutY="362.0" text="Forma de pago:" />
-      <ComboBox fx:id="cbfpago" layoutX="25.0" layoutY="379.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbdbanc" layoutX="277.0" layoutY="362.0" text="Datos bancarios:" />
-      <TextField fx:id="txdbanc" layoutX="277.0" layoutY="379.0" prefHeight="25.0" prefWidth="304.0" />
-      <Label fx:id="lbdesc" layoutX="25.0" layoutY="412.0" text="Descuento:" />
-      <ComboBox fx:id="cbdesc" layoutX="24.0" layoutY="429.0" prefHeight="25.0" prefWidth="134.0" />
-      <Label fx:id="lbagencia" layoutX="590.0" layoutY="362.0" text="Agencia:" />
-      <ComboBox fx:id="cbagencia" layoutX="590.0" layoutY="379.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbref" layoutX="846.0" layoutY="362.0" text="Referencia:" />
-      <TextField fx:id="txref" layoutX="845.0" layoutY="379.0" prefHeight="25.0" prefWidth="194.0" />
-      <CheckBox fx:id="chfact" layoutX="179.0" layoutY="433.0" mnemonicParsing="false" text="Emitir factura" />
-      <CheckBox fx:id="chfirfact" layoutX="289.0" layoutY="433.0" mnemonicParsing="false" text="Firmar factura" />
-      <Label fx:id="lbdafact" layoutX="399.0" layoutY="412.0" text="Datos adicionales para facturación (Titular):" />
-      <TextArea fx:id="txardafact" layoutX="398.0" layoutY="429.0" prefHeight="52.0" prefWidth="558.0" />
-      <CheckBox fx:id="chbaja" layoutX="25.0" layoutY="510.0" mnemonicParsing="false" text="Baja" />
-      <Label fx:id="lbfbaja" layoutX="85.0" layoutY="489.0" text="Fecha de baja:" />
-      <DatePicker fx:id="dpfbaja" layoutX="85.0" layoutY="507.0" prefHeight="25.0" prefWidth="162.0" />
-      <Label fx:id="lbmbaja" layoutX="264.0" layoutY="489.0" text="Motivo de la baja:" />
-      <ComboBox fx:id="cbmbaja" layoutX="264.0" layoutY="507.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbcsep1" layoutX="26.0" layoutY="544.0" text="Cargos en Junta Directiva:" />
-      <TextField fx:id="txcjdir" layoutX="26.0" layoutY="561.0" prefHeight="25.0" prefWidth="350.0" />
-      <CheckBox fx:id="chjdiract" layoutX="397.0" layoutY="561.0" mnemonicParsing="false" text="Junta actual" />
-      <Label fx:id="lbanot" layoutX="515.0" layoutY="490.0" text="Anotaciones:" />
-      <TextArea fx:id="txaranot" layoutX="515.0" layoutY="507.0" prefHeight="91.0" prefWidth="558.0" />
+      <CheckBox fx:id="chbaja" layoutX="25.0" layoutY="381.0" mnemonicParsing="false" text="Baja" />
+      <Label fx:id="lbfbaja" layoutX="85.0" layoutY="360.0" text="Fecha de baja:" />
+      <DatePicker fx:id="dpfbaja" layoutX="85.0" layoutY="378.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label fx:id="lbmbaja" layoutX="264.0" layoutY="360.0" text="Motivo de la baja:" />
+      <ComboBox fx:id="cbmbaja" layoutX="264.0" layoutY="378.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbcsep1" layoutX="515.0" layoutY="360.0" text="Cargos en Junta Directiva:" />
+      <TextField fx:id="txcjdir" layoutX="515.0" layoutY="377.0" prefHeight="25.0" prefWidth="350.0" />
+      <TabPane fx:id="tpsoc" layoutX="20.0" layoutY="413.0" prefHeight="168.0" prefWidth="1043.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabdfact" closable="false" text="Datos de facturación">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="lbfpago" layoutX="20.0" layoutY="6.0" text="Forma de pago:" />
+                        <ComboBox fx:id="cbfpago" layoutX="19.0" layoutY="23.0" prefHeight="25.0" prefWidth="234.0" />
+                        <Label fx:id="lbdbanc" layoutX="274.0" layoutY="6.0" text="Datos bancarios:" />
+                        <TextField fx:id="txdbanc" layoutX="273.0" layoutY="23.0" prefHeight="25.0" prefWidth="304.0" />
+                        <Label fx:id="lbdesc" layoutX="19.0" layoutY="55.0" text="Descuento:" />
+                        <ComboBox fx:id="cbdesc" layoutX="18.0" layoutY="72.0" prefHeight="25.0" prefWidth="134.0" />
+                        <Label fx:id="lbagencia" layoutX="167.0" layoutY="55.0" text="Agencia:" />
+                        <ComboBox fx:id="cbagencia" layoutX="166.0" layoutY="72.0" prefHeight="25.0" prefWidth="234.0" />
+                        <Label fx:id="lbref" layoutX="413.0" layoutY="55.0" text="Referencia:" />
+                        <TextField fx:id="txref" layoutX="413.0" layoutY="72.0" prefHeight="25.0" prefWidth="194.0" />
+                        <Label fx:id="lbdafact" layoutX="624.0" layoutY="5.0" text="Datos adicionales para facturación (Titular):" />
+                        <Label fx:id="lbdafactlen" alignment="CENTER_RIGHT" layoutX="911.0" layoutY="5.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+                        <TextArea fx:id="txardafact" layoutX="623.0" layoutY="22.0" prefHeight="104.0" prefWidth="399.0" />
+                        <CheckBox fx:id="chfact" layoutX="20.0" layoutY="112.0" mnemonicParsing="false" text="Emitir factura" />
+                        <CheckBox fx:id="chfirfact" layoutX="126.0" layoutY="112.0" mnemonicParsing="false" text="Firmar factura" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabanot" closable="false" text="Anotaciones">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="lbanot" layoutX="14.0" layoutY="8.0" text="Anotaciones:" />
+                        <Label fx:id="lbanotlen" alignment="CENTER_RIGHT" layoutX="762.0" layoutY="7.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+                        <TextArea fx:id="txaranot" layoutX="13.0" layoutY="24.0" prefHeight="105.0" prefWidth="859.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+      </TabPane>
+      <CheckBox fx:id="chjdiract" layoutX="886.0" layoutY="377.0" mnemonicParsing="false" text="Junta actual" />
       <Label fx:id="lbultact_" layoutX="26.0" layoutY="603.0" text="Ultima actualización:" />
       <Label fx:id="lbultact" layoutX="141.0" layoutY="603.0" minWidth="103.0" prefHeight="17.0" prefWidth="120.0" />
       <Label fx:id="lbmsg1" layoutX="349.0" layoutY="611.0" minWidth="350.0" prefHeight="17.0" prefWidth="630.0" />

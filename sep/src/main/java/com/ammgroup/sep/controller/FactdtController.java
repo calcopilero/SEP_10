@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -47,6 +48,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -108,7 +110,15 @@ public class FactdtController implements Initializable {
 	private TextField txrefer;
 	
 	@FXML
+	private Label lbtitlen;
+	int maxtitchars = 350;
+	
+	@FXML
 	private TextArea tatitular;
+	
+	@FXML
+	private Label lbdirlen;
+	int maxdirchars = 350;
 	
 	@FXML
 	private TextArea tadirec;
@@ -120,10 +130,22 @@ public class FactdtController implements Initializable {
 	private TextField txmarc;
 	
 	@FXML
+	private Label lbtfpaglen;
+	int maxtfpagchars = 150;
+	
+	@FXML
 	private TextField txfpago;
 	
 	@FXML
+	private Label lbtcomplen;
+	int maxtcompchars = 350;
+	
+	@FXML
 	private TextArea tatcomp;
+	
+	@FXML
+	private Label lbconceplen;
+	int maxconcepchars = 400;
 
 	@FXML
 	private TextArea taconcep;
@@ -163,6 +185,10 @@ public class FactdtController implements Initializable {
 	
 	@FXML
 	private ComboBox<EstadoFactura> cbefact;
+	
+	@FXML
+	private Label lbanotlen;
+	int maxanotchars = 500;
 	
 	@FXML
 	private TextArea taanot;
@@ -457,7 +483,7 @@ public class FactdtController implements Initializable {
 	        	
 	        } else {
 	        	
-	        	lbmsg1.setText("No exisste ninguna serie para facturas rectificativas");
+	        	lbmsg1.setText("No existe ninguna serie para facturas rectificativas");
 	        	lbmsg2.setText("");
 	        }
         }
@@ -551,23 +577,101 @@ public class FactdtController implements Initializable {
 	    
 	    //Setting the maximum number of characters of TextField
 	    txrefer.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
-	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-	    txfpago.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
+	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(25));
+	    //txfpago.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
 	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 	    tximpitems.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
 	    txgenv.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
 	    
-	    //Setting the maximum number of characters of TextArea
-	    tatitular.setTextFormatter(new TextFormatter<String>(change -> 
-    		change.getControlNewText().length() <= 150 ? change : null));
-	    tadirec.setTextFormatter(new TextFormatter<String>(change -> 
-			change.getControlNewText().length() <= 250 ? change : null));
-	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
-	    	change.getControlNewText().length() <= 180 ? change : null));
-	    tatcomp.setTextFormatter(new TextFormatter<String>(change -> 
-			change.getControlNewText().length() <= 250 ? change : null));
-	    taanot.setTextFormatter(new TextFormatter<String>(change -> 
-			change.getControlNewText().length() <= 250 ? change : null));
+	    //Setting the maximum number of characters of TextArea (another way)
+//	    tatitular.setTextFormatter(new TextFormatter<String>(change -> 
+//    		change.getControlNewText().length() <= 250 ? change : null));
+//	    tadirec.setTextFormatter(new TextFormatter<String>(change -> 
+//			change.getControlNewText().length() <= 250 ? change : null));
+//	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
+//	    	change.getControlNewText().length() <= 180 ? change : null));
+//	    tatcomp.setTextFormatter(new TextFormatter<String>(change -> 
+//			change.getControlNewText().length() <= 300 ? change : null));
+//	    taanot.setTextFormatter(new TextFormatter<String>(change -> 
+//			change.getControlNewText().length() <= 250 ? change : null));
+	    
+		//To check direccion maximum number of chars and show the number of chars
+		UnaryOperator<Change> titFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxtitchars) {
+		    	
+				showTitularChars(change.getControlNewText().length(), maxtitchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		tatitular.setTextFormatter(new TextFormatter<String>(titFilter));
+		
+		//To check direccion maximum number of chars and show the number of chars
+		UnaryOperator<Change> dirFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxdirchars) {
+		    	
+				showDireccionChars(change.getControlNewText().length(), maxdirchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		tadirec.setTextFormatter(new TextFormatter<String>(dirFilter));
+	    
+		//To check direccion maximum number of chars and show the number of chars
+		UnaryOperator<Change> tfpagoFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxtfpagchars) {
+		    	
+				showFormaPagoChars(change.getControlNewText().length(), maxtfpagchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		txfpago.setTextFormatter(new TextFormatter<String>(tfpagoFilter));
+		
+		//To check texto complementario maximum number of chars and show the number of chars
+		UnaryOperator<Change> tcompFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxtcompchars) {
+		    	
+				showTextoComplementarioChars(change.getControlNewText().length(), maxtcompchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		tatcomp.setTextFormatter(new TextFormatter<String>(tcompFilter));
+		
+		//To check anotaciones maximum number of chars and show the number of chars
+		UnaryOperator<Change> anotFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxanotchars) {
+		    	
+				showTextoComplementarioChars(change.getControlNewText().length(), maxanotchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		taanot.setTextFormatter(new TextFormatter<String>(anotFilter));
+		
+		//To check concepto maximum number of chars and show the number of chars
+		UnaryOperator<Change> concepFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxconcepchars) {
+		    	
+				showConceptoChars(change.getControlNewText().length(), maxconcepchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		taconcep.setTextFormatter(new TextFormatter<String>(concepFilter));
 	    
 	    //Check the visible buttons
 	    //Facturas rectificadas and rectificativas can not be recalculated
@@ -735,6 +839,8 @@ public class FactdtController implements Initializable {
 				tatitular.setText("");
 			});
 		
+		showTitularChars(tatitular.getLength(), maxtitchars);
+			
 		optStr = Optional.ofNullable(factwrapper.fact.getDireccion());
 			optStr.ifPresentOrElse((y) -> {
 				tadirec.setText(y);
@@ -742,6 +848,8 @@ public class FactdtController implements Initializable {
 				tadirec.setText("");
 			});
 		
+		showDireccionChars(tadirec.getLength(), maxdirchars);
+			
 		optStr = Optional.ofNullable(factwrapper.fact.getTextoFormaPago());
 			optStr.ifPresentOrElse((y) -> {
 				txfpago.setText(y);
@@ -749,12 +857,16 @@ public class FactdtController implements Initializable {
 				txfpago.setText("");
 			});
 		
+		showFormaPagoChars(txfpago.getLength(), maxtfpagchars);
+			
 		optStr = Optional.ofNullable(factwrapper.fact.getTextoComplementario());
 			optStr.ifPresentOrElse((y) -> {
 				tatcomp.setText(y);
 			}, () -> {
 				tatcomp.setText("");
 			});
+			
+		showTextoComplementarioChars(tatcomp.getLength(), maxtcompchars);
 			
 		optStr = Optional.ofNullable(factwrapper.fact.getMarcador());
 			optStr.ifPresentOrElse((y) -> {
@@ -773,6 +885,8 @@ public class FactdtController implements Initializable {
 					taconcep.setText("");
 				});
 		}
+		
+		showConceptoChars(taconcep.getLength(), maxconcepchars);
 
 		fillImporteControls(factwrapper.fact);
 			
@@ -783,8 +897,10 @@ public class FactdtController implements Initializable {
 				taanot.setText("");
 			});
 			
+		showAnotacionesChars(taanot.getLength(), maxanotchars);
+		
 		Optional<FormaPago> optFpag = Optional.ofNullable(factwrapper.fact.getFormaPago());
-			optFpag.ifPresent((y) -> {
+		optFpag.ifPresent((y) -> {
 				cbfpago.getSelectionModel().select(mutils.searchIdInCombo(cbfpago, y));
 			});
 			
@@ -983,5 +1099,35 @@ public class FactdtController implements Initializable {
 		//color in text fields when disabled should be modified using a CSS file
 		//We can add a CSS file to a Scene in code or using Scenebuilder
 		
+	}
+	
+	private void showTextoComplementarioChars(int numchars, int maxchars) {
+		
+		lbtcomplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showAnotacionesChars(int numchars, int maxchars) {
+		
+		lbanotlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showConceptoChars(int numchars, int maxchars) {
+		
+		lbconceplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showTitularChars(int numchars, int maxchars) {
+		
+		lbtitlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showDireccionChars(int numchars, int maxchars) {
+		
+		lbdirlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showFormaPagoChars(int numchars, int maxchars) {
+		
+		lbtfpaglen.setText("(" + numchars + "/" + maxchars + " caracteres)");
 	}
 }

@@ -35,6 +35,12 @@ public class SEPPropertiesFile {
 	@Value( "${facturas.default.sort.direction}" )
 	private String facturasDefaultSortDirection;
 	
+	@Value( "${facturas.image.sep.filename}" )
+	private String facturasImageFilename;
+	
+	@Value( "${facturas.image.firma.filename}" )
+	private String facturasImageFirmaFilename;
+	
 	@Value( "${agencias.default.sort.field}" )
 	private String agenciasDefaultSortField;
 	
@@ -50,6 +56,9 @@ public class SEPPropertiesFile {
 	@Value( "${mainform.backcolor}" )
 	private String mainformBackcolor;
 	
+	@Value( "${sep.name}" )
+	private String name;
+	
 	@Value( "${sep.address}" )
 	private String address;
 	
@@ -61,6 +70,24 @@ public class SEPPropertiesFile {
 	
 	@Value( "${sep.web}" )
 	private String web;
+	
+	@Value( "${sep.nif}" )
+	private String nif;
+	
+	@Value( "${sep.image.filename}" )
+	private String sepImageFilename;
+	
+	@Value( "${sep.image.width}" )
+	private String imageWidth;
+	
+	@Value( "${sep.image.height}" )
+	private String imageHeight;
+	
+	@Value( "${sep.image.x}" )
+	private String imageX;
+	
+	@Value( "${sep.image.y}" )
+	private String imageY;
 	
 	public SEPPropertiesFile() {
 		super();
@@ -162,6 +189,14 @@ public class SEPPropertiesFile {
 		this.mainformBackcolor = mainformBackcolor;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getAddress() {
 		return address;
 	}
@@ -194,6 +229,38 @@ public class SEPPropertiesFile {
 		this.web = web;
 	}
 
+	public String getImageWidth() {
+		return imageWidth;
+	}
+
+	public void setImageWidth(String imageWidth) {
+		this.imageWidth = imageWidth;
+	}
+
+	public String getImageHeight() {
+		return imageHeight;
+	}
+
+	public void setImageHeight(String imageHeight) {
+		this.imageHeight = imageHeight;
+	}
+
+	public String getImageX() {
+		return imageX;
+	}
+
+	public void setImageX(String imageX) {
+		this.imageX = imageX;
+	}
+
+	public String getImageY() {
+		return imageY;
+	}
+
+	public void setImageY(String imageY) {
+		this.imageY = imageY;
+	}
+
 	public String getEmailFileLocation() {
 		return emailFileLocation;
 	}
@@ -208,5 +275,37 @@ public class SEPPropertiesFile {
 
 	public void setEmailSeparator(String emailSeparator) {
 		this.emailSeparator = emailSeparator;
+	}
+
+	public String getFacturasImageFilename() {
+		return facturasImageFilename;
+	}
+
+	public void setFacturasImageFilename(String facturasImageFilename) {
+		this.facturasImageFilename = facturasImageFilename;
+	}
+
+	public String getFacturasImageFirmaFilename() {
+		return facturasImageFirmaFilename;
+	}
+
+	public void setFacturasImageFirmaFilename(String facturasImageFirmaFilename) {
+		this.facturasImageFirmaFilename = facturasImageFirmaFilename;
+	}
+
+	public String getNif() {
+		return nif;
+	}
+
+	public void setNif(String nif) {
+		this.nif = nif;
+	}
+
+	public String getSepImageFilename() {
+		return sepImageFilename;
+	}
+
+	public void setSepImageFilename(String sepImageFilename) {
+		this.sepImageFilename = sepImageFilename;
 	}
 }

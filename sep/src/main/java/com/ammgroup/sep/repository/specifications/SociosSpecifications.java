@@ -17,6 +17,7 @@ import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.FormaPago;
 import com.ammgroup.sep.model.ModalidadSocio;
 import com.ammgroup.sep.model.ModoAcceso;
+import com.ammgroup.sep.model.MotivoBaja;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
 import com.ammgroup.sep.model.Socio;
@@ -390,6 +391,17 @@ public class SociosSpecifications {
 			}
 		}
 		
+		Optional<MotivoBaja> optMbaja = Optional.ofNullable(socfilter.getMotivoBaja());
+		optMbaja.ifPresent((x) -> {
+			
+			if (spwrapper.firstsp) {
+				spwrapper.spsoc = where(socioMotivoBajaIs(x));
+				spwrapper.firstsp = false;
+			} else {
+				spwrapper.spsoc = (spwrapper.spsoc).and(socioMotivoBajaIs(x));
+			}
+		});
+		
 		var listwrapper = new Object(){ List<Socio> itemslist; };
 		
 		Optional<Sort> sortOpt = Optional.ofNullable(mutils.getDefaultSociosSort());
@@ -563,5 +575,11 @@ public class SociosSpecifications {
 		
 		return (root, query, criteriaBuilder)
 				-> criteriaBuilder.between(root.get(Socio_.FECHA_BAJA), dtini, dtfin);
+	}
+	
+	private Specification<Socio> socioMotivoBajaIs(MotivoBaja mb) {
+
+		return (root, query, criteriaBuilder)
+				-> criteriaBuilder.equal(root.get(Socio_.MOTIVO_BAJA), mb);
 	}
 }

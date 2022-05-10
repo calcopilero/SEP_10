@@ -37,13 +37,13 @@ public class Socio {
 	@JoinColumn(name="MODSOCIO_ID", nullable=true)
     private ModalidadSocio modalidad;
 
-    @Column(name="NOMBRE", length=70, nullable=false, unique=false)
+    @Column(name="NOMBRE", length=150, nullable=false, unique=false)
     private String nombre;
     
     @Column(name="APELLIDOS", length=60, nullable=true, unique=false)
     private String apellidos;
 
-    @Column(name="CIFNIF", length=12, nullable=true, unique=false)
+    @Column(name="CIFNIF", length=25, nullable=true, unique=false)
     private String cifnif;
     
     @Column(name="DOMICILIO", length=100, nullable=true, unique=false)

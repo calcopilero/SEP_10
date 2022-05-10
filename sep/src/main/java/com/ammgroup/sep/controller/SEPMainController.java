@@ -71,7 +71,7 @@ public class SEPMainController implements Initializable {
 		
 		try {
 			
-			InputStream stream = new FileInputStream(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + "SEPHD.jpg");
+			InputStream stream = new FileInputStream(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + sepprop.getSepImageFilename());
 			//InputStream stream = new FileInputStream(sepprop.getImagesLocation() + "SEPHD.jpg");
 			//Another way to create an InputStream from resources location
 			//InputStream stream = this.getClass().getClassLoader().getResourceAsStream("SEPHD.jpg");
@@ -79,8 +79,10 @@ public class SEPMainController implements Initializable {
 			
 			imlogo.setImage(logo);
 			imlogo.setPreserveRatio(true);
-			imlogo.setFitHeight(600);
-			imlogo.setFitWidth(1050);
+			imlogo.setFitHeight(Integer.parseInt(sepprop.getImageHeight()));
+			imlogo.setFitWidth(Integer.parseInt(sepprop.getImageWidth()));
+			imlogo.setLayoutX(Integer.parseInt(sepprop.getImageX()));
+			imlogo.setLayoutY(Integer.parseInt(sepprop.getImageY()));
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

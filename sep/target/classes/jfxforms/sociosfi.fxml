@@ -57,10 +57,12 @@
       <CheckBox fx:id="chjdiract" layoutX="382.0" layoutY="433.0" mnemonicParsing="false" text="Junta actual" />
       <Label fx:id="lbanot_" layoutX="479.0" layoutY="414.0" text="Anotaciones:" />
       <TextField fx:id="txanot" layoutX="479.0" layoutY="431.0" prefHeight="25.0" prefWidth="549.0" />
-      <Label fx:id="lbfbajaini_" layoutX="20.0" layoutY="469.0" text="Fecha de baja (inicial):" />
+      <Label fx:id="lbfbajaini_" layoutX="20.0" layoutY="471.0" text="Fecha de baja (inicial):" />
       <DatePicker fx:id="dpfbajaini" layoutX="20.0" layoutY="488.0" prefHeight="25.0" prefWidth="162.0" />
-      <Label fx:id="lbfbajaini_" layoutX="195.0" layoutY="469.0" text="Fecha de baja (final):" />
+      <Label fx:id="lbfbajaini_" layoutX="195.0" layoutY="471.0" text="Fecha de baja (final):" />
       <DatePicker fx:id="dpfbajafin" layoutX="195.0" layoutY="488.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label fx:id="lbmbaja" layoutX="377.0" layoutY="471.0" text="Motivo de la baja:" />
+      <ComboBox fx:id="cbmbaja" layoutX="376.0" layoutY="488.0" prefHeight="25.0" prefWidth="234.0" />
       <Label fx:id="lbmsg1" layoutX="20.0" layoutY="528.0" minWidth="350.0" prefHeight="17.0" prefWidth="725.0" />
       <Label fx:id="lbmsg2" layoutX="20.0" layoutY="557.0" minWidth="350.0" prefHeight="17.0" prefWidth="725.0" />
       <Button fx:id="bfilter" layoutX="20.0" layoutY="586.0" mnemonicParsing="false" onAction="#bfilterOnAction" prefHeight="25.0" prefWidth="75.0" text="Filtrar" AnchorPane.leftAnchor="20.0" />

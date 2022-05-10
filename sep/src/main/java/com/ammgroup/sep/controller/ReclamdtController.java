@@ -330,18 +330,28 @@ public class ReclamdtController implements Initializable {
 				Optional<Date> optDate = Optional.ofNullable(x.getFechaReclamacion());
 					optDate.ifPresent((y) -> dpfrecl.setValue(mutils.obtainLocalDate(y)));
 			
-		    	Optional<Agencia> ageOpt = Optional.ofNullable(reclamCrud.getDao().getAgencia());
+		    	Optional<Agencia> ageOpt = Optional.ofNullable(x.getAgencia());
 		    		ageOpt.ifPresent((y) -> cbagen.getSelectionModel().select(mutils.searchIdInCombo(cbagen, y)));
 
-		    	tareccom.setText(reclamCrud.getDao().getReclamacionComentario());
+				Optional<String> optStr = Optional.ofNullable(x.getReclamacionComentario());
+					optStr.ifPresentOrElse((y) -> {
+						tareccom.setText(y);
+					}, () -> {
+						tareccom.setText("");
+					});
 		    	
 				optDate = Optional.ofNullable(x.getFechaRespuesta());
 					optDate.ifPresent((y) -> dpfresp.setValue(mutils.obtainLocalDate(y)));
 		    	
-		    	Optional<EstadoReclamacion> erecOpt = Optional.ofNullable(reclamCrud.getDao().getEstadoReclamacion());
+		    	Optional<EstadoReclamacion> erecOpt = Optional.ofNullable(x.getEstadoReclamacion());
 		    		erecOpt.ifPresent((y) -> cbestrec.getSelectionModel().select(mutils.searchIdInCombo(cbestrec, y)));
 				
-		    	taanot.setText(reclamCrud.getDao().getAnotaciones());
+				optStr = Optional.ofNullable(x.getAnotaciones());
+					optStr.ifPresentOrElse((y) -> {
+						taanot.setText(y);
+					}, () -> {
+						taanot.setText("");
+					});
 				
 			});
 		

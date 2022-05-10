@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -48,6 +49,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -118,6 +120,10 @@ public class HfactController implements Initializable {
     private TextField txrefer;
 	
 	@FXML
+	private Label lbconceplen;
+	int maxconcepchars = 400;
+    
+	@FXML
 	private Label lbtaconcep;
 	
 	@FXML
@@ -161,6 +167,10 @@ public class HfactController implements Initializable {
     
 	@FXML
 	private Label lbdafact_;
+	
+	@FXML
+	private Label lbdafactlen;
+	int maxdafactchars = 200;
 	
 	@FXML
 	private TextArea txardafact;
@@ -387,11 +397,37 @@ public class HfactController implements Initializable {
 	    tximpitems.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
 	    txgenv.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
 	    
-	    //Setting the maximum number of characters of TextArea
-	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
-    		change.getControlNewText().length() <= 250 ? change : null));
-	    txardafact.setTextFormatter(new TextFormatter<String>(change -> 
-	    	change.getControlNewText().length() <= 200 ? change : null)); 
+		//To check concepto maximum number of chars and show the number of chars
+		UnaryOperator<Change> concepFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxconcepchars) {
+		    	
+				showConceptoChars(change.getControlNewText().length(), maxconcepchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		taconcep.setTextFormatter(new TextFormatter<String>(concepFilter));
+		
+		//To check datos auxiliares facturacion maximum number of chars and show the number of chars
+		UnaryOperator<Change> dafactFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxdafactchars) {
+		    	
+				showDatosAuxiliaresChars(change.getControlNewText().length(), maxdafactchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		txardafact.setTextFormatter(new TextFormatter<String>(dafactFilter));
+		
+	    //Setting the maximum number of characters of TextArea (another way)
+//	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
+//    		change.getControlNewText().length() <= 250 ? change : null));
+//	    txardafact.setTextFormatter(new TextFormatter<String>(change -> 
+//	    	change.getControlNewText().length() <= 200 ? change : null)); 
 	    
 		Optional<Socio> socOpt = Optional.ofNullable(socrud.getDao());
 			socOpt.ifPresent((x) -> {
@@ -539,7 +575,7 @@ public class HfactController implements Initializable {
 						strOpt.ifPresent((z) -> tfwrapper.tcifnif = z);
 						
 	    			strOpt = Optional.ofNullable(y.getDomicilio());
-    					strOpt.ifPresent((z) -> tfwrapper.tdireccion = (z + "\n"));
+    					strOpt.ifPresent((z) -> tfwrapper.tdireccion = (z + mutils.NL_TEXT));
             		strOpt = Optional.ofNullable(y.getCp());
             			strOpt.ifPresent((z) -> tfwrapper.tdireccion += z);
                 	strOpt = Optional.ofNullable(y.getLocalidad());
@@ -548,7 +584,7 @@ public class HfactController implements Initializable {
                 	Optional<Provincia> prvOpt = Optional.ofNullable(y.getProvincia());
                 		prvOpt.ifPresent((z) -> { 
                 			Optional<String> stOpt = Optional.ofNullable(z.getDescripcion());
-                				stOpt.ifPresent((w) -> tfwrapper.tdireccion += (" (" + w + ")\n"));
+                				stOpt.ifPresent((w) -> tfwrapper.tdireccion += (" (" + w + ")" + mutils.NL_TEXT));
                 		});
                 		
                 	Optional<Pais> paisOpt = Optional.ofNullable(y.getPais());
@@ -561,7 +597,7 @@ public class HfactController implements Initializable {
                 	Optional<String> strPara = Optional.ofNullable(fdatawrapper.sfact.getTextoPara());
     					strPara.ifPresentOrElse((z) -> {
     						
-    						if (z.length() > 0) tfwrapper.tcomp = z + "\n";
+    						if (z.length() > 0) tfwrapper.tcomp = z + mutils.NL_TEXT;
     						
     					} , () -> {
    						
@@ -573,7 +609,7 @@ public class HfactController implements Initializable {
 	    	            			Optional<String> strParam = Optional.ofNullable(w.getTextoPara());
 	    	        					strParam.ifPresent((v) -> { 
 	    	        						
-	    	        						if (v.length() > 0) tfwrapper.tcomp = v + "\n";
+	    	        						if (v.length() > 0) tfwrapper.tcomp = v + mutils.NL_TEXT;
 	    	        						
 	    	        					});
     	        				});
@@ -583,9 +619,9 @@ public class HfactController implements Initializable {
     				strOpt = Optional.ofNullable(x.getNombre());
     					strOpt.ifPresent((z) ->  tfwrapper.tcomp +=  z);
        				strOpt = Optional.ofNullable(x.getApellidos());
-    					strOpt.ifPresent((z) ->  tfwrapper.tcomp +=  " " + z + "\n");
+    					strOpt.ifPresent((z) ->  tfwrapper.tcomp +=  " " + z + mutils.NL_TEXT);
         			strOpt = Optional.ofNullable(x.getDomicilio());
-    					strOpt.ifPresent((z) ->  tfwrapper.tcomp +=  z + "\n");
+    					strOpt.ifPresent((z) ->  tfwrapper.tcomp +=  z + mutils.NL_TEXT);
             		strOpt = Optional.ofNullable(x.getCp());
         				strOpt.ifPresent((z) ->  tfwrapper.tcomp +=  z);
                 	strOpt = Optional.ofNullable(x.getLocalidad());
@@ -594,7 +630,7 @@ public class HfactController implements Initializable {
             		prvOpt = Optional.ofNullable(x.getProvincia());
                 		prvOpt.ifPresent((z) -> { 
                 			Optional<String> stOpt = Optional.ofNullable(z.getDescripcion());
-                				stOpt.ifPresent((w) -> tfwrapper.tcomp += (" (" + w + ")\n"));
+                				stOpt.ifPresent((w) -> tfwrapper.tcomp += (" (" + w + ")" + mutils.NL_TEXT));
                 		});
                 		
                 	paisOpt = Optional.ofNullable(x.getPais());
@@ -613,17 +649,17 @@ public class HfactController implements Initializable {
 					//wich only happend in facturacion manual 
 					strOpt = Optional.ofNullable(dafact);
 						strOpt.ifPresentOrElse((y) -> {
-									tfwrapper.ttitular += ("\n" + y);
+									tfwrapper.ttitular += (mutils.NL_TEXT + y);
 								}, () -> {
 									Optional<String> dafOpt = Optional.ofNullable(x.getDatosAdicionalesFactura());
-										dafOpt.ifPresent((z) -> tfwrapper.ttitular += ("\n" + z));
+										dafOpt.ifPresent((z) -> tfwrapper.ttitular += (mutils.NL_TEXT + z));
 								});
 
 					strOpt = Optional.ofNullable(x.getCifnif());
 						strOpt.ifPresent((y) -> tfwrapper.tcifnif = y);
 						
 	    			strOpt = Optional.ofNullable(x.getDomicilio());
-						strOpt.ifPresent((y) -> tfwrapper.tdireccion += (y + "\n"));
+						strOpt.ifPresent((y) -> tfwrapper.tdireccion += (y + mutils.NL_TEXT));
 	        		strOpt = Optional.ofNullable(x.getCp());
 	        			strOpt.ifPresent((y) -> tfwrapper.tdireccion += y);
 	            	strOpt = Optional.ofNullable(x.getLocalidad());
@@ -632,7 +668,7 @@ public class HfactController implements Initializable {
 	            	Optional<Provincia> prvOpt = Optional.ofNullable(x.getProvincia());
 	            		prvOpt.ifPresent((y) -> { 
 	            			Optional<String> stOpt = Optional.ofNullable(y.getDescripcion());
-	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += (" (" + z + ")\n"));
+	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += (" (" + z + ")" + mutils.NL_TEXT));
 	            		});
 	            	Optional<Pais> paisOpt = Optional.ofNullable(x.getPais());
 	            		paisOpt.ifPresent((y) -> { 
@@ -640,10 +676,19 @@ public class HfactController implements Initializable {
 	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += z);
 	            		});
     			});
-    			
+
+    		//Truncate the titular to 250 chars (with long text is not needed)
+    		//if (tfwrapper.ttitular.length() > 250) tfwrapper.ttitular = tfwrapper.ttitular.substring(0, 249);
 			fact.setTitular(tfwrapper.ttitular);
+
 			fact.setCifnif(tfwrapper.tcifnif);
+			
+        	//Truncate the direccion to 250 chars (with long text is not needed)
+        	//if (tfwrapper.tdireccion.length() > 250) tfwrapper.tdireccion = tfwrapper.tdireccion.substring(0, 249);
         	fact.setDireccion(tfwrapper.tdireccion);
+        	
+        	//Truncate the texto complementario to 250 chars (with long text is not needed)
+        	//if (tfwrapper.tcomp.length() > 250) tfwrapper.tcomp = tfwrapper.tcomp.substring(0, 249);
         	fact.setTextoComplementario(tfwrapper.tcomp);
 			
         	Optional<String> strPcon = Optional.ofNullable(pconcep);
@@ -683,8 +728,11 @@ public class HfactController implements Initializable {
                 			});
         			}
         		});
-        	
+
+            //Truncate the concepto to 250 chars (with long text is not needed)
+            //if (fdatawrapper.concep.length() > 250) fdatawrapper.concep = fdatawrapper.concep.substring(0, 249);
     		itfact.setConcepto(fdatawrapper.concep);
+    		
     		itfact.setImporte(fdatawrapper.impitems);
 	    	itfact.setFactura(fact);
 	    	
@@ -787,5 +835,15 @@ public class HfactController implements Initializable {
 				}
 			}
 		});
+	}
+	
+	private void showConceptoChars(int numchars, int maxchars) {
+		
+		lbconceplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showDatosAuxiliaresChars(int numchars, int maxchars) {
+		
+		lbdafactlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
 	}
 }

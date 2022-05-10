@@ -26,7 +26,7 @@ public class Agencia {
     @Column(name="NOMBRE", length=95, nullable=false, unique=false)
     private String nombre;
     
-    @Column(name="CIFNIF", length=12, nullable=false, unique=true)
+    @Column(name="CIFNIF", length=25, nullable=false, unique=true)
     private String cifnif;
     
     @Column(name="DOMICILIO", length=100, nullable=true, unique=false)
@@ -59,7 +59,7 @@ public class Agencia {
     @Column(name="PERSONA_CONTACTO", length=70, nullable=true, unique=false)
     private String personaContacto;
     
-    @Column(name="ANOTACIONES", length=250, nullable=true, unique=false)
+    @Column(name="ANOTACIONES", length=500, nullable=true, unique=false)
     private String anotaciones;
 
     @OneToMany(targetEntity=Socio.class, mappedBy="agencia", fetch=FetchType.LAZY, cascade=CascadeType.ALL)

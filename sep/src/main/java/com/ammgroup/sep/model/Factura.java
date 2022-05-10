@@ -62,13 +62,13 @@ public class Factura {
 	@JoinColumn(name="AGENCIA_ID", nullable=true)
     private Agencia agencia;
     
-    @Column(name="CIFNIF", length=12, nullable=false, unique=true)
+    @Column(name="CIFNIF", length=25, nullable=false, unique=true)
     private String cifnif;
     
-    @Column(name="TITULAR", length=150, nullable=false, unique=false)
+    @Column(name="TITULAR", length=350, nullable=false, unique=false)
     private String titular;
     
-    @Column(name="DIRECCION", length=250, nullable=false, unique=false)
+    @Column(name="DIRECCION", length=350, nullable=false, unique=false)
     private String direccion;
     
     @OneToMany(targetEntity=ItemFactura.class, mappedBy="factura", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
@@ -127,7 +127,7 @@ public class Factura {
     @Column(name="TEXTO_MARCADOR", length=30, nullable=true, unique=false)
     private String marcador;
     
-    @Column(name="TEXTO_COMPLEMENTARIO", length=250, nullable=true, unique=true)
+    @Column(name="TEXTO_COMPLEMENTARIO", length=350, nullable=true, unique=true)
     private String textoComplementario;
     
     @Column(name="TEXTO_FORMA_PAGO", length=150, nullable=false, unique=true)
@@ -139,7 +139,7 @@ public class Factura {
     @Column(name="TEXTO_RECTIFICATIVA", length=85, nullable=true, unique=true)
     private String textoRectificativa;
     
-    @Column(name="ANOTACIONES", length=250, nullable=false, unique=false)
+    @Column(name="ANOTACIONES", length=500, nullable=false, unique=false)
     private String anotaciones;
     
 	public Factura() {

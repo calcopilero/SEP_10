@@ -45,7 +45,7 @@
       </MenuBar>
       <AnchorPane prefHeight="380.0" prefWidth="600.0">
          <children>
-            <ImageView fx:id="imlogo" fitHeight="283.0" fitWidth="374.0" layoutX="114.0" layoutY="102.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imlogo" fitHeight="283.0" fitWidth="374.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../../../../../DATA/images/SEPHD.jpg" />
                </image>

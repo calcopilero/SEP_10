@@ -15,6 +15,7 @@ import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.FormaPago;
 import com.ammgroup.sep.model.ModalidadSocio;
 import com.ammgroup.sep.model.ModoAcceso;
+import com.ammgroup.sep.model.MotivoBaja;
 import com.ammgroup.sep.model.Pais;
 import com.ammgroup.sep.model.Provincia;
 import com.ammgroup.sep.model.ZonaPostal;
@@ -22,6 +23,7 @@ import com.ammgroup.sep.repository.AgenciaRepository;
 import com.ammgroup.sep.repository.FormaPagoRepository;
 import com.ammgroup.sep.repository.ModalidadSocioRepository;
 import com.ammgroup.sep.repository.ModoAccesoRepository;
+import com.ammgroup.sep.repository.MotivoBajaRepository;
 import com.ammgroup.sep.repository.PaisRepository;
 import com.ammgroup.sep.repository.ProvinciaRepository;
 import com.ammgroup.sep.repository.ZonaPostalRepository;
@@ -70,6 +72,9 @@ public class SociosfiController implements Initializable {
 	
 	@Autowired
 	FormaPagoRepository fpagoRepository;
+	
+	@Autowired
+	MotivoBajaRepository mbajaRepository;
 	
 	@FXML
 	private DatePicker dpfaltai;
@@ -156,6 +161,9 @@ public class SociosfiController implements Initializable {
 	private DatePicker dpfbajafin;
 	
 	@FXML
+	private ComboBox<MotivoBaja> cbmbaja;
+	
+	@FXML
 	private Label lbmsg1;
 	
 	@FXML
@@ -188,10 +196,12 @@ public class SociosfiController implements Initializable {
 		cbmacc.getItems().add(null);
 		cbfpago.setItems(FXCollections.observableList(fpagoRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbfpago.getItems().add(null);
+		cbmbaja.setItems(FXCollections.observableList(mbajaRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
+		cbmbaja.getItems().add(null);
 		
 	    //Setting the maximum number of characters of TextField
-		txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-		txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+		txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(25));
+		txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
 		txapell.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
 		txlocal.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
 		txtelefono.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
@@ -253,6 +263,9 @@ public class SociosfiController implements Initializable {
 					optDate.ifPresent((y) -> dpfbajaini.setValue(mutils.obtainLocalDate(y)));
 				optDate = Optional.ofNullable(x.getFechaBajaFinal());
 					optDate.ifPresent((y) -> dpfbajafin.setValue(mutils.obtainLocalDate(y)));
+				Optional<MotivoBaja> optMbaja = Optional.ofNullable(socfilter.getMotivoBaja());
+					optMbaja.ifPresent((y) -> { cbmbaja.getSelectionModel().select(mutils.searchIdInCombo(cbmbaja, y)); });
+
 			}
 			
 		});
@@ -335,6 +348,7 @@ public class SociosfiController implements Initializable {
 		chjdiract.setSelected(false);
 		dpfbajaini.setValue(null);
 		dpfbajafin.setValue(null);
+		cbmbaja.getSelectionModel().clearSelection();
 
 		//Shove filters into filter object
 		fillFilterObjetct(socfilter);
@@ -433,6 +447,8 @@ public class SociosfiController implements Initializable {
 					}, () -> {
 						x.setFechaBajaFinal(null);
 					});
+					
+				x.setMotivoBaja(cbmbaja.getValue());
 			});
 	}
 	

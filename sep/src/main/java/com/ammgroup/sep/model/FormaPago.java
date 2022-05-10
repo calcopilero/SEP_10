@@ -24,7 +24,7 @@ public class FormaPago {
     @Column(name="DESCRIPCION", length=60, nullable=false, unique=true)
     private String descripcion;
     
-    @Column(name="TEXTO_FACTURA", length=70, nullable=false, unique=true)
+    @Column(name="TEXTO_FACTURA", length=150, nullable=false, unique=true)
     private String textoFactura;
     
     @OneToMany(targetEntity=Socio.class, mappedBy="formaPago", fetch=FetchType.LAZY, cascade=CascadeType.ALL)

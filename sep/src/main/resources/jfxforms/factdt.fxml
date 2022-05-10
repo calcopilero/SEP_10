@@ -5,87 +5,116 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="594.0" prefWidth="859.0" stylesheets="@sep.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.FactdtController">
+<AnchorPane prefHeight="649.0" prefWidth="859.0" stylesheets="@sep.css" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.FactdtController">
    <children>
       <Label fx:id="lbnfact_" layoutX="22.0" layoutY="13.0" text="Número de factura:" />
-      <Label fx:id="lbnfact" layoutX="136.0" layoutY="13.0" prefHeight="17.0" prefWidth="138.0" />
-      <Label fx:id="lbserie_" layoutX="286.0" layoutY="13.0" text="Serie:" />
-      <Label fx:id="lbserie" layoutX="324.0" layoutY="13.0" prefHeight="17.0" prefWidth="138.0" />
-      <Label fx:id="lbfrect_" layoutX="22.0" layoutY="43.0" text="Rectifica factura:" />
-      <Label fx:id="lbfrect" layoutX="136.0" layoutY="43.0" prefHeight="17.0" prefWidth="130.0" />
-      <Label fx:id="lbesrect" layoutX="274.0" layoutY="43.0" prefHeight="17.0" prefWidth="205.0" />
-      <Label fx:id="lbffact_" layoutX="22.0" layoutY="71.0" text="Fecha de factura:" />
-      <DatePicker fx:id="dpffact" layoutX="135.0" layoutY="67.0" prefHeight="25.0" prefWidth="162.0" />
-      <CheckBox fx:id="chffirm" layoutX="324.0" layoutY="71.0" mnemonicParsing="false" text="Factura firmada" />
-      <Label fx:id="lbcsoc_" layoutX="23.0" layoutY="99.0" text="Cód Socio:" />
-      <Label fx:id="lbcsoc" layoutX="86.0" layoutY="99.0" prefHeight="17.0" prefWidth="75.0" />
-      <Label fx:id="lbagenc_" layoutX="167.0" layoutY="99.0" text="Agencia:" />
-      <Label fx:id="lbagenc" layoutX="228.0" layoutY="99.0" prefHeight="17.0" prefWidth="234.0" />
-      <Label fx:id="lbrefer_" layoutX="167.0" layoutY="128.0" text="Referencia:" />
-      <TextField fx:id="txrefer" layoutX="230.0" layoutY="124.0" prefHeight="25.0" prefWidth="234.0" />
-      <Label fx:id="lbtitular_" layoutX="24.0" layoutY="160.0" text="Titular:" />
-      <TextArea fx:id="tatitular" layoutX="84.0" layoutY="156.0" prefHeight="55.0" prefWidth="379.0" />
-      <Label fx:id="lbdirec_" layoutX="22.0" layoutY="225.0" text="Dirección:" />
-      <TextArea fx:id="tadirec" layoutX="84.0" layoutY="218.0" prefHeight="74.0" prefWidth="379.0" />
-      <Label fx:id="lbcifnif_" layoutX="23.0" layoutY="303.0" text="CIF/NIF:" />
-      <TextField fx:id="txcifnif" layoutX="84.0" layoutY="299.0" prefHeight="25.0" prefWidth="144.0" />
-      <Label fx:id="lbmarc_" layoutX="243.0" layoutY="303.0" text="Marcador:" />
-      <TextField fx:id="txmarc" layoutX="305.0" layoutY="299.0" prefHeight="25.0" prefWidth="156.0" />
-      <Label fx:id="lbtfpago_" layoutX="23.0" layoutY="331.0" text="Texto de forma de pago:" />
-      <TextField fx:id="txfpago" layoutX="20.0" layoutY="351.0" prefHeight="25.0" prefWidth="445.0" />
-      <Label fx:id="lbtcomp_" layoutX="23.0" layoutY="383.0" text="Texto complementario" />
-      <TextArea fx:id="tatcomp" layoutX="21.0" layoutY="401.0" prefHeight="90.0" prefWidth="445.0" />
-      <Label fx:id="lbconcep_" layoutX="498.0" layoutY="13.0" text="Concepto:" />
-      <TextArea fx:id="taconcep" layoutX="498.0" layoutY="31.0" prefHeight="74.0" prefWidth="350.0" />
-      <Label fx:id="lbimpitems_" layoutX="498.0" layoutY="115.0" text="Importe:" />
-      <TextField fx:id="tximpitems" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="111.0" prefHeight="25.0" prefWidth="138.0" />
-      <Label fx:id="lbdesc_" layoutX="498.0" layoutY="144.0" text="Descuento:" />
-      <ComboBox fx:id="cbdesc" layoutX="498.0" layoutY="163.0" onAction="#cbdescOnAction" prefHeight="25.0" prefWidth="130.0" stylesheets="@sep.css" />
-      <Label fx:id="lbporcdesc_" layoutX="641.0" layoutY="144.0" text="(Porcent.)" />
-      <Label fx:id="lbporcdesc" alignment="CENTER_RIGHT" layoutX="641.0" layoutY="167.0" prefHeight="17.0" prefWidth="51.0" />
-      <Label fx:id="lbdesc" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="167.0" prefHeight="17.0" prefWidth="131.0" />
-      <Label fx:id="lbagencia11212" layoutX="498.0" layoutY="199.0" text="Base imponible:" />
-      <Label fx:id="lbbimp" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="199.0" prefHeight="17.0" prefWidth="131.0" />
-      <Label fx:id="lbtiva_" layoutX="498.0" layoutY="222.0" text="IVA" />
-      <ComboBox fx:id="cbtiva" layoutX="498.0" layoutY="241.0" onAction="#cbtivaOnAction" prefHeight="25.0" prefWidth="130.0" stylesheets="@sep.css" />
-      <Label fx:id="lbporciva_" layoutX="641.0" layoutY="222.0" text="(Porcent.)" />
-      <Label fx:id="lbporciva" alignment="CENTER_RIGHT" layoutX="641.0" layoutY="245.0" prefHeight="17.0" prefWidth="51.0" />
-      <Label fx:id="lbiva" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="244.0" prefHeight="17.0" prefWidth="131.0" />
-      <Label fx:id="lbgenv_" layoutX="498.0" layoutY="280.0" text="Gastos de envío:" />
-      <TextField fx:id="txgenv" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="276.0" prefHeight="25.0" prefWidth="138.0" />
-      <Label fx:id="lbtfact_" layoutX="498.0" layoutY="311.0" text="TOTAL FACTURA:">
+      <Label fx:id="lbnfact" layoutX="131.0" layoutY="13.0" prefHeight="17.0" prefWidth="138.0" />
+      <Label fx:id="lbserie_" layoutX="284.0" layoutY="13.0" text="Serie:" />
+      <Label fx:id="lbserie" layoutX="319.0" layoutY="13.0" prefHeight="17.0" prefWidth="138.0" />
+      <Label fx:id="lbfrect_" layoutX="467.0" layoutY="13.0" text="Rectifica factura:" />
+      <Label fx:id="lbfrect" layoutX="566.0" layoutY="13.0" prefHeight="17.0" prefWidth="130.0" />
+      <Label fx:id="lbesrect" layoutX="708.0" layoutY="13.0" prefHeight="17.0" prefWidth="138.0" />
+      <Label fx:id="lbcsoc_" layoutX="22.0" layoutY="39.0" text="Cód Socio:" />
+      <Label fx:id="lbcsoc" layoutX="86.0" layoutY="39.0" prefHeight="17.0" prefWidth="75.0" />
+      <Label fx:id="lbagenc_" layoutX="167.0" layoutY="39.0" text="Agencia:" />
+      <Label fx:id="lbagenc" layoutX="228.0" layoutY="39.0" prefHeight="17.0" prefWidth="234.0" />
+      <Label fx:id="lbrefer_" layoutX="467.0" layoutY="39.0" text="Referencia:" />
+      <TextField fx:id="txrefer" layoutX="530.0" layoutY="35.0" prefHeight="25.0" prefWidth="234.0" />
+      <Label fx:id="lbffact_" layoutX="22.0" layoutY="78.0" text="Fecha de factura:" />
+      <DatePicker fx:id="dpffact" layoutX="22.0" layoutY="95.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label fx:id="lbtitular_" layoutX="22.0" layoutY="125.0" text="Titular:" />
+      <Label fx:id="lbtitlen" alignment="CENTER_RIGHT" layoutX="356.0" layoutY="125.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+      <TextArea fx:id="tatitular" layoutX="22.0" layoutY="142.0" prefHeight="85.0" prefWidth="445.0" />
+      <Label fx:id="lbdirec_" layoutX="22.0" layoutY="236.0" text="Dirección:" />
+      <Label fx:id="lbdirlen" alignment="CENTER_RIGHT" layoutX="356.0" layoutY="236.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+      <TextArea fx:id="tadirec" layoutX="22.0" layoutY="253.0" prefHeight="93.0" prefWidth="445.0" />
+      <TabPane fx:id="tpfact" layoutX="21.0" layoutY="355.0" prefHeight="207.0" prefWidth="445.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab fx:id="tabtfact" text="Textos en factura">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="lbtfpago_" layoutX="7.0" layoutY="8.0" text="Texto de forma de pago:" />
+                        <Label fx:id="lbtfpaglen" alignment="CENTER_RIGHT" layoutX="325.0" layoutY="8.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+                        <TextField fx:id="txfpago" layoutX="7.0" layoutY="25.0" prefHeight="25.0" prefWidth="428.0" />
+                        <Label fx:id="lbtcomp_" layoutX="7.0" layoutY="56.0" text="Texto complementario" />
+                        <Label fx:id="lbtcomplen" alignment="CENTER_RIGHT" layoutX="325.0" layoutY="56.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+                        <TextArea fx:id="tatcomp" layoutX="7.0" layoutY="73.0" prefHeight="90.0" prefWidth="428.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab fx:id="tabanot" text="Anotaciones">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="lbanot_" layoutX="7.0" layoutY="6.0" text="Anotaciones:" />
+                        <Label fx:id="lbanotlen" alignment="CENTER_RIGHT" layoutX="323.0" layoutY="6.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+                        <TextArea fx:id="taanot" layoutX="7.0" layoutY="23.0" prefHeight="142.0" prefWidth="425.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+        </tabs>
+      </TabPane>
+      <Label fx:id="lbcifnif_" layoutX="205.0" layoutY="78.0" text="NIF/VAT:" />
+      <TextField fx:id="txcifnif" layoutX="205.0" layoutY="95.0" prefHeight="25.0" prefWidth="187.0" />
+      <Label fx:id="lbconcep_" layoutX="498.0" layoutY="78.0" text="Concepto:" />
+      <Label fx:id="lbconceplen" alignment="CENTER_RIGHT" layoutX="739.0" layoutY="78.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
+      <TextArea fx:id="taconcep" layoutX="498.0" layoutY="95.0" prefHeight="115.0" prefWidth="350.0" />
+      <Label fx:id="lbimpitems_" layoutX="498.0" layoutY="223.0" text="Importe:" />
+      <TextField fx:id="tximpitems" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="219.0" prefHeight="25.0" prefWidth="138.0" />
+      <Label fx:id="lbdesc_" layoutX="498.0" layoutY="252.0" text="Descuento:" />
+      <ComboBox fx:id="cbdesc" layoutX="498.0" layoutY="271.0" onAction="#cbdescOnAction" prefHeight="25.0" prefWidth="130.0" stylesheets="@sep.css" />
+      <Label fx:id="lbporcdesc_" layoutX="641.0" layoutY="252.0" text="(Porcent.)" />
+      <Label fx:id="lbporcdesc" alignment="CENTER_RIGHT" layoutX="641.0" layoutY="275.0" prefHeight="17.0" prefWidth="51.0" />
+      <Label fx:id="lbdesc" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="275.0" prefHeight="17.0" prefWidth="131.0" />
+      <Label fx:id="lbagencia11212" layoutX="498.0" layoutY="307.0" text="Base imponible:" />
+      <Label fx:id="lbbimp" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="307.0" prefHeight="17.0" prefWidth="131.0" />
+      <Label fx:id="lbtiva_" layoutX="498.0" layoutY="330.0" text="IVA" />
+      <ComboBox fx:id="cbtiva" layoutX="498.0" layoutY="349.0" onAction="#cbtivaOnAction" prefHeight="25.0" prefWidth="130.0" stylesheets="@sep.css" />
+      <Label fx:id="lbporciva_" layoutX="641.0" layoutY="330.0" text="(Porcent.)" />
+      <Label fx:id="lbporciva" alignment="CENTER_RIGHT" layoutX="641.0" layoutY="353.0" prefHeight="17.0" prefWidth="51.0" />
+      <Label fx:id="lbiva" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="352.0" prefHeight="17.0" prefWidth="131.0" />
+      <Label fx:id="lbgenv_" layoutX="498.0" layoutY="388.0" text="Gastos de envío:" />
+      <TextField fx:id="txgenv" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="384.0" prefHeight="25.0" prefWidth="138.0" />
+      <Label fx:id="lbtfact_" layoutX="498.0" layoutY="419.0" text="TOTAL FACTURA:">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="lbtfact" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="310.0" prefHeight="17.0" prefWidth="131.0">
+      <Label fx:id="lbtfact" alignment="CENTER_RIGHT" layoutX="710.0" layoutY="418.0" prefHeight="17.0" prefWidth="131.0">
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Label>
-      <Label fx:id="lbfpago_" layoutX="498.0" layoutY="348.0" text="Forma de pago:" />
-      <ComboBox fx:id="cbfpago" layoutX="611.0" layoutY="344.0" prefHeight="25.0" prefWidth="234.0" stylesheets="@sep.css" />
-      <Label fx:id="lbefact_" layoutX="499.0" layoutY="381.0" text="Estado de la factura:" />
-      <ComboBox fx:id="cbefact" layoutX="612.0" layoutY="377.0" prefHeight="25.0" prefWidth="234.0" stylesheets="@sep.css" />
-      <Label fx:id="lbanot_" layoutX="499.0" layoutY="406.0" text="Anotaciones:" />
-      <TextArea fx:id="taanot" layoutX="499.0" layoutY="424.0" prefHeight="74.0" prefWidth="350.0" />
-      <Label fx:id="lbmsg1" layoutX="25.0" layoutY="506.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
-      <Label fx:id="lbmsg2" layoutX="25.0" layoutY="526.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
-      <Label fx:id="lbfcrea_" layoutX="601.0" layoutY="506.0" text="Fecha de creación:" />
-      <Label fx:id="lbfcrea" layoutX="728.0" layoutY="506.0" minWidth="103.0" prefHeight="17.0" prefWidth="120.0" />
-      <Label fx:id="lbultact_" layoutX="601.0" layoutY="526.0" text="Ultima actualización:" />
-      <Label fx:id="lbultact" layoutX="728.0" layoutY="526.0" minWidth="103.0" prefHeight="17.0" prefWidth="120.0" />
-      <Button fx:id="bexec" layoutX="21.0" layoutY="560.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" AnchorPane.leftAnchor="21.0" />
-      <Button fx:id="brecalc" layoutX="101.0" layoutY="560.0" mnemonicParsing="false" onAction="#brecalcOnAction" prefHeight="25.0" prefWidth="75.0" text="Recalcular" />
-      <Button fx:id="bprint" layoutX="181.0" layoutY="560.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="87.0" text="Imprimir" />
-      <Button fx:id="bpdf" layoutX="273.0" layoutY="560.0" mnemonicParsing="false" onAction="#bpdfOnAction" prefHeight="25.0" prefWidth="87.0" text="Generar PDF" />
-      <Button fx:id="bfrect" layoutX="365.0" layoutY="560.0" mnemonicParsing="false" onAction="#bfrectOnAction" prefHeight="25.0" prefWidth="162.0" text="Hacer factura rectificativa" />
-      <Button fx:id="bclose" layoutX="770.0" layoutY="560.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
-      <Line endX="-8.0" endY="24.0" layoutX="494.0" layoutY="-17.0" startX="-8.0" startY="514.0" />
-      <Line endX="257.0" layoutX="590.0" layoutY="335.0" startX="-104.5" />
+      <Label fx:id="lbfpago_" layoutX="498.0" layoutY="456.0" text="Forma de pago:" />
+      <ComboBox fx:id="cbfpago" layoutX="611.0" layoutY="452.0" prefHeight="25.0" prefWidth="234.0" stylesheets="@sep.css" />
+      <Label fx:id="lbefact_" layoutX="499.0" layoutY="489.0" text="Estado de la factura:" />
+      <ComboBox fx:id="cbefact" layoutX="612.0" layoutY="485.0" prefHeight="25.0" prefWidth="234.0" stylesheets="@sep.css" />
+      <Label fx:id="lbmarc_" layoutX="499.0" layoutY="524.0" text="Marcador:" />
+      <TextField fx:id="txmarc" layoutX="562.0" layoutY="520.0" prefHeight="25.0" prefWidth="120.0" />
+      <CheckBox fx:id="chffirm" layoutX="708.0" layoutY="524.0" mnemonicParsing="false" text="Factura firmada" />
+      <Label fx:id="lbmsg1" layoutX="25.0" layoutY="568.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
+      <Label fx:id="lbmsg2" layoutX="25.0" layoutY="588.0" minWidth="350.0" prefHeight="17.0" prefWidth="558.0" />
+      <Label fx:id="lbfcrea_" layoutX="601.0" layoutY="568.0" text="Fecha de creación:" />
+      <Label fx:id="lbfcrea" layoutX="728.0" layoutY="568.0" minWidth="103.0" prefHeight="17.0" prefWidth="120.0" />
+      <Label fx:id="lbultact_" layoutX="601.0" layoutY="588.0" text="Ultima actualización:" />
+      <Label fx:id="lbultact" layoutX="728.0" layoutY="588.0" minWidth="103.0" prefHeight="17.0" prefWidth="120.0" />
+      <Button fx:id="bexec" layoutX="21.0" layoutY="614.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" AnchorPane.leftAnchor="21.0" />
+      <Button fx:id="brecalc" layoutX="101.0" layoutY="614.0" mnemonicParsing="false" onAction="#brecalcOnAction" prefHeight="25.0" prefWidth="75.0" text="Recalcular" />
+      <Button fx:id="bprint" layoutX="181.0" layoutY="614.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="87.0" text="Imprimir" />
+      <Button fx:id="bpdf" layoutX="273.0" layoutY="614.0" mnemonicParsing="false" onAction="#bpdfOnAction" prefHeight="25.0" prefWidth="87.0" text="Generar PDF" />
+      <Button fx:id="bfrect" layoutX="365.0" layoutY="614.0" mnemonicParsing="false" onAction="#bfrectOnAction" prefHeight="25.0" prefWidth="162.0" text="Hacer factura rectificativa" />
+      <Button fx:id="bclose" layoutX="770.0" layoutY="614.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Line endX="-8.0" endY="85.5" layoutX="494.0" layoutY="-17.0" startX="-8.0" startY="578.0" />
+      <Line endX="257.0" layoutX="590.0" layoutY="443.0" startX="-104.5" />
+      <Line endX="745.0" layoutX="114.0" layoutY="68.0" startX="-114.0" />
    </children>
 </AnchorPane>

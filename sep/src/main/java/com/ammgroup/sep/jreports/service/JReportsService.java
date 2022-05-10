@@ -64,7 +64,7 @@ public class JReportsService {
 		optStr = Optional.ofNullable(fact.getTitular());
 			optStr.ifPresentOrElse((x) -> {
 				//New lines codes are replaced by <br> when markup is html and are multiline sections 
-				String htmlText = x.replace("\n", "<br>");
+				String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
 				map.put("pmTitular", htmlText);
 			}, 
 				() -> map.put("pmTitular", "")
@@ -72,7 +72,7 @@ public class JReportsService {
 		optStr = Optional.ofNullable(fact.getDireccion());
 			optStr.ifPresentOrElse((x) -> {
 				//New lines codes are replaced by <br> when markup is html and are multiline sections 
-				String htmlText = x.replace("\n", "<br>");
+				String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
 				map.put("pmDireccion", htmlText);
 			}, 
 				() -> map.put("pmDireccion", "")
@@ -85,7 +85,7 @@ public class JReportsService {
 			optStr.ifPresentOrElse((x) -> map.put("pmReferencia", x), () -> map.put("pmReferencia", ""));
 		optStr = Optional.ofNullable(fact.getTextoComplementario());
 			optStr.ifPresentOrElse((x) -> {
-				String htmlText = x.replace("\n", "<br>");
+				String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
 				//New lines codes are replaced by <br> when markup is html and are multiline sections 
 				map.put("pmTextoComplementario", htmlText);
 			}, 
@@ -131,10 +131,14 @@ public class JReportsService {
 				optFact.ifPresent((y) -> map.put("pmTextoRectificativa", "Rectifica la factura " + y.getNumeroCompuesto()));
 		}
 
-		File logofile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + "SEPHD.jpg");
+		File logofile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + sepprop.getFacturasImageFilename());
 		BufferedImage logo = ImageIO.read(logofile);
 		map.put("pmLogo", logo );
 		
+		optStr = Optional.ofNullable(sepprop.getName());
+			optStr.ifPresentOrElse((x) -> map.put("pmSepNombre", x), () -> map.put("pmSepNombre", ""));
+		optStr = Optional.ofNullable(sepprop.getNif());
+			optStr.ifPresentOrElse((x) -> map.put("pmSepNif", x), () -> map.put("pmSepNif", ""));
 		optStr = Optional.ofNullable(sepprop.getAddress());
 			optStr.ifPresentOrElse((x) -> map.put("pmSepDireccion", x), () -> map.put("pmSepDireccion", ""));
 		optStr = Optional.ofNullable(sepprop.getEmail());
@@ -145,7 +149,7 @@ public class JReportsService {
 			optStr.ifPresentOrElse((x) -> map.put("pmSepTels", x), () -> map.put("pmSepTels", ""));
 			
 		if (fact.isFacturaFirmada()) {
-			File firmafile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + "firma.png");
+			File firmafile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + sepprop.getFacturasImageFirmaFilename());
 			BufferedImage firma = ImageIO.read(firmafile);
 			//Another way to create a BufferedImage from ImageIO
 			//BufferedImage firma = ImageIO.read(getClass().getResource(mutils.RESOURCE_IMAGES_DIR + "firma.png"));
@@ -165,7 +169,7 @@ public class JReportsService {
 			
 			optStr = Optional.ofNullable(it.getConcepto());
 				optStr.ifPresent((x) -> {
-					String htmlText = x.replace("\n", "<br>");
+					String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
 					//New lines codes are replaced by <br> when markup is html and are multiline sections 
 					it.setConcepto(htmlText);
 				});
