@@ -23,7 +23,7 @@ public class Agencia {
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long id;
     
-    @Column(name="NOMBRE", length=95, nullable=false, unique=false)
+    @Column(name="NOMBRE", length=120, nullable=false, unique=false)
     private String nombre;
     
     @Column(name="CIFNIF", length=25, nullable=false, unique=true)
@@ -61,6 +61,12 @@ public class Agencia {
     
     @Column(name="ANOTACIONES", length=500, nullable=true, unique=false)
     private String anotaciones;
+    
+    @Column(name="DATOS_ADIC_FACTURA", length=250, nullable=true, unique=false)
+    private String datosAdicionalesFactura;
+    
+    @Column(name="ACTIVA", nullable=false, unique=false)
+    private boolean activa;
 
     @OneToMany(targetEntity=Socio.class, mappedBy="agencia", fetch=FetchType.LAZY, cascade=CascadeType.ALL)
     private Set<Socio> socios;
@@ -166,6 +172,22 @@ public class Agencia {
 
 	public void setAnotaciones(String anotaciones) {
 		this.anotaciones = anotaciones;
+	}
+
+	public String getDatosAdicionalesFactura() {
+		return datosAdicionalesFactura;
+	}
+
+	public void setDatosAdicionalesFactura(String datosAdicionalesFactura) {
+		this.datosAdicionalesFactura = datosAdicionalesFactura;
+	}
+
+	public boolean isActiva() {
+		return activa;
+	}
+
+	public void setActiva(boolean activa) {
+		this.activa = activa;
 	}
 
 	public Set<Socio> getSocios() {

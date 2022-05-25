@@ -12,12 +12,13 @@
          <columns>
             <TableColumn fx:id="tcnumero" prefWidth="131.0" text="Número" />
             <TableColumn fx:id="tctitular" prefWidth="305.0" text="Titular" />
-            <TableColumn fx:id="tccifnif" minWidth="0.0" prefWidth="119.0" text="CIF/NIF" />
+            <TableColumn fx:id="tccifnif" minWidth="0.0" prefWidth="119.0" text="NIF/VAT" />
             <TableColumn fx:id="tcffactura" prefWidth="113.0" text="Fecha factura" />
             <TableColumn fx:id="tcimporte" prefWidth="101.0" text="Importe" />
             <TableColumn fx:id="tcsfact" prefWidth="130.0" text="Serie de facturas" />
             <TableColumn fx:id="tcfpago" prefWidth="130.0" text="Forma de pago" />
             <TableColumn fx:id="tcest" prefWidth="130.0" text="Estado" />
+            <TableColumn fx:id="tcagencia" prefWidth="250.0" text="Agencia" />
          </columns>
       </TableView>
       <Label fx:id="lbmsg" layoutX="19.0" layoutY="514.0" prefHeight="17.0" prefWidth="591.0" />

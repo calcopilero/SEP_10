@@ -9,6 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Agencia.class)
 public abstract class Agencia_ {
 
+	public static volatile SingularAttribute<Agencia, String> datosAdicionalesFactura;
 	public static volatile SetAttribute<Agencia, Factura> facturas;
 	public static volatile SingularAttribute<Agencia, String> personaContacto;
 	public static volatile SingularAttribute<Agencia, String> cifnif;
@@ -16,6 +17,7 @@ public abstract class Agencia_ {
 	public static volatile SingularAttribute<Agencia, ZonaPostal> zonaPostal;
 	public static volatile SingularAttribute<Agencia, String> nombre;
 	public static volatile SingularAttribute<Agencia, String> cp;
+	public static volatile SingularAttribute<Agencia, Boolean> activa;
 	public static volatile SetAttribute<Agencia, Socio> socios;
 	public static volatile SingularAttribute<Agencia, Pais> pais;
 	public static volatile SingularAttribute<Agencia, String> anotaciones;
@@ -25,6 +27,7 @@ public abstract class Agencia_ {
 	public static volatile SingularAttribute<Agencia, String> telefono;
 	public static volatile SingularAttribute<Agencia, String> email;
 
+	public static final String DATOS_ADICIONALES_FACTURA = "datosAdicionalesFactura";
 	public static final String FACTURAS = "facturas";
 	public static final String PERSONA_CONTACTO = "personaContacto";
 	public static final String CIFNIF = "cifnif";
@@ -32,6 +35,7 @@ public abstract class Agencia_ {
 	public static final String ZONA_POSTAL = "zonaPostal";
 	public static final String NOMBRE = "nombre";
 	public static final String CP = "cp";
+	public static final String ACTIVA = "activa";
 	public static final String SOCIOS = "socios";
 	public static final String PAIS = "pais";
 	public static final String ANOTACIONES = "anotaciones";

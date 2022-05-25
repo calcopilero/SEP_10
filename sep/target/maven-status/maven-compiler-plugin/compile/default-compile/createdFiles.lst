@@ -189,6 +189,7 @@ com\ammgroup\sep\controller\HfactController.class
 com\ammgroup\sep\repository\ZonaPostalRepository.class
 com\ammgroup\sep\controller\AgenclController.class
 com\ammgroup\sep\controller\FpagodtController$1.class
+com\ammgroup\sep\controller\FactlController$7.class
 com\ammgroup\sep\controller\PaisdtController$3.class
 com\ammgroup\sep\runners\data\FacturaRunner.class
 com\ammgroup\sep\SEPJavaFXApplication.class

@@ -263,6 +263,9 @@ public class AgenclController implements Initializable {
 		//socioRepository.findAll().forEach((p) -> {sociosOL.add(p);});
 		//tsocios.setItems(sociosOL);
 		
+		//Set the default value in agfilter
+		agfilter.setActiva(true);
+		
 		refreshForm();
 
 	}

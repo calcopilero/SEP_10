@@ -23,6 +23,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -49,6 +50,9 @@ public class AgencfiController implements Initializable {
 	
 	@FXML
 	private TextField txnombre;
+	
+    @FXML
+    private CheckBox chactivas;
 	
 	@FXML
 	private TextField txcifnif;
@@ -116,6 +120,8 @@ public class AgencfiController implements Initializable {
 			
 			if (agfilter.containsFilters() > 0) {
 				txnombre.setText(agfilter.getNombre());
+				Optional<Boolean> boolOpt = Optional.ofNullable(x.getActiva());
+					boolOpt.ifPresent((y) -> chactivas.setSelected(y));
 				txcifnif.setText(agfilter.getCifnif());
 				txlocal.setText(agfilter.getLocalidad());
 				Optional<Provincia> optProv = Optional.ofNullable(agfilter.getProvincia());
@@ -163,6 +169,7 @@ public class AgencfiController implements Initializable {
     void bcleanOnAction(ActionEvent event) {
 		
 		txnombre.setText("");
+		chactivas.setSelected(false);
 		txcifnif.setText("");
 		txlocal.setText("");
 		cbprov.getSelectionModel().clearSelection();
@@ -183,6 +190,7 @@ public class AgencfiController implements Initializable {
 		optAgfilter.ifPresent((x) -> {
 			
 			x.setNombre(txnombre.getText());
+			x.setActiva(chactivas.isSelected());
 			x.setCifnif(txcifnif.getText());
 			x.setLocalidad(txlocal.getText());
 			x.setProvincia(cbprov.getSelectionModel().getSelectedItem());

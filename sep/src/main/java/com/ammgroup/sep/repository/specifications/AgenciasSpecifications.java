@@ -1,5 +1,7 @@
 package com.ammgroup.sep.repository.specifications;
 
+import static org.springframework.data.jpa.domain.Specification.where;
+
 import java.util.List;
 import java.util.Optional;
 
@@ -48,7 +50,22 @@ public class AgenciasSpecifications {
 				}
 			});
 
-		Optional<String> optCifnif = Optional.ofNullable(agfilter.getCifnif());
+		Optional<Boolean> optAct = Optional.ofNullable(agfilter.getActiva());
+			optAct.ifPresent((x) -> {
+				
+				//The filter only applies if true
+				if (x) {
+					
+					if (spwrapper.firstsp) {
+						spwrapper.spage = where(agenciaIsActiva());
+						spwrapper.firstsp = false;
+					} else {
+						spwrapper.spage = (spwrapper.spage).and(agenciaIsActiva());
+					}
+				}
+			});
+
+			Optional<String> optCifnif = Optional.ofNullable(agfilter.getCifnif());
 			optCifnif.ifPresent((x) -> {
 				
 				if (x.length() > 0) {
@@ -168,6 +185,13 @@ public class AgenciasSpecifications {
 		
 		return (root, query, criteriaBuilder)
 				-> criteriaBuilder.like(root.get(Agencia_.NOMBRE), "%"+nombre+"%");
+	}
+	
+	private Specification<Agencia> agenciaIsActiva() {
+
+		return (root, query, criteriaBuilder)
+				-> criteriaBuilder.isTrue(root.get(Agencia_.ACTIVA));
+				//-> criteriaBuilder.equal(root.get(Socio_.BAJA), false);
 	}
 	
 	private Specification<Agencia> cifnifLike(String cifnif) {

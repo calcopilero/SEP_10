@@ -201,6 +201,7 @@ public class HfactController implements Initializable {
 		lbrefer_.setVisible(!chfauto.isSelected());
 		txrefer.setVisible(!chfauto.isSelected());
 		lbtaconcep.setVisible(!chfauto.isSelected());
+		lbconceplen.setVisible(!chfauto.isSelected());
 		taconcep.setVisible(!chfauto.isSelected());
 		lbtximpitems.setVisible(!chfauto.isSelected());
 		tximpitems.setVisible(!chfauto.isSelected());
@@ -215,6 +216,7 @@ public class HfactController implements Initializable {
 		lbmarc_.setVisible(!chfauto.isSelected());
 		txmarc.setVisible(!chfauto.isSelected());
 		lbdafact_.setVisible(!chfauto.isSelected());
+		lbdafactlen.setVisible(!chfauto.isSelected());
 		txardafact.setVisible(!chfauto.isSelected());
     		
     }
@@ -570,7 +572,9 @@ public class HfactController implements Initializable {
     				
     				Optional<String> strOpt = Optional.ofNullable(y.getNombre());
 						strOpt.ifPresent((z) -> tfwrapper.ttitular = z);
-
+					strOpt = Optional.ofNullable(y.getDatosAdicionalesFactura());
+						strOpt.ifPresent((z) -> tfwrapper.ttitular += (mutils.NL_TEXT + z));
+							
     				strOpt = Optional.ofNullable(y.getCifnif());
 						strOpt.ifPresent((z) -> tfwrapper.tcifnif = z);
 						
@@ -649,11 +653,11 @@ public class HfactController implements Initializable {
 					//wich only happend in facturacion manual 
 					strOpt = Optional.ofNullable(dafact);
 						strOpt.ifPresentOrElse((y) -> {
-									tfwrapper.ttitular += (mutils.NL_TEXT + y);
-								}, () -> {
-									Optional<String> dafOpt = Optional.ofNullable(x.getDatosAdicionalesFactura());
-										dafOpt.ifPresent((z) -> tfwrapper.ttitular += (mutils.NL_TEXT + z));
-								});
+							tfwrapper.ttitular += (mutils.NL_TEXT + y);
+						}, () -> {
+							Optional<String> dafOpt = Optional.ofNullable(x.getDatosAdicionalesFactura());
+								dafOpt.ifPresent((z) -> tfwrapper.ttitular += (mutils.NL_TEXT + z));
+						});
 
 					strOpt = Optional.ofNullable(x.getCifnif());
 						strOpt.ifPresent((y) -> tfwrapper.tcifnif = y);

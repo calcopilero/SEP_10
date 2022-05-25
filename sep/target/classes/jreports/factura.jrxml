@@ -38,7 +38,7 @@
 		<band height="308" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.FreeLayout"/>
 			<rectangle>
-				<reportElement x="0" y="146" width="531" height="154" forecolor="#000000" backcolor="#F0F0F0" uuid="004ce53c-7fe9-4c87-8645-cfcd2f2d4250"/>
+				<reportElement x="10" y="146" width="521" height="154" forecolor="#000000" backcolor="#F0F0F0" uuid="004ce53c-7fe9-4c87-8645-cfcd2f2d4250"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
@@ -68,7 +68,7 @@
 				<textFieldExpression><![CDATA[$P{pmNumFactura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="78" y="271" width="212" height="20" uuid="0265b7a8-e08d-4fa6-98c8-a6345140e46e">
+				<reportElement x="88" y="270" width="212" height="20" uuid="0265b7a8-e08d-4fa6-98c8-a6345140e46e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -77,7 +77,7 @@
 				<textFieldExpression><![CDATA[$P{pmCifnif}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="20" y="271" width="58" height="20" uuid="8103c062-76cb-42c2-a544-85b7633cac42">
+				<reportElement x="30" y="270" width="58" height="20" uuid="8103c062-76cb-42c2-a544-85b7633cac42">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -105,18 +105,18 @@
 				<text><![CDATA[FECHA:]]></text>
 			</staticText>
 			<image>
-				<reportElement x="1" y="10" width="179" height="80" uuid="08fd4d40-0021-470e-8ba4-0a139f284cb5"/>
+				<reportElement x="10" y="10" width="179" height="80" uuid="08fd4d40-0021-470e-8ba4-0a139f284cb5"/>
 				<imageExpression><![CDATA[$P{pmLogo}]]></imageExpression>
 			</image>
 			<textField>
-				<reportElement x="20" y="146" width="320" height="62" isPrintWhenDetailOverflows="true" uuid="a037c7d1-66ec-41df-bb33-69de3cbfa7f4"/>
+				<reportElement x="31" y="146" width="309" height="62" isPrintWhenDetailOverflows="true" uuid="a037c7d1-66ec-41df-bb33-69de3cbfa7f4"/>
 				<textElement verticalAlignment="Middle" markup="html">
 					<font fontName="Calibri" size="9" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pmTitular}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="208" width="320" height="62" uuid="7d9ef5da-55db-4ae5-b1db-1e58033c4ff4"/>
+				<reportElement x="31" y="208" width="309" height="62" uuid="7d9ef5da-55db-4ae5-b1db-1e58033c4ff4"/>
 				<textElement verticalAlignment="Top" markup="html">
 					<font fontName="Calibri" size="9" isBold="false"/>
 				</textElement>
@@ -147,7 +147,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" markup="html">
 					<font fontName="Calibri" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pmSepDireccion}]]></textFieldExpression>
@@ -158,16 +158,16 @@
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Right" markup="html">
-					<font fontName="Calibri" size="9" isBold="false" isItalic="true"/>
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA["<b><span style=\"color: blue;\">" + $P{pmSepEmail} +" - " + $P{pmSepWeb} + "</span></b>"]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{pmSepEmail} +" - " + $P{pmSepWeb}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="299" y="69" width="232" height="13" uuid="cb5e3124-26c8-4543-b548-c49346670119">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right">
+				<textElement textAlignment="Right" markup="html">
 					<font fontName="Calibri" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pmSepTels}]]></textFieldExpression>
@@ -179,7 +179,7 @@
 				</graphicElement>
 			</line>
 			<textField>
-				<reportElement mode="Opaque" x="20" y="114" width="224" height="25" backcolor="#FFEA00" uuid="a8bc9162-256e-47c5-a1aa-28a91709b611">
+				<reportElement mode="Opaque" x="31" y="114" width="224" height="25" backcolor="#FFEA00" uuid="a8bc9162-256e-47c5-a1aa-28a91709b611">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<printWhenExpression><![CDATA[!$P{pmTextoRectificativa}.isEmpty()]]></printWhenExpression>
 				</reportElement>
@@ -193,8 +193,8 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Calibri" size="9" isBold="true"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Calibri" size="9" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pmSepNif}]]></textFieldExpression>
 			</textField>
@@ -203,8 +203,8 @@
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
-				<textElement textAlignment="Right">
-					<font fontName="Calibri" size="9" isBold="true" isItalic="true"/>
+				<textElement textAlignment="Right" markup="html">
+					<font fontName="Calibri" size="9" isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pmSepNombre}]]></textFieldExpression>
 			</textField>
@@ -213,13 +213,13 @@
 	<columnHeader>
 		<band height="52" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="11" width="531" height="41" forecolor="#000000" backcolor="#F0F0F0" uuid="d215057e-c841-4f67-a545-4fd106d49e90"/>
+				<reportElement x="10" y="11" width="521" height="41" forecolor="#000000" backcolor="#F0F0F0" uuid="d215057e-c841-4f67-a545-4fd106d49e90"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<staticText>
-				<reportElement x="20" y="20" width="311" height="30" uuid="d75f6a1c-140d-4e94-a958-463cd9c68261">
+				<reportElement x="30" y="20" width="301" height="30" uuid="d75f6a1c-140d-4e94-a958-463cd9c68261">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a1aef81-5dba-4215-a887-3c3ca5ced495"/>
 				</reportElement>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -248,13 +248,13 @@
 		<band height="105" splitType="Stretch">
 			<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 			<rectangle>
-				<reportElement x="0" y="0" width="531" height="105" forecolor="#000000" backcolor="#F0F0F0" uuid="7d7c7c8c-ef86-4906-bbaa-5883ebc75c25"/>
+				<reportElement x="10" y="0" width="521" height="105" forecolor="#000000" backcolor="#F0F0F0" uuid="7d7c7c8c-ef86-4906-bbaa-5883ebc75c25"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement x="20" y="6" width="370" height="94" uuid="f743394a-0259-4e87-afb8-fd02cab84696">
+				<reportElement x="30" y="6" width="360" height="94" uuid="f743394a-0259-4e87-afb8-fd02cab84696">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7a1aef81-5dba-4215-a887-3c3ca5ced495"/>
 				</reportElement>
 				<textElement verticalAlignment="Top" markup="html">
@@ -276,7 +276,7 @@
 	<columnFooter>
 		<band height="156" splitType="Stretch">
 			<rectangle>
-				<reportElement x="0" y="0" width="531" height="156" forecolor="#000000" backcolor="#F0F0F0" uuid="5e06166e-915d-4f74-bfb7-58bce4d01486"/>
+				<reportElement x="10" y="0" width="521" height="156" forecolor="#000000" backcolor="#F0F0F0" uuid="5e06166e-915d-4f74-bfb7-58bce4d01486"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
@@ -296,7 +296,7 @@
 				<textFieldExpression><![CDATA[$P{pmImporteIVA}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="94" width="370" height="17" uuid="f20eebfb-c1de-40eb-a4bb-f475f2b21d89"/>
+				<reportElement x="30" y="94" width="360" height="17" uuid="f20eebfb-c1de-40eb-a4bb-f475f2b21d89"/>
 				<textElement verticalAlignment="Middle" markup="html">
 					<font fontName="Calibri" size="9" isBold="true"/>
 				</textElement>
@@ -312,7 +312,7 @@
 				<textFieldExpression><![CDATA[$P{pmImporteDescuento}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="20" y="10" width="370" height="20" uuid="6587e8c8-2ed8-4c7a-acd8-06592ff24a0e">
+				<reportElement x="30" y="10" width="360" height="20" uuid="6587e8c8-2ed8-4c7a-acd8-06592ff24a0e">
 					<printWhenExpression><![CDATA[!$P{pmTextoDescuento}.isEmpty()]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle" markup="html">
@@ -328,7 +328,7 @@
 				<textFieldExpression><![CDATA[$P{pmImporteTotal}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="20" y="70" width="311" height="20" uuid="c4cf9f33-edca-4db1-9d0e-a698925a8b9d"/>
+				<reportElement x="30" y="70" width="301" height="20" uuid="c4cf9f33-edca-4db1-9d0e-a698925a8b9d"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri" size="9" isBold="true"/>
 				</textElement>
@@ -347,7 +347,7 @@
 				</graphicElement>
 			</line>
 			<staticText>
-				<reportElement x="20" y="120" width="310" height="30" uuid="4b103ff7-6822-416e-a0a1-840d29e02702"/>
+				<reportElement x="30" y="120" width="300" height="30" uuid="4b103ff7-6822-416e-a0a1-840d29e02702"/>
 				<textElement verticalAlignment="Middle">
 					<font fontName="Calibri" size="9" isBold="true"/>
 				</textElement>
@@ -363,7 +363,7 @@
 				<textFieldExpression><![CDATA[$P{pmGastosEnvio}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="20" y="42" width="370" height="18" uuid="9ba7b833-563c-49d4-bbbe-902ea7d20196">
+				<reportElement x="30" y="42" width="360" height="18" uuid="9ba7b833-563c-49d4-bbbe-902ea7d20196">
 					<printWhenExpression><![CDATA[$P{pmGastosEnvio} != 0]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -376,13 +376,13 @@
 	<pageFooter>
 		<band height="181" splitType="Stretch">
 			<rectangle>
-				<reportElement mode="Opaque" x="0" y="152" width="531" height="22" forecolor="#000000" backcolor="#F0F0F0" uuid="51548ee9-279a-44d0-bd60-f0f966bdae1b"/>
+				<reportElement mode="Opaque" x="10" y="152" width="521" height="22" forecolor="#000000" backcolor="#F0F0F0" uuid="51548ee9-279a-44d0-bd60-f0f966bdae1b"/>
 				<graphicElement>
 					<pen lineWidth="0.5"/>
 				</graphicElement>
 			</rectangle>
 			<textField>
-				<reportElement mode="Transparent" x="10" y="153" width="508" height="20" backcolor="#FFFFFF" uuid="3ae62b83-b72b-49d4-8bb3-a0af92550f9e">
+				<reportElement mode="Transparent" x="10" y="153" width="521" height="20" backcolor="#FFFFFF" uuid="3ae62b83-b72b-49d4-8bb3-a0af92550f9e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">

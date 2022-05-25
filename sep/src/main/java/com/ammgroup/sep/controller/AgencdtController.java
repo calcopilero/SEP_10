@@ -27,6 +27,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
@@ -60,10 +61,13 @@ public class AgencdtController implements Initializable {
 
 	@FXML
 	private Label lbnomlen;
-	int maxnomchars = 95;
+	int maxnomchars = 120;
 	
 	@FXML
-	private TextField txnombre;
+	private TextArea txarnombre;
+	
+	@FXML
+	private CheckBox chactiva;
 	
 	@FXML
 	private TextField txcifnif;
@@ -104,6 +108,13 @@ public class AgencdtController implements Initializable {
 	private TextField txpcont;
 	
 	@FXML
+	private Label lbdafactlen;
+	int maxdafactchars = 250;
+	
+	@FXML
+	private TextArea txardafact;
+	
+	@FXML
 	private Label lbanotlen;
 	int maxanotchars = 500;
 	
@@ -138,7 +149,7 @@ public class AgencdtController implements Initializable {
         	
         	if (checkControls()) {
         	
-	        	cont1 = agenciaRepository.countExistingAgenciasByNombre(txnombre.getText());
+	        	cont1 = agenciaRepository.countExistingAgenciasByNombre(txarnombre.getText());
 	        	//cont2 = agenciaRepository.countExistingAgenciasByCifnif(txcifnif.getText());
 	        	
 	        	if (cont1 == 0) {
@@ -168,7 +179,7 @@ public class AgencdtController implements Initializable {
         	
         	if (checkControls()) {
 
-        		cont1 = agenciaRepository.countExistingAgenciasByNombre(txnombre.getText(), agcrud.getDao().getId());
+        		cont1 = agenciaRepository.countExistingAgenciasByNombre(txarnombre.getText(), agcrud.getDao().getId());
         		//cont2 = agenciaRepository.countExistingAgenciasByCifnif(txcifnif.getText(), agcrud.getDao().getId());
         	
 	        	//Check if there are no coincidences of there's one with the previous text is the same in the text box
@@ -252,7 +263,8 @@ public class AgencdtController implements Initializable {
 	
 	private void saveDataToAgencia(Agencia ag) {
 		
-		ag.setNombre(obtainText(txnombre));
+		ag.setNombre(obtainText(txarnombre));
+		ag.setActiva(chactiva.isSelected());
 		ag.setCifnif(obtainText(txcifnif));
 		ag.setDomicilio(obtainText(txardomic));
 		ag.setCp(obtainText(txcp));
@@ -263,6 +275,7 @@ public class AgencdtController implements Initializable {
 		ag.setEmail(obtainText(txemail));
 		ag.setTelefono(obtainText(txtelefono));
 		ag.setPersonaContacto(obtainText(txpcont));
+		ag.setDatosAdicionalesFactura(obtainText(txardafact));
 		ag.setAnotaciones(obtainText(txaranot));
 		
 	}
@@ -340,7 +353,7 @@ public class AgencdtController implements Initializable {
 	    switch (agcrud.getAction()) {
         case ADD :
         	
-    		txnombre.setText("");
+    		txarnombre.setText("");
     		txcifnif.setText("");
     		txardomic.setText("");
     		txcp.setText("");
@@ -411,7 +424,7 @@ public class AgencdtController implements Initializable {
 		    }
 		    return null;
 		});
-		txnombre.setTextFormatter(new TextFormatter<String>(nomFilter));
+		txarnombre.setTextFormatter(new TextFormatter<String>(nomFilter));
 		
 		//To check domicilio maximum number of chars and show the number of chars
 		UnaryOperator<Change> domicFilter = (change -> {
@@ -426,7 +439,7 @@ public class AgencdtController implements Initializable {
 		});
 		txardomic.setTextFormatter(new TextFormatter<String>(domicFilter));
 	    
-		//To check domicilio maximum number of chars and show the number of chars
+		//To check localidad maximum number of chars and show the number of chars
 		UnaryOperator<Change> localFilter = (change -> {
 			
 			if (change.getControlNewText().length() <= maxlocchars) {
@@ -439,6 +452,19 @@ public class AgencdtController implements Initializable {
 		});
 		txlocal.setTextFormatter(new TextFormatter<String>(localFilter));
 	    
+		//To check datos adicionales facturacion maximum number of chars and show the number of chars
+		UnaryOperator<Change> dafactFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxdafactchars) {
+		    	
+				showDafactChars(change.getControlNewText().length(), maxdafactchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		txardafact.setTextFormatter(new TextFormatter<String>(dafactFilter));
+		
 		//To check anotaciones maximum number of chars and show the number of chars
 		UnaryOperator<Change> anotFilter = (change -> {
 			
@@ -498,13 +524,18 @@ public class AgencdtController implements Initializable {
 				
 				Optional<String> optStr = Optional.ofNullable(x.getNombre());
 					optStr.ifPresentOrElse((y) -> {
-						txnombre.setText(y);
+						txarnombre.setText(y);
 					}, () -> {
-						txnombre.setText("");
+						txarnombre.setText("");
 					});
 
-				showDomicilioChars(txnombre.getLength(), maxnomchars);
-					
+				showNombreChars(txarnombre.getLength(), maxnomchars);
+				
+				Optional<Boolean> optBool = Optional.ofNullable(x.isActiva());
+					optBool.ifPresent((y) -> {
+						chactiva.setSelected(y);
+					});
+				
 				optStr = Optional.ofNullable(x.getCifnif());
 					optStr.ifPresentOrElse((y) -> {
 						txcifnif.setText(y);
@@ -565,6 +596,15 @@ public class AgencdtController implements Initializable {
 						txpcont.setText("");
 					});	
 				
+				optStr = Optional.ofNullable(x.getDatosAdicionalesFactura());
+					optStr.ifPresentOrElse((y) -> {
+						txardafact.setText(y);
+					}, () -> {
+						txardafact.setText("");
+					});
+				
+				showDafactChars(txardafact.getLength(), maxdafactchars);
+				
 				optStr = Optional.ofNullable(x.getAnotaciones());
 					optStr.ifPresentOrElse((y) -> {
 						txaranot.setText(y);
@@ -581,7 +621,8 @@ public class AgencdtController implements Initializable {
 		//txnombre.setDisable(true);
 		//txnombre.setStyle("-fx-background-color: yellow;");
 		//txnombre.setStyle("-fx-opacity: 1.0;");
-		disableControl(txnombre);
+		disableControl(txarnombre);
+		disableControl(chactiva);
 		disableControl(txcifnif);
 		disableControl(txardomic);
 		disableControl(txcp);
@@ -592,7 +633,7 @@ public class AgencdtController implements Initializable {
 		disableControl(txemail);
 		disableControl(txtelefono);
 		disableControl(txpcont);
-		disableControl(txnombre);
+		disableControl(txardafact);
 		disableControl(txaranot);
 
 	}
@@ -615,7 +656,7 @@ public class AgencdtController implements Initializable {
 		
 		var checkwrapper = new Object(){ String errorstext = ""; boolean checks = true; };
 		
-		if (obtainText(txnombre).length() == 0) {
+		if (obtainText(txarnombre).length() == 0) {
 			checkwrapper.errorstext += "El nombre no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}
@@ -643,6 +684,11 @@ public class AgencdtController implements Initializable {
 	private void showLocalidadChars(int numchars, int maxchars) {
 		
 		lbloclen.setText("(" + numchars + "/" + maxchars + " caracteres)");
+	}
+	
+	private void showDafactChars(int numchars, int maxchars) {
+		
+		lbdafactlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
 	}
 	
 	private void showAnotacionesChars(int numchars, int maxchars) {

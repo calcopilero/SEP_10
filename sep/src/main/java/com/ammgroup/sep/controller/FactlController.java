@@ -17,6 +17,7 @@ import com.ammgroup.sep.controller.config.crud.enums.CrudAction;
 import com.ammgroup.sep.controller.config.filter.FacturaFilter;
 import com.ammgroup.sep.jreports.config.enums.ReportFormat;
 import com.ammgroup.sep.jreports.service.JReportsService;
+import com.ammgroup.sep.model.Agencia;
 import com.ammgroup.sep.model.EstadoFactura;
 import com.ammgroup.sep.model.Factura;
 import com.ammgroup.sep.model.FormaPago;
@@ -87,6 +88,9 @@ public class FactlController implements Initializable {
 	
 	@FXML
 	private TableColumn<Factura, String> tcest;
+	
+	@FXML
+	private TableColumn<Factura, String> tcagencia;
 
 	@FXML
 	private Button bedit;
@@ -320,6 +324,21 @@ public class FactlController implements Initializable {
 				} );
 			
 			return new ReadOnlyStringWrapper(strwrapper.est);
+				
+		});
+		
+		tcagencia.setCellValueFactory(c-> {
+			
+			var strwrapper = new Object(){ String agencia; };
+			
+			Optional<Agencia> ageOpt = Optional.ofNullable(c.getValue().getAgencia());
+				ageOpt.ifPresentOrElse((x) -> {
+					strwrapper.agencia = x.toString();	
+				}, () -> {
+					strwrapper.agencia = "";
+				} );
+			
+			return new ReadOnlyStringWrapper(strwrapper.agencia);
 				
 		});
 		

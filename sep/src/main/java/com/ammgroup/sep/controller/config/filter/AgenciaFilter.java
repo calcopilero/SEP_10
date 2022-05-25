@@ -12,6 +12,7 @@ import com.ammgroup.sep.model.ZonaPostal;
 public class AgenciaFilter {
 	
 	private String nombre;
+	private Boolean activa;
 	private String cifnif;
 	private String localidad;
 	private Provincia provincia;
@@ -31,6 +32,14 @@ public class AgenciaFilter {
 
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
+	}
+
+	public Boolean getActiva() {
+		return activa;
+	}
+
+	public void setActiva(Boolean activa) {
+		this.activa = activa;
 	}
 
 	public String getCifnif() {
@@ -105,6 +114,9 @@ public class AgenciaFilter {
 		Optional<String> optNombre = Optional.ofNullable(nombre);
 			optNombre.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
 		
+		Optional<Boolean> optAct = Optional.ofNullable(activa);
+			optAct.ifPresent((x) -> { if (x) cfwrapper.cf++; });
+			
 		Optional<String> optCifnif = Optional.ofNullable(cifnif);
 			optCifnif.ifPresent((x) -> { if (x.length() > 0) cfwrapper.cf++; });
 
