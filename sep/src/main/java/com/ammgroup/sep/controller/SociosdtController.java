@@ -405,7 +405,8 @@ public class SociosdtController implements Initializable {
 	
 	private void saveDataToSocio(Socio soc) {
 		
-		Optional<Socio> socOpt = Optional.ofNullable(socrud.getDao());
+		//Optional<Socio> socOpt = Optional.ofNullable(socrud.getDao());
+		Optional<Socio> socOpt = Optional.ofNullable(soc);
 			socOpt.ifPresent((x) -> {
 				
 				x.setFechaAlta(Date.from(dpfalta.getValue().atStartOfDay(mutils.getDefaultZoneId()).toInstant()));

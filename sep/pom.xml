@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.ammgroup</groupId>
   <artifactId>sep</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
+  <version>1.0</version>
   <name>SEP Management Software 1.0</name>
   
     <parent>
