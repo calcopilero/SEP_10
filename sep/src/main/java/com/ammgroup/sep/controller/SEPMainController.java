@@ -25,7 +25,9 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 @Component
 public class SEPMainController implements Initializable {
@@ -41,6 +43,9 @@ public class SEPMainController implements Initializable {
 	
 	@FXML
 	private VBox vb;
+	
+	@FXML
+	private AnchorPane mainapane;
 	
 	@FXML
 	private MenuBar mbSEP;
@@ -83,6 +88,7 @@ public class SEPMainController implements Initializable {
 			imlogo.setFitWidth(Integer.parseInt(sepprop.getImageWidth()));
 			imlogo.setLayoutX(Integer.parseInt(sepprop.getImageX()));
 			imlogo.setLayoutY(Integer.parseInt(sepprop.getImageY()));
+			
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -280,5 +286,19 @@ public class SEPMainController implements Initializable {
     		((ConfigurableApplicationContext) springContext).close();
     		Platform.exit();
         }
+    }
+    
+    public void setTitleAndIcon( ) {
+    	
+    	//Get the current stage from a node in the scene
+		Stage mstage = (Stage) mainapane.getScene().getWindow();
+		
+		//Set the image in the window
+        Image sepImg = new Image(mutils.RESOURCE_IMAGES_DIR + sepprop.getSepImageFilename());
+        mstage.getIcons().add(sepImg);
+        
+        //Set the title
+		mstage.setTitle(sepprop.getApptitle());
+    	
     }
 }

@@ -123,7 +123,7 @@
 				<textFieldExpression><![CDATA[$P{pmDireccion}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="350" y="146" width="80" height="30" uuid="d6959194-b630-4e64-a0af-56a9ea126e9d">
+				<reportElement x="350" y="146" width="85" height="30" uuid="d6959194-b630-4e64-a0af-56a9ea126e9d">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<printWhenExpression><![CDATA[!$P{pmReferencia}.isBlank()]]></printWhenExpression>
 				</reportElement>
@@ -133,7 +133,7 @@
 				<text><![CDATA[Nº DE REFERENCIA:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="430" y="150" width="96" height="26" uuid="584eb593-7ef3-4216-a602-d964f72ef5d2">
+				<reportElement x="435" y="150" width="96" height="26" uuid="584eb593-7ef3-4216-a602-d964f72ef5d2">
 					<property name="com.jaspersoft.studio.unit.y" value="px"/>
 					<printWhenExpression><![CDATA[!$P{pmReferencia}.isBlank()]]></printWhenExpression>
 				</reportElement>

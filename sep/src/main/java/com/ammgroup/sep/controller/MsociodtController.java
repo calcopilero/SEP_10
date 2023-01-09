@@ -3,6 +3,7 @@ package com.ammgroup.sep.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,6 +26,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
@@ -46,6 +48,10 @@ public class MsociodtController implements Initializable {
 	@FXML
 	private TextField tcuota;
 
+	@FXML
+	private Label lbconceplen;
+	int maxconcepchars = 180;
+	
 	@FXML
 	private TextArea taconcep;
 	
@@ -147,10 +153,20 @@ public class MsociodtController implements Initializable {
 		
 	    //Setting the maximum number of characters
 	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    ttpara.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    ttpara.addEventFilter(KeyEvent.KEY_TYPED, maxLength(95));
 	    
-	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
-    		change.getControlNewText().length() <= 180 ? change : null));
+		//To check concepto maximum number of chars and show the number of chars
+		UnaryOperator<Change> concepFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxconcepchars) {
+		    	
+				showConceptoChars(change.getControlNewText().length(), maxconcepchars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+	    taconcep.setTextFormatter(new TextFormatter<String>(concepFilter));
 	    
 	    //Setting the formatter for numbers
 	    tcuota.addEventFilter(KeyEvent.KEY_TYPED, maxLength(6));
@@ -331,5 +347,10 @@ public class MsociodtController implements Initializable {
 		}
 		
 		return boolwrapper.checks;
+	}
+	
+	private void showConceptoChars(int numchars, int maxchars) {
+		
+		lbconceplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
 	}
 }

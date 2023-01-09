@@ -127,7 +127,6 @@ public class FactlController implements Initializable {
 			
 			//Check if factura is Rectificada or Rectificativa
 			if (!(x.isExisteRectificativa() || x.getSerie().isRectificativas())) {
-			
 
 				faccrud.setAction(CrudAction.EDIT);
 				faccrud.setIndex(tfacturas.getSelectionModel().getSelectedIndex());
@@ -143,7 +142,7 @@ public class FactlController implements Initializable {
 	   		
 			} else {
 				
-				lbmsg.setText("Las facturas rectificativas o rectificadas no pueden editarse");
+				lbmsg.setText("Las facturas rectificativas/rectificadas no pueden editarse ni borrarse");
 			}
    			
    		}, () -> {
@@ -157,8 +156,11 @@ public class FactlController implements Initializable {
     void bdeleteOnAction(ActionEvent event) {
 		
 		Optional<Factura> facOpt = Optional.ofNullable(tfacturas.getSelectionModel().getSelectedItem());
-			facOpt.ifPresentOrElse((x) -> {
+		facOpt.ifPresentOrElse((x) -> {
 	
+			//Check if factura is Rectificada or Rectificativa
+			if (!(x.isExisteRectificativa() || x.getSerie().isRectificativas())) {
+
 				faccrud.setAction(CrudAction.DELETE);
 				faccrud.setIndex(tfacturas.getSelectionModel().getSelectedIndex());
 				faccrud.setDao(tfacturas.getSelectionModel().getSelectedItem());
@@ -170,11 +172,16 @@ public class FactlController implements Initializable {
 				}
 	    			
 	   			refreshForm();
-	   		}, () -> {
 	   			
-	   			lbmsg.setText("Debe seleccionar una factura");
-	   			
-	   		});
+			} else {
+				
+				lbmsg.setText("Las facturas rectificativas/rectificadas no pueden editarse ni borrarse");
+			}
+   		}, () -> {
+   			
+   			lbmsg.setText("Debe seleccionar una factura");
+   			
+   		});
 	}
 	
 	@FXML

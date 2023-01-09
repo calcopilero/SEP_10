@@ -1,6 +1,7 @@
 package com.ammgroup.sep.controller;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URL;
@@ -40,7 +41,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -637,36 +640,47 @@ public class SocioslController implements Initializable {
 		
 		DateTimeFormatter dtf = DateTimeFormatter.ofPattern(mutils.DATETIME_FORMAT);  
 	   	LocalDateTime now = LocalDateTime.now();  
-		   
+		
+	   	String emailLocation = sepprop.getEmailFileLocation();
 		String fileName = "emails_socios_" + dtf.format(now) + ".txt";
 		
-		BufferedWriter writer = new BufferedWriter(new FileWriter(sepprop.getEmailFileLocation() + fileName));
-		writer.write("");
+		File emaildir = new File(emailLocation);
 		
-		String sep = sepprop.getEmailSeparator();
+		if (emaildir.isDirectory()) {
 		
-		var cwrapper = new Object(){ int cont = 0; };
-		
-		ObservableList<Socio> socios = tsocios.getItems();
-		socios.forEach((soc) -> {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(emailLocation + fileName));
+			writer.write("");
 			
-			Optional<String> emailOpt = Optional.ofNullable(soc.getEmail());
+			String sep = sepprop.getEmailSeparator();
 			
-			emailOpt.ifPresent((x) -> {
-				try {
-					writer.append(x + sep + "\n");
-					cwrapper.cont++;
-				} catch (IOException e) {
-					System.out.println("Error generating emails file when writing email of a socio.");
-					e.printStackTrace();
-				}
+			var cwrapper = new Object(){ int cont = 0; };
+			
+			ObservableList<Socio> socios = tsocios.getItems();
+			socios.forEach((soc) -> {
+				
+				Optional<String> emailOpt = Optional.ofNullable(soc.getEmail());
+				
+				emailOpt.ifPresent((x) -> {
+					try {
+						writer.append(x + sep + "\n");
+						cwrapper.cont++;
+					} catch (IOException e) {
+						System.out.println("Error generating emails file when writing email of a socio.");
+						e.printStackTrace();
+					}
+				});
+	
+				    
 			});
-
-			    
-		});
-		
-		lbmsg.setText("El fichero de emails de socios se ha generado correctamente (" + cwrapper.cont + " emails de " + socios.size() + " socios).");
-		
-		writer.close();
+			
+			lbmsg.setText("El fichero de emails de socios se ha generado correctamente (" + cwrapper.cont + " emails de " + socios.size() + " socios).");
+			
+			writer.close();
+			
+		} else {
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION, "No existe la carpeta " + emailLocation + " para generar el informe.", ButtonType.YES);
+			alert.showAndWait();
+		}
 	}
 }

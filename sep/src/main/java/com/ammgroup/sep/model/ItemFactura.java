@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+//import org.hibernate.annotations.NotFound;
+//import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "ITEMS_FACTURAS")
 public class ItemFactura {
@@ -20,6 +23,7 @@ public class ItemFactura {
     
     @ManyToOne
 	@JoinColumn(name="FACTURA_ID", nullable=true)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private Factura factura;
     
     @Column(name="CONCEPTO", length=400, nullable=false, unique=true)

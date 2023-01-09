@@ -56,6 +56,9 @@ public class SEPPropertiesFile {
 	@Value( "${mainform.backcolor}" )
 	private String mainformBackcolor;
 	
+	@Value( "${sep.apptitle}" )
+	private String apptitle;
+	
 	@Value( "${sep.name}" )
 	private String name;
 	
@@ -189,6 +192,14 @@ public class SEPPropertiesFile {
 		this.mainformBackcolor = mainformBackcolor;
 	}
 
+	public String getApptitle() {
+		return apptitle;
+	}
+
+	public void setApptitle(String apptitle) {
+		this.apptitle = apptitle;
+	}
+	
 	public String getName() {
 		return name;
 	}

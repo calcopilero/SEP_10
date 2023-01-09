@@ -13,6 +13,7 @@
       <Label fx:id="lcuota_" layoutX="20.0" layoutY="77.0" text="Cuota:" />
       <TextField fx:id="tcuota" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="94.0" prefHeight="25.0" prefWidth="113.0" />
       <Label fx:id="lbconcep_" layoutX="20.0" layoutY="135.0" text="Concepto:" />
+      <Label fx:id="lbconceplen" alignment="CENTER_RIGHT" layoutX="261.0" layoutY="135.0" prefHeight="17.0" prefWidth="109.0" text="(0 caracteres)" textAlignment="RIGHT" />
       <TextArea fx:id="taconcep" layoutX="20.0" layoutY="153.0" prefHeight="74.0" prefWidth="350.0" />
       <Label fx:id="ltpara_" layoutX="20.0" layoutY="241.0" text="Texto &quot;para&quot;:" />
       <TextField fx:id="ttpara" layoutX="20.0" layoutY="258.0" prefHeight="25.0" prefWidth="350.0" />

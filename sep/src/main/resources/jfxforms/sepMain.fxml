@@ -43,7 +43,7 @@
           </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane prefHeight="380.0" prefWidth="600.0">
+      <AnchorPane fx:id="mainapane" prefHeight="380.0" prefWidth="600.0">
          <children>
             <ImageView fx:id="imlogo" fitHeight="283.0" fitWidth="374.0" pickOnBounds="true" preserveRatio="true">
                <image>

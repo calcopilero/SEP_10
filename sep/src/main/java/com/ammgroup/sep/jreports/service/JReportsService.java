@@ -131,6 +131,7 @@ public class JReportsService {
 				optFact.ifPresent((y) -> map.put("pmTextoRectificativa", "Rectifica la factura " + y.getNumeroCompuesto()));
 		}
 
+		//TODO Check if file exists 
 		File logofile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + sepprop.getFacturasImageFilename());
 		BufferedImage logo = ImageIO.read(logofile);
 		map.put("pmLogo", logo );
@@ -149,6 +150,8 @@ public class JReportsService {
 			optStr.ifPresentOrElse((x) -> map.put("pmSepTels", x), () -> map.put("pmSepTels", ""));
 			
 		if (fact.isFacturaFirmada()) {
+			
+			//TODO Check if file exists 
 			File firmafile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + sepprop.getFacturasImageFirmaFilename());
 			BufferedImage firma = ImageIO.read(firmafile);
 			//Another way to create a BufferedImage from ImageIO
@@ -157,202 +160,239 @@ public class JReportsService {
 		}
 		
 		File jrfile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_REPORTS_DIR + jrxfile);
-		JasperReport jreport = JasperCompileManager.compileReport(jrfile.getAbsolutePath());
-		
-        //InputStream in = this.getClass().getResourceAsStream(mutils.RESOURCE_REPORTS_DIR + jrxfile);
-        //JasperDesign jd = JRXmlLoader.load(in);
-        //JasperReport jreport = JasperCompileManager.compileReport(jd);
-		
-		List<ItemFactura> items = factRepository.findItemsOfFactura(fact);
-		
-		for (ItemFactura it: items) {
-			
-			optStr = Optional.ofNullable(it.getConcepto());
-				optStr.ifPresent((x) -> {
-					String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
-					//New lines codes are replaced by <br> when markup is html and are multiline sections 
-					it.setConcepto(htmlText);
-				});
-		}
-		
-		JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(items);
-		
-		JasperPrint jprint = JasperFillManager.fillReport(jreport, map, jrds);
-		
-		Optional<ReportFormat> rfOpt = Optional.ofNullable(rform);
-			rfOpt.ifPresentOrElse((x) -> {
-				
-			    switch (rform) {
-		        case PREVIEW:
-		        	
-			        final SwingNode swingNode = new SwingNode();
-			        createSwingContent(swingNode, jprint);
-			        //swingNode.setContent(new JLabel("Hello"));
-			        //swingNode.setContent(new JButton("Click me!"));
-	
-			        StackPane pane = new StackPane();
-			        pane.getChildren().add(swingNode);
-			        
-			        //JasperPrintManager.printPages(jprint, 0, 0, true);
-					
-				    Stage preview = new Stage();
-				    //preview.initOwner(owner);
-				    //preview.initModality(Modality.APPLICATION_MODAL);
-				    preview.setScene(new Scene(pane, 850, 1250));
-				    
-				    Optional<String> titOpt = Optional.ofNullable(vtitle);
-				    	titOpt.ifPresentOrElse((y) -> preview.setTitle(y), () -> preview.setTitle("Report preview"));
-				    
-				    preview.setTitle(vtitle);
-				    preview.show();
-				    
-		            break;
-		        	
-		        case PDF :
-		        	
-		        	try {
-						JasperExportManager.exportReportToPdfFile(jprint, sepprop.getPdfLocation() + gfile);
-						
-						Optional<String> optNum = Optional.ofNullable(fact.getNumeroCompuesto());
-							optNum.ifPresentOrElse((y) -> {
-								Alert alert = new Alert(Alert.AlertType.INFORMATION, "Se ha generado el fichero PDF de la factura " + y, ButtonType.YES);
-								alert.showAndWait();
-							}, () -> {
-								Alert alert = new Alert(Alert.AlertType.INFORMATION, "Se ha generado el fichero PDF de la factura.", ButtonType.YES);
-								alert.showAndWait();
-							});
 
-					} catch (JRException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		        	
-		            break;
-		            
-		        case HTML:
-		        	
-		        	try {
-		        		//gfile should contain the complete path and file name of the generated file
-						JasperExportManager.exportReportToHtmlFile(jprint, gfile);
-					} catch (JRException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		        	
-		    		break;
-		    		
-		        case XML:
-		        	
-		        	try {
-		        		//gfile should contain the complete path and file name of the generated file
-						JasperExportManager.exportReportToXmlFile(jprint, gfile, false);
-					} catch (JRException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-		        	
-		            break;
-		            
-		        case EXCEL:
-		            break;
-				default:
-					break;
-			    }
+		//Check if jasper reports file exists
+		if (jrfile.exists()) {
+
+			JasperReport jreport = JasperCompileManager.compileReport(jrfile.getAbsolutePath());
+		
+		    //InputStream in = this.getClass().getResourceAsStream(mutils.RESOURCE_REPORTS_DIR + jrxfile);
+		    //JasperDesign jd = JRXmlLoader.load(in);
+		    //JasperReport jreport = JasperCompileManager.compileReport(jd);
+			
+			List<ItemFactura> items = factRepository.findItemsOfFactura(fact);
+			
+			for (ItemFactura it: items) {
 				
-			}, () -> {
+				optStr = Optional.ofNullable(it.getConcepto());
+					optStr.ifPresent((x) -> {
+						String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
+						//New lines codes are replaced by <br> when markup is html and are multiline sections 
+						it.setConcepto(htmlText);
+					});
+			}
+			
+			JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(items);
+			
+			JasperPrint jprint = JasperFillManager.fillReport(jreport, map, jrds);
+			
+			Optional<ReportFormat> rfOpt = Optional.ofNullable(rform);
+				rfOpt.ifPresentOrElse((x) -> {
 					
-				//TODO Show message setting that a format should be set
-			});
+				    switch (rform) {
+			        case PREVIEW:
+			        	
+				        final SwingNode swingNode = new SwingNode();
+				        createSwingContent(swingNode, jprint);
+				        //swingNode.setContent(new JLabel("Hello"));
+				        //swingNode.setContent(new JButton("Click me!"));
+		
+				        StackPane pane = new StackPane();
+				        pane.getChildren().add(swingNode);
+				        
+				        //JasperPrintManager.printPages(jprint, 0, 0, true);
+						
+					    Stage preview = new Stage();
+					    //preview.initOwner(owner);
+					    //preview.initModality(Modality.APPLICATION_MODAL);
+					    preview.setScene(new Scene(pane, 850, 1250));
+					    
+					    Optional<String> titOpt = Optional.ofNullable(vtitle);
+					    	titOpt.ifPresentOrElse((y) -> preview.setTitle(y), () -> preview.setTitle("Report preview"));
+					    
+					    preview.setTitle(vtitle);
+					    preview.show();
+					    
+			            break;
+			        	
+			        case PDF :
+			        	
+			        	try {
+			        		
+			        		String pdfLocation = sepprop.getPdfLocation();
+			        		File pdfdir = new File(pdfLocation);
+			        		
+			        		if (pdfdir.isDirectory()) {
+			        		
+								JasperExportManager.exportReportToPdfFile(jprint, pdfLocation + gfile);
+								
+								Optional<String> optNum = Optional.ofNullable(fact.getNumeroCompuesto());
+									optNum.ifPresentOrElse((y) -> {
+										Alert alert = new Alert(Alert.AlertType.INFORMATION, "Se ha generado el fichero PDF de la factura " + y, ButtonType.YES);
+										alert.showAndWait();
+									}, () -> {
+										Alert alert = new Alert(Alert.AlertType.INFORMATION, "Se ha generado el fichero PDF de la factura.", ButtonType.YES);
+										alert.showAndWait();
+									});
+									
+			        		} else {
+			        			
+								Alert alert = new Alert(Alert.AlertType.INFORMATION, "No existe la carpeta " + pdfLocation + " para generar el informe.", ButtonType.YES);
+								alert.showAndWait();
+			        		}
+		
+						} catch (JRException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        	
+			            break;
+			            
+			        case HTML:
+			        	
+			        	try {
+			        		//gfile should contain the complete path and file name of the generated file
+			        		//html location should be configured in properties file and added as in PDFs printing
+							JasperExportManager.exportReportToHtmlFile(jprint, gfile);
+						} catch (JRException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        	
+			    		break;
+			    		
+			        case XML:
+			        	
+			        	try {
+			        		//gfile should contain the complete path and file name of the generated file
+			        		//xml location should be configured in properties file and added as in PDFs printing
+							JasperExportManager.exportReportToXmlFile(jprint, gfile, false);
+						} catch (JRException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+			        	
+			            break;
+			            
+			        case EXCEL:
+			            break;
+					default:
+						break;
+				    }
+					
+				}, () -> {
+						
+					Alert alert = new Alert(Alert.AlertType.INFORMATION, "Debe especificar un formato para generar el informe.", ButtonType.YES);
+					alert.showAndWait();
+				});
+				
+		} else {
+
+			Alert alert = new Alert(Alert.AlertType.INFORMATION, "El fichero JasperReports para generar el informe no se encuentra.", ButtonType.YES);
+			alert.showAndWait();
+
+		}
 	}
 
 	public <T> void generateListReport(String jrxfile, List<T> itemslist, ReportFormat rform, String gfile, String vtitle) throws Exception {
 		
 		File jrfile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_REPORTS_DIR + jrxfile);
-		JasperReport jreport = JasperCompileManager.compileReport(jrfile.getAbsolutePath());
 		
-        //InputStream in = getClass().getResourceAsStream(mutils.RESOURCE_REPORTS_DIR + jrxfile);
-		//Another alternative to get an InputStream using absolute location
-		//File jrfile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_REPORTS_DIR + jrxfile);
-		//InputStream in = new FileInputStream(jrfile);
-        //JasperDesign jd = JRXmlLoader.load(in);
-        //JasperReport jreport = JasperCompileManager.compileReport(jd);
-
-		JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(itemslist);
-		
-		JasperPrint jprint = JasperFillManager.fillReport(jreport, null, jrds);
-		
-		Optional<ReportFormat> rfOpt = Optional.ofNullable(rform);
-			rfOpt.ifPresentOrElse((x) -> {
-				
-			    switch (rform) {
-		        case PREVIEW:
-		        	
-			        final SwingNode swingNode = new SwingNode();
-			        createSwingContent(swingNode, jprint);
-			        //swingNode.setContent(new JLabel("Hello"));
-			        //swingNode.setContent(new JButton("Click me!"));
+		//Check if jasper reports file exists
+		if (jrfile.exists()) {
+			JasperReport jreport = JasperCompileManager.compileReport(jrfile.getAbsolutePath());
+			
+	        //InputStream in = getClass().getResourceAsStream(mutils.RESOURCE_REPORTS_DIR + jrxfile);
+			//Another alternative to get an InputStream using absolute location
+			//File jrfile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_REPORTS_DIR + jrxfile);
+			//InputStream in = new FileInputStream(jrfile);
+	        //JasperDesign jd = JRXmlLoader.load(in);
+	        //JasperReport jreport = JasperCompileManager.compileReport(jd);
 	
-			        StackPane pane = new StackPane();
-			        pane.getChildren().add(swingNode);
-			        
-			        //JasperPrintManager.printPages(jprint, 0, 0, true);
+			JRBeanCollectionDataSource jrds = new JRBeanCollectionDataSource(itemslist);
+			
+			JasperPrint jprint = JasperFillManager.fillReport(jreport, null, jrds);
+			
+			Optional<ReportFormat> rfOpt = Optional.ofNullable(rform);
+				rfOpt.ifPresentOrElse((x) -> {
 					
-				    Stage preview = new Stage();
-				    //preview.initOwner(owner);
-				    //preview.initModality(Modality.APPLICATION_MODAL);
-				    preview.setScene(new Scene(pane, 850, 650));
-				    
-				    Optional<String> titOpt = Optional.ofNullable(vtitle);
-				    	titOpt.ifPresentOrElse((y) -> preview.setTitle(y), () -> preview.setTitle("Report preview"));
-				    
-				    preview.setTitle(vtitle);
-				    preview.show();
-				    
-		            break;
-		        	
-		        case PDF :
-		        	
-		        	try {
-		        		//gfile should contain the complete path and file name of the generated file
-						JasperExportManager.exportReportToPdfFile(jprint, gfile);
-					} catch (JRException e) {
-						e.printStackTrace();
-					}
-		        	
-		            break;
-		            
-		        case HTML:
-		        	
-		        	try {
-		        		//gfile should contain the complete path and file name of the generated file
-						JasperExportManager.exportReportToHtmlFile(jprint, gfile);
-					} catch (JRException e) {
-						e.printStackTrace();
-					}
-		        	
-		    		break;
-		    		
-		        case XML:
-		        	
-		        	try {
-		        		//gfile should contain the complete path and file name of the generated file
-						JasperExportManager.exportReportToXmlFile(jprint, gfile, false);
-					} catch (JRException e) {
-						e.printStackTrace();
-					}
-		        	
-		            break;
-		            
-		        case EXCEL:
-		            break;
-				default:
-					break;
-			    }
+				    switch (rform) {
+			        case PREVIEW:
+			        	
+				        final SwingNode swingNode = new SwingNode();
+				        createSwingContent(swingNode, jprint);
+				        //swingNode.setContent(new JLabel("Hello"));
+				        //swingNode.setContent(new JButton("Click me!"));
+		
+				        StackPane pane = new StackPane();
+				        pane.getChildren().add(swingNode);
+				        
+				        //JasperPrintManager.printPages(jprint, 0, 0, true);
+						
+					    Stage preview = new Stage();
+					    //preview.initOwner(owner);
+					    //preview.initModality(Modality.APPLICATION_MODAL);
+					    preview.setScene(new Scene(pane, 850, 650));
+					    
+					    Optional<String> titOpt = Optional.ofNullable(vtitle);
+					    	titOpt.ifPresentOrElse((y) -> preview.setTitle(y), () -> preview.setTitle("Report preview"));
+					    
+					    preview.setTitle(vtitle);
+					    preview.show();
+					    
+			            break;
+			        	
+			        case PDF :
+			        	
+			        	try {
+			        		//gfile should contain the complete path and file name of the generated file
+							JasperExportManager.exportReportToPdfFile(jprint, gfile);
+						} catch (JRException e) {
+							e.printStackTrace();
+						}
+			        	
+			            break;
+			            
+			        case HTML:
+			        	
+			        	try {
+			        		//gfile should contain the complete path and file name of the generated file
+							JasperExportManager.exportReportToHtmlFile(jprint, gfile);
+						} catch (JRException e) {
+							e.printStackTrace();
+						}
+			        	
+			    		break;
+			    		
+			        case XML:
+			        	
+			        	try {
+			        		//gfile should contain the complete path and file name of the generated file
+							JasperExportManager.exportReportToXmlFile(jprint, gfile, false);
+						} catch (JRException e) {
+							e.printStackTrace();
+						}
+			        	
+			            break;
+			            
+			        case EXCEL:
+			            break;
+					default:
+						break;
+				    }
+					
+				}, () -> {
+						
+					Alert alert = new Alert(Alert.AlertType.INFORMATION, "Debe especificar un formato para generar el informe.", ButtonType.YES);
+					alert.showAndWait();
+				});
 				
-			}, () -> {
-					
-				//TODO Show message setting that a format should be set
-			});
+		} else {
+			
+			Alert alert = new Alert(Alert.AlertType.INFORMATION, "El fichero JasperReports para generar el informe no se encuentra.", ButtonType.YES);
+			alert.showAndWait();
+			
+		}
 	}
 	
     private void createSwingContent(final SwingNode swingNode, JasperPrint jprint) {

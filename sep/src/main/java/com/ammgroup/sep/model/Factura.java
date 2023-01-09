@@ -20,6 +20,9 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.hibernate.annotations.NotFound;
+import org.hibernate.annotations.NotFoundAction;
+
 @Entity
 @Table(name = "FACTURAS")
 public class Factura {
@@ -35,6 +38,7 @@ public class Factura {
     
     @ManyToOne
 	@JoinColumn(name="SERIEFACTURAS_ID", nullable=true)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private SerieFacturas serie;
     
     @Column(name="NUMERO", precision=5, nullable=false, unique=false)
@@ -56,10 +60,12 @@ public class Factura {
     
 	@ManyToOne
 	@JoinColumn(name="SOCIO_ID", nullable=true)
+	//@NotFound(action = NotFoundAction.IGNORE) 
     private Socio socio;
     
     @ManyToOne
 	@JoinColumn(name="AGENCIA_ID", nullable=true)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private Agencia agencia;
     
     @Column(name="CIFNIF", length=25, nullable=false, unique=true)
@@ -72,6 +78,7 @@ public class Factura {
     private String direccion;
     
     @OneToMany(targetEntity=ItemFactura.class, mappedBy="factura", fetch=FetchType.EAGER, cascade=CascadeType.ALL)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private Set<ItemFactura> itemsFactura = new HashSet<ItemFactura>();
     
     @Column(name="IMP_TOTALITEMS", precision=5, scale=2, nullable=false, unique=false)
@@ -79,6 +86,7 @@ public class Factura {
     
     @ManyToOne
 	@JoinColumn(name="DESCUENTO_ID", nullable=true)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private Descuento descuento;
     
     @Column(name="PORC_DESCUENTO", precision=5, scale=2, nullable=false, unique=false)
@@ -92,6 +100,7 @@ public class Factura {
     
     @ManyToOne
 	@JoinColumn(name="TIPOIVA_ID", nullable=false)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private TipoIVA tipoIVA;
     
     @Column(name="PORC_TIPOIVA", precision=5, scale=2, nullable=false, unique=false)
@@ -111,14 +120,17 @@ public class Factura {
     
     @OneToOne
 	@JoinColumn(name="FACTURARECTIFICADA_ID", nullable=true)
+    @NotFound(action = NotFoundAction.IGNORE)
     private Factura facturaRectificada;
 	
     @ManyToOne
 	@JoinColumn(name="ESTADOFACTURA_ID", nullable=true)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private EstadoFactura estadoFactura;
     
     @ManyToOne
 	@JoinColumn(name="FORMAPAGO_ID", nullable=false)
+    //@NotFound(action = NotFoundAction.IGNORE) 
     private FormaPago formaPago;
     
     @Column(name="REFERENCIA", length=30, nullable=true, unique=false)

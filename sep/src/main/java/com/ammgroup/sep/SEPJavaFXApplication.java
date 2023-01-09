@@ -4,6 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ConfigurableApplicationContext;
+
+import com.ammgroup.sep.controller.SEPMainController;
+
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +14,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class SEPJavaFXApplication extends Application {
@@ -35,7 +39,7 @@ public class SEPJavaFXApplication extends Application {
 	    //Parent root = loader.load();
 	    //TTTrackerMainController controller = loader.getController();
 	    
-	    primaryStage.setTitle("Gestión SEP 1.0");
+        primaryStage.setTitle("Gestión SEP 1.1");
 	    primaryStage.setMaximized(true);
 	    primaryStage.setOnCloseRequest(evt -> {
 	        // allow user to decide between yes and no
@@ -50,9 +54,12 @@ public class SEPJavaFXApplication extends Application {
 	        }
 	    });
 	    
-	    
 	    primaryStage.setScene(new Scene(root));
 
+	    //Once the scene is set and the controller initialized we can use it to set title and icons
+	    SEPMainController sepmc = loader.getController();
+	    sepmc.setTitleAndIcon();
+	    
 	    primaryStage.show();
 	    
 	}
