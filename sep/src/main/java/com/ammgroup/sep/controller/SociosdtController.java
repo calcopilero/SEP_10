@@ -688,7 +688,7 @@ public class SociosdtController implements Initializable {
 	    txtelmovil.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
 	    txctrab.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
 	    txatrab.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txtitul.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    txtitul.addEventFilter(KeyEvent.KEY_TYPED, maxLength(90));
 	    txcsep.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
 	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 	    txdbanc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));

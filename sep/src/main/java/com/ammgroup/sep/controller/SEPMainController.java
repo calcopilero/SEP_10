@@ -294,7 +294,8 @@ public class SEPMainController implements Initializable {
 		Stage mstage = (Stage) mainapane.getScene().getWindow();
 		
 		//Set the image in the window
-        Image sepImg = new Image(mutils.RESOURCE_IMAGES_DIR + sepprop.getSepImageFilename());
+        //Image sepImg = new Image(mutils.RESOURCE_IMAGES_DIR + sepprop.getSepImageFilename());
+        Image sepImg = new Image(sepprop.getIconFile());
         mstage.getIcons().add(sepImg);
         
         //Set the title

@@ -11,6 +11,9 @@ public class SEPPropertiesFile {
 	@Value( "${db.file}" )
 	private String dbFile;
 	
+	@Value( "${icon.file}" )
+	private String iconFile;
+	
 	@Value( "${pdf.location}" )
 	private String pdfLocation;
 	
@@ -104,6 +107,14 @@ public class SEPPropertiesFile {
 		this.dbFile = dbFile;
 	}
 	
+	public String getIconFile() {
+		return iconFile;
+	}
+
+	public void setIconFile(String iconFile) {
+		this.iconFile = iconFile;
+	}
+
 	public String getPdfLocation() {
 		return pdfLocation;
 	}

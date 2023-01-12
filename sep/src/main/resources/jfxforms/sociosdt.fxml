@@ -55,9 +55,9 @@
       <Label fx:id="lbctrab" layoutX="25.0" layoutY="261.0" text="Centro de trabajo:" />
       <TextField fx:id="txctrab" layoutX="25.0" layoutY="278.0" prefHeight="25.0" prefWidth="350.0" />
       <Label fx:id="lbatrab" layoutX="393.0" layoutY="261.0" text="Área de trabajo:" />
-      <TextField fx:id="txatrab" layoutX="392.0" layoutY="278.0" prefHeight="25.0" prefWidth="350.0" />
-      <Label fx:id="lbtitul" layoutX="757.0" layoutY="261.0" text="Titulación:" />
-      <TextField fx:id="txtitul" layoutX="757.0" layoutY="278.0" prefHeight="25.0" prefWidth="290.0" />
+      <TextField fx:id="txatrab" layoutX="392.0" layoutY="278.0" prefHeight="25.0" prefWidth="290.0" />
+      <Label fx:id="lbtitul" layoutX="694.0" layoutY="261.0" text="Titulación:" />
+      <TextField fx:id="txtitul" layoutX="693.0" layoutY="278.0" prefHeight="25.0" prefWidth="382.0" />
       <Label fx:id="lbcsep" layoutX="26.0" layoutY="311.0" text="Contacto con la SEP:" />
       <TextField fx:id="txcsep" layoutX="26.0" layoutY="328.0" prefHeight="25.0" prefWidth="350.0" />
       <CheckBox fx:id="chlopd" layoutX="393.0" layoutY="332.0" mnemonicParsing="false" text="LOPD" />

@@ -588,13 +588,13 @@ public class HfactController implements Initializable {
                 	Optional<Provincia> prvOpt = Optional.ofNullable(y.getProvincia());
                 		prvOpt.ifPresent((z) -> { 
                 			Optional<String> stOpt = Optional.ofNullable(z.getDescripcion());
-                				stOpt.ifPresent((w) -> tfwrapper.tdireccion += (" (" + w + ")" + mutils.NL_TEXT));
+                				stOpt.ifPresent((w) -> tfwrapper.tdireccion += (" (" + w + ")"));
                 		});
                 		
                 	Optional<Pais> paisOpt = Optional.ofNullable(y.getPais());
                 		paisOpt.ifPresent((z) -> { 
                 			Optional<String> stOpt = Optional.ofNullable(z.getDescripcion());
-                				stOpt.ifPresent((w) -> tfwrapper.tdireccion += w);
+                				stOpt.ifPresent((w) -> tfwrapper.tdireccion += (mutils.NL_TEXT + w));
                 		});
                 		
                 	//Insert text in Texto Complementario (if its set at serie facturas level, wich is the priority level)
@@ -634,13 +634,13 @@ public class HfactController implements Initializable {
             		prvOpt = Optional.ofNullable(x.getProvincia());
                 		prvOpt.ifPresent((z) -> { 
                 			Optional<String> stOpt = Optional.ofNullable(z.getDescripcion());
-                				stOpt.ifPresent((w) -> tfwrapper.tcomp += (" (" + w + ")" + mutils.NL_TEXT));
+                				stOpt.ifPresent((w) -> tfwrapper.tcomp += (" (" + w + ")"));
                 		});
                 		
                 	paisOpt = Optional.ofNullable(x.getPais());
                 		paisOpt.ifPresent((z) -> { 
                 			Optional<String> stOpt = Optional.ofNullable(z.getDescripcion());
-                				stOpt.ifPresent((w) -> tfwrapper.tcomp += w);
+                				stOpt.ifPresent((w) -> tfwrapper.tcomp += (mutils.NL_TEXT + w));
                 		});
     				
     			}, () -> {
@@ -672,12 +672,12 @@ public class HfactController implements Initializable {
 	            	Optional<Provincia> prvOpt = Optional.ofNullable(x.getProvincia());
 	            		prvOpt.ifPresent((y) -> { 
 	            			Optional<String> stOpt = Optional.ofNullable(y.getDescripcion());
-	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += (" (" + z + ")" + mutils.NL_TEXT));
+	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += (" (" + z + ")"));
 	            		});
 	            	Optional<Pais> paisOpt = Optional.ofNullable(x.getPais());
 	            		paisOpt.ifPresent((y) -> { 
 	            			Optional<String> stOpt = Optional.ofNullable(y.getDescripcion());
-	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += z);
+	            				stOpt.ifPresent((z) -> tfwrapper.tdireccion += (mutils.NL_TEXT + z));
 	            		});
     			});
 
