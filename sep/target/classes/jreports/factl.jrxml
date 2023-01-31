@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.18.1.final using JasperReports Library version 6.18.1-9d75d1969e774d4f179fb3be8401e98a0e6d1611  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factl" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="2a7e050c-c35c-4613-8274-c9f5d5dd8e43">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="factl" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" isFloatColumnFooter="true" uuid="2a7e050c-c35c-4613-8274-c9f5d5dd8e43">
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageHeight" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.pageWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.topMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.bottomMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.leftMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.rightMargin" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnWidth" value="pixel"/>
+	<property name="com.jaspersoft.studio.unit.columnSpacing" value="pixel"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
 	<field name="titular" class="java.lang.String"/>
-	<field name="fechaFactura" class="java.util.Date"/>
+	<field name="formaPago" class="com.ammgroup.sep.model.FormaPago"/>
 	<field name="numeroCompuesto" class="java.lang.String"/>
-	<field name="cifnif" class="java.lang.String"/>
+	<field name="agencia" class="com.ammgroup.sep.model.Agencia"/>
 	<field name="importeTotal" class="java.lang.Double"/>
+	<field name="estadoFactura" class="com.ammgroup.sep.model.EstadoFactura"/>
+	<field name="referencia" class="java.lang.String"/>
 	<variable name="sumaImportes" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{importeTotal}]]></variableExpression>
 	</variable>
@@ -18,7 +29,7 @@
 	<pageHeader>
 		<band height="40" splitType="Stretch">
 			<staticText>
-				<reportElement x="-6" y="8" width="566" height="30" uuid="cbe2fcc2-09d2-4d98-9451-2ac459378c60"/>
+				<reportElement x="-6" y="8" width="780" height="30" uuid="cbe2fcc2-09d2-4d98-9451-2ac459378c60"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="18" isBold="true"/>
 				</textElement>
@@ -27,9 +38,9 @@
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="45" splitType="Stretch">
+		<band height="38" splitType="Stretch">
 			<staticText>
-				<reportElement x="76" y="8" width="180" height="30" uuid="67fd83ce-fe85-4065-99b0-667e94bf7f50">
+				<reportElement x="76" y="8" width="174" height="30" uuid="67fd83ce-fe85-4065-99b0-667e94bf7f50">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -38,13 +49,13 @@
 				<text><![CDATA[Titular]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="354" y="8" width="76" height="30" uuid="4f0b1daa-4f09-4cdc-b147-e64555b24526">
+				<reportElement x="471" y="8" width="108" height="30" uuid="4f0b1daa-4f09-4cdc-b147-e64555b24526">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>
-				<text><![CDATA[Fecha factura]]></text>
+				<text><![CDATA[Forma de pago]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="8" width="76" height="30" uuid="0e1e004b-bcc2-48e1-bcb5-6e777e6e88f1"/>
@@ -54,12 +65,12 @@
 				<text><![CDATA[Nº Factura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="260" y="8" width="90" height="30" uuid="695d6387-a889-4c95-be6a-04fbfdc0295e"/>
+				<reportElement x="250" y="8" width="136" height="30" uuid="695d6387-a889-4c95-be6a-04fbfdc0295e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[CIF/NIF]]></text>
+				<text><![CDATA[Agencia]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="432" y="8" width="76" height="30" uuid="85c245cb-1632-4805-884e-5def1fb733d8">
+				<reportElement x="700" y="8" width="76" height="30" uuid="85c245cb-1632-4805-884e-5def1fb733d8">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -67,12 +78,30 @@
 				</textElement>
 				<text><![CDATA[Importe]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="580" y="8" width="108" height="30" uuid="de7c7b1d-a7eb-4ae3-a77c-e60e894e1ab9">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Estado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="386" y="8" width="84" height="30" uuid="d9b99447-4ae1-46b9-85d5-3e4ff35aea30">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
+				</reportElement>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Referencia]]></text>
+			</staticText>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="22" splitType="Stretch">
+		<band height="23" splitType="Stretch">
 			<textField>
-				<reportElement x="80" y="2" width="176" height="16" uuid="2959b917-4829-425b-b6e8-1cb80db09b7f">
+				<reportElement x="80" y="2" width="170" height="16" uuid="2959b917-4829-425b-b6e8-1cb80db09b7f">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
 					<printWhenExpression><![CDATA[!$F{titular}.isEmpty()]]></printWhenExpression>
 				</reportElement>
@@ -80,12 +109,12 @@
 				<textFieldExpression><![CDATA[$F{titular}]]></textFieldExpression>
 			</textField>
 			<textField pattern="dd-MM-yy">
-				<reportElement x="354" y="2" width="76" height="16" isRemoveLineWhenBlank="true" uuid="a73971aa-0b1e-46e4-bc61-0c55a7101ec2">
+				<reportElement x="481" y="3" width="98" height="14" isRemoveLineWhenBlank="true" uuid="a73971aa-0b1e-46e4-bc61-0c55a7101ec2">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
-					<printWhenExpression><![CDATA[!$F{fechaFactura}.equals( null )]]></printWhenExpression>
+					<printWhenExpression><![CDATA[!$F{formaPago}.equals( null )]]></printWhenExpression>
 				</reportElement>
 				<textElement verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{fechaFactura}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{formaPago}.getDescripcion()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="10" y="3" width="62" height="14" uuid="aea0dd66-e354-412f-9fcd-8f138e246338">
@@ -95,26 +124,42 @@
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA[$F{numeroCompuesto}]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="260" y="3" width="90" height="14" uuid="5b9a2654-2f7e-4cfe-8dd6-004f60a1a8b3">
+			<textField isBlankWhenNull="true">
+				<reportElement x="256" y="3" width="130" height="14" uuid="5b9a2654-2f7e-4cfe-8dd6-004f60a1a8b3">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="e0a01ec5-7304-4f4a-8822-c9b8376cb17a"/>
-					<printWhenExpression><![CDATA[!$F{cifnif}.isEmpty()]]></printWhenExpression>
 				</reportElement>
-				<textFieldExpression><![CDATA[$F{cifnif}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{agencia}.getNombre()]]></textFieldExpression>
 			</textField>
 			<textField pattern="#,##0.00">
-				<reportElement x="432" y="3" width="76" height="14" uuid="f832c631-938d-460c-99b5-a519f9d9dee7">
+				<reportElement x="700" y="3" width="74" height="14" uuid="f832c631-938d-460c-99b5-a519f9d9dee7">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2b9fffe-75c2-4c93-866f-7d7d9e93c54d"/>
 				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{importeTotal}]]></textFieldExpression>
+			</textField>
+			<textField pattern="dd-MM-yy">
+				<reportElement x="590" y="4" width="98" height="14" isRemoveLineWhenBlank="true" uuid="b6f734f6-f668-4d2f-9e2f-5c13285d09c2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="86116671-285c-40fc-b77c-72e199c97113"/>
+					<printWhenExpression><![CDATA[!$F{formaPago}.equals( null )]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{estadoFactura}.getDescripcion()]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="400" y="4" width="70" height="14" uuid="c4f34c90-36a8-482d-8ab2-986a7a42a47b">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d57b2242-c452-4b38-90e8-dd57b878176f"/>
+					<property name="com.jaspersoft.studio.unit.height" value="px"/>
+					<printWhenExpression><![CDATA[!$F{titular}.isEmpty()]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{referencia}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
 		<band height="29">
 			<textField pattern="#,##0.00">
-				<reportElement x="432" y="7" width="76" height="13" uuid="c44a6cee-8e2e-4691-ad4d-ecf9fe32237d"/>
+				<reportElement x="700" y="7" width="76" height="13" uuid="c44a6cee-8e2e-4691-ad4d-ecf9fe32237d"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font isBold="true"/>
 				</textElement>

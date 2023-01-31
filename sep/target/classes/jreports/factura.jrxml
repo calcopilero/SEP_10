@@ -68,7 +68,7 @@
 				<textFieldExpression><![CDATA[$P{pmNumFactura}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="88" y="270" width="212" height="20" uuid="0265b7a8-e08d-4fa6-98c8-a6345140e46e">
+				<reportElement x="88" y="270" width="252" height="20" uuid="0265b7a8-e08d-4fa6-98c8-a6345140e46e">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 				</reportElement>
 				<textElement verticalAlignment="Middle">
@@ -143,7 +143,7 @@
 				<textFieldExpression><![CDATA[$P{pmReferencia}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="299" y="30" width="232" height="13" uuid="e1bd8152-ff56-4c4f-ae15-b28609760ec5">
+				<reportElement x="235" y="30" width="296" height="13" uuid="e1bd8152-ff56-4c4f-ae15-b28609760ec5">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -153,7 +153,7 @@
 				<textFieldExpression><![CDATA[$P{pmSepDireccion}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="299" y="56" width="232" height="13" uuid="565f48fb-0e7b-416c-9214-5fb38d8ecb97">
+				<reportElement x="235" y="56" width="296" height="13" uuid="565f48fb-0e7b-416c-9214-5fb38d8ecb97">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -163,7 +163,7 @@
 				<textFieldExpression><![CDATA[$P{pmSepEmail} +" - " + $P{pmSepWeb}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="299" y="69" width="232" height="13" uuid="cb5e3124-26c8-4543-b548-c49346670119">
+				<reportElement x="235" y="69" width="296" height="13" uuid="cb5e3124-26c8-4543-b548-c49346670119">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -189,7 +189,7 @@
 				<textFieldExpression><![CDATA[$P{pmTextoRectificativa}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="299" y="43" width="232" height="13" uuid="23473851-f175-43d2-80b1-377d9a1f0533">
+				<reportElement x="235" y="43" width="296" height="13" uuid="23473851-f175-43d2-80b1-377d9a1f0533">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>
@@ -199,7 +199,7 @@
 				<textFieldExpression><![CDATA[$P{pmSepNif}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="299" y="17" width="232" height="13" uuid="238303b7-6b80-4a89-8895-5161300c2de8">
+				<reportElement x="235" y="17" width="296" height="13" uuid="238303b7-6b80-4a89-8895-5161300c2de8">
 					<property name="com.jaspersoft.studio.unit.height" value="px"/>
 					<property name="com.jaspersoft.studio.unit.x" value="px"/>
 				</reportElement>

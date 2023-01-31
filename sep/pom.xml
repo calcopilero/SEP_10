@@ -92,7 +92,7 @@
 </project>
 
 <!-- PLACE INSIDE build TAG -->
-<!-- 		<resources> -->
+<!-- 	    <resources> -->
 <!-- 	        <resource> -->
 <!-- 	            <directory>src/main/resources</directory> -->
 <!-- 	            <excludes> -->
@@ -100,10 +100,10 @@
 <!-- 	                <exclude>config/**</exclude> -->
 <!-- 	                <exclude>images/**</exclude> -->
 <!-- 	                <exclude>jreports/**</exclude> -->
-<!--					<exclude>fonts/**</exclude> -->
-<!--					<exclude>jasperreports_extension.properties</exclude> -->
+<!-- 					<exclude>fonts/**</exclude> -->
 <!-- 	            </excludes> -->
 <!-- 	            <filtering>false</filtering> -->
 <!-- 	        </resource> -->
 <!-- 	    </resources> -->
+
 
