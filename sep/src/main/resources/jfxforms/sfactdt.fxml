@@ -7,7 +7,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="454.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.SfactdtController">
+<AnchorPane prefHeight="490.0" prefWidth="388.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.SfactdtController">
    <children>
       <Label fx:id="ldesc" layoutX="20.0" layoutY="23.0" text="Descripción:" />
       <TextField fx:id="tdesc" layoutX="20.0" layoutY="40.0" prefHeight="25.0" prefWidth="350.0" />
@@ -21,8 +21,9 @@
       <TextField fx:id="ttpara" layoutX="20.0" layoutY="270.0" prefHeight="25.0" prefWidth="350.0" />
       <Label fx:id="lbcbtiva" layoutX="20.0" layoutY="313.0" text="IVA" />
       <ComboBox fx:id="cbtiva" layoutX="20.0" layoutY="330.0" prefHeight="25.0" prefWidth="243.0" stylesheets="@sep.css" />
-      <Label fx:id="lbmsg" layoutX="20.0" layoutY="380.0" minWidth="350.0" prefHeight="17.0" prefWidth="350.0" />
-      <Button fx:id="bexec" layoutX="20.0" layoutY="413.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" AnchorPane.leftAnchor="20.0" />
-      <Button fx:id="bclose" layoutX="295.0" layoutY="413.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Label fx:id="lbmsg" layoutX="20.0" layoutY="421.0" minWidth="350.0" prefHeight="17.0" prefWidth="350.0" />
+      <Button fx:id="bexec" layoutX="20.0" layoutY="454.0" mnemonicParsing="false" onAction="#bexecOnAction" prefHeight="25.0" prefWidth="75.0" text="Ejecutar" AnchorPane.leftAnchor="20.0" />
+      <Button fx:id="bclose" layoutX="295.0" layoutY="454.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <CheckBox fx:id="chfprof" layoutX="20.0" layoutY="375.0" mnemonicParsing="false" text="Usada para facturas PROFORMA" />
    </children>
 </AnchorPane>

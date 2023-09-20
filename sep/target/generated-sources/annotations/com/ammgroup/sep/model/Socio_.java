@@ -27,6 +27,7 @@ public abstract class Socio_ {
 	public static volatile SingularAttribute<Socio, String> anotaciones;
 	public static volatile SingularAttribute<Socio, String> domicilio;
 	public static volatile SingularAttribute<Socio, Boolean> factura;
+	public static volatile SingularAttribute<Socio, String> notasmbaja;
 	public static volatile SingularAttribute<Socio, Boolean> baja;
 	public static volatile SingularAttribute<Socio, MotivoBaja> motivoBaja;
 	public static volatile SingularAttribute<Socio, String> localidad;
@@ -70,6 +71,7 @@ public abstract class Socio_ {
 	public static final String ANOTACIONES = "anotaciones";
 	public static final String DOMICILIO = "domicilio";
 	public static final String FACTURA = "factura";
+	public static final String NOTASMBAJA = "notasmbaja";
 	public static final String BAJA = "baja";
 	public static final String MOTIVO_BAJA = "motivoBaja";
 	public static final String LOCALIDAD = "localidad";

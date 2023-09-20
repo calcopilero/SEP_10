@@ -162,6 +162,12 @@ public class SociosdtController implements Initializable {
 	private TextField txtelmovil;
 	
 	@FXML
+	private TextField txcjdir;
+	
+	@FXML
+	private CheckBox chjdiract;
+	
+	@FXML
 	private TextField txctrab;
 	
 	@FXML
@@ -169,6 +175,25 @@ public class SociosdtController implements Initializable {
 
 	@FXML
 	private TextField txtitul;
+	
+	@FXML
+	private TextField txmarc;
+
+	@FXML
+	private CheckBox chbaja;
+
+	@FXML
+	private DatePicker dpfbaja;
+
+	@FXML
+	private ComboBox<MotivoBaja> cbmbaja;
+	
+	@FXML
+	private Label lbnmbajalen;
+	int maxnmbajachars = 500;
+	
+	@FXML
+	private TextArea txarnmbaja;
 	
 	@FXML
 	private TextField txcsep;
@@ -179,9 +204,6 @@ public class SociosdtController implements Initializable {
 	@FXML
 	private CheckBox chldist;
 	
-	@FXML
-	private TextField txmarc;
-		
 	@FXML
 	private ComboBox<FormaPago> cbfpago;
 	
@@ -211,21 +233,6 @@ public class SociosdtController implements Initializable {
 	private TextField txref;
 
 	@FXML
-	private CheckBox chbaja;
-
-	@FXML
-	private DatePicker dpfbaja;
-
-	@FXML
-	private ComboBox<MotivoBaja> cbmbaja;
-	
-	@FXML
-	private TextField txcjdir;
-	
-	@FXML
-	private CheckBox chjdiract;
-
-	@FXML
 	private Label lbanotlen;
 	int maxanotchars = 500;
 	
@@ -253,6 +260,27 @@ public class SociosdtController implements Initializable {
 	@FXML
 	private Button bclose;
 	
+    @FXML
+    void chbajaOnAction(ActionEvent event) {
+    	
+    	//Check if controls should be enabled or disabled
+    	checkBaja();
+    }
+    
+    private void checkBaja() {
+    	
+    	//Enable disable controls for baja
+    	if (!chbaja.isSelected()) {
+			disableControl(dpfbaja);
+			disableControl(cbmbaja);
+			disableControl(txarnmbaja);
+    	} else {
+    		dpfbaja.setDisable(false);
+    		cbmbaja.setDisable(false);
+    		txarnmbaja.setDisable(false);
+    	}
+    }
+    
 	@FXML
     void bexecOnAction(ActionEvent event) {
 
@@ -510,7 +538,8 @@ public class SociosdtController implements Initializable {
 					}, () -> {
 						x.setMotivoBaja(null);
 					});
-					
+				
+				x.setNotasmbaja(obtainText(txarnmbaja));
 				x.setCargosJuntaDirectiva(obtainText(txcjdir));
 				x.setJuntaDirectivaActual(chjdiract.isSelected());
 
@@ -630,6 +659,7 @@ public class SociosdtController implements Initializable {
     		txaranot.setText("");
     		txmarc.setText("");
     		txcjdir.setText("");
+    		txarnmbaja.setText("");
     		
     		disableButtons();
     		
@@ -690,7 +720,7 @@ public class SociosdtController implements Initializable {
 	    txatrab.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
 	    txtitul.addEventFilter(KeyEvent.KEY_TYPED, maxLength(90));
 	    txcsep.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
+	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(50));
 	    txdbanc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 	    txref.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
 	    txcjdir.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
@@ -746,6 +776,19 @@ public class SociosdtController implements Initializable {
 		    return null;
 		});
 		txardomic.setTextFormatter(new TextFormatter<String>(domicFilter));
+		
+		//To check notasmbaja maximum number of chars and show the number of chars
+		UnaryOperator<Change> nmbajaFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= maxnmbajachars) {
+		    	
+				showNotasmbajaChars(change.getControlNewText().length(), maxnmbajachars);
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		txarnmbaja.setTextFormatter(new TextFormatter<String>(nmbajaFilter));
 		
 		//To check Datos auxiliares facturacion maximum number of chars and show the number of chars
 		UnaryOperator<Change> dafactFilter = (change -> {
@@ -1025,6 +1068,16 @@ public class SociosdtController implements Initializable {
 						cbmbaja.getSelectionModel().select(mutils.searchIdInCombo(cbmbaja, y));
 					});
 					
+				optStr = Optional.ofNullable(x.getNotasmbaja());
+					optStr.ifPresentOrElse((y) -> {
+						txarnmbaja.setText(y);
+					}, () -> {
+						txarnmbaja.setText("");
+					});
+				
+				//Enable disable controls depending on chbaja
+				checkBaja();
+					
 				optStr = Optional.ofNullable(x.getCargosJuntaDirectiva());
 					optStr.ifPresentOrElse((y) -> {
 						txcjdir.setText(y);
@@ -1094,9 +1147,11 @@ public class SociosdtController implements Initializable {
 		disableControl(chjdiract);
 
 		disableControl(dpfbaja);
+		//To simulate as if the control is enabled
 		dpfalta.getEditor().setStyle("-fx-opacity: 1;");
 
 		disableControl(cbmbaja);
+		disableControl(txarnmbaja);
 		disableControl(txaranot);
 
 	}
@@ -1166,6 +1221,11 @@ public class SociosdtController implements Initializable {
 		bfact.setDisable(true);
 		breclam.setDisable(true);
 		
+	}
+
+	private void showNotasmbajaChars(int numchars, int maxchars) {
+		
+		lbnmbajalen.setText("(" + numchars + "/" + maxchars + " caracteres)");
 	}
 	
 	private void showDomicilioChars(int numchars, int maxchars) {

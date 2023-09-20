@@ -69,6 +69,9 @@ public class SfactdtController implements Initializable {
 	private ComboBox<TipoIVA> cbtiva;
 	
 	@FXML
+	private CheckBox chfprof;
+	
+	@FXML
 	private Label lbmsg;
 	
 	@FXML
@@ -84,7 +87,7 @@ public class SfactdtController implements Initializable {
 
 			boolean cform = true;
 			SerieFacturas sf;
-			long cont1, cont2, cont3;
+			long cont1, cont2, cont3, cont4;
 			
 		    switch (sfaccrud.getAction()) {
 	        case ADD :
@@ -103,8 +106,14 @@ public class SfactdtController implements Initializable {
 	        		cont3 = 0;
 	        	}
 	        	
-	        	if ((cont1 == 0) && (cont2 == 0) && (cont3 == 0)) {
-	        		sf = new SerieFacturas(obtainText(tdesc), obtainText(tininum), chfrect.isSelected(), obtainText(ttfrect), chfauto.isSelected(), obtainText(ttpara), cbtiva.getValue());
+	        	if (chfprof.isSelected()) {
+	        		cont4 = efacRepo.countExistingSeriesProforma();
+	        	} else {
+	        		cont4 = 0;
+	        	}
+	        	
+	        	if ((cont1 == 0) && (cont2 == 0) && (cont3 == 0) && (cont4 == 0)) {
+	        		sf = new SerieFacturas(obtainText(tdesc), obtainText(tininum), chfrect.isSelected(), obtainText(ttfrect), chfauto.isSelected(), obtainText(ttpara), chfprof.isSelected(), cbtiva.getValue());
 	        		efacRepo.save(sf);
 	        	} else {
 	        		if (cont1 > 0) lbmsg.setText("Existen " + String.valueOf(cont1) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas con esa descripción.");
@@ -130,8 +139,14 @@ public class SfactdtController implements Initializable {
 	        		cont3 = 0;
 	        	}
 	        	
+	        	if (chfprof.isSelected()) {
+	        		cont4 = efacRepo.countExistingSeriesProforma(sfaccrud.getDao().getId());
+	        	} else {
+	        		cont4 = 0;
+	        	}
+	        	
 	        	//Check if there are no coincidences
-	        	if ((cont1 == 0) && (cont2 == 0) && (cont3 == 0)) {
+	        	if ((cont1 == 0) && (cont2 == 0) && (cont3 == 0) && (cont4 == 0)) {
 	        		sf = sfaccrud.getDao();
 	        		sf.setDescripcion(obtainText(tdesc));
 	        		sf.setAutomatica(chfauto.isSelected());
@@ -140,11 +155,13 @@ public class SfactdtController implements Initializable {
 	        		sf.setTextoRectificativa(obtainText(ttfrect));
 	        		sf.setTextoPara(obtainText(ttpara));
 	        		sf.setTipoIVA(cbtiva.getValue());
+	        		sf.setFacturasProforma(chfprof.isSelected());
 	        		efacRepo.save(sf);
 	        	} else {
 	        		if (cont1 > 0) lbmsg.setText("Existen " + String.valueOf(cont1) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas con esa descripción.");
 	        		if ((cont2 > 0) && chfauto.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont2) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas de fact. automática.");
 	        		if ((cont3 > 0) && chfrect.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont3) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas rectificativas.");
+	        		if ((cont4 > 0) && chfprof.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont3) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas proforma.");
 	        		cform = false;
 	        	}
 	        	
@@ -320,6 +337,11 @@ public class SfactdtController implements Initializable {
 						optTiva.ifPresent((y) -> {
 							cbtiva.getSelectionModel().select(mutils.searchIdInCombo(cbtiva, y));
 						});
+						
+					optBool = Optional.ofNullable(x.isFacturasProforma());
+						optBool.ifPresent((y) -> {
+							chfprof.setSelected(y);
+						});
 				});
 		}
 	
@@ -332,6 +354,7 @@ public class SfactdtController implements Initializable {
 		disableControl(ttfrect);
 		disableControl(ttpara);
 		disableControl(cbtiva);
+		disableControl(chfprof);
 		
 	}
 	

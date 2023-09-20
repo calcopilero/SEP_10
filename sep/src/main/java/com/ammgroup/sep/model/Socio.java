@@ -93,6 +93,9 @@ public class Socio {
 	@JoinColumn(name="MOTIVOBAJA_ID", nullable=true)
     private MotivoBaja motivoBaja;
     
+    @Column(name="NOTAS_MBAJA", length=250, nullable=true, unique=false)
+    private String notasmbaja;
+    
     @Column(name="CONTACTO_SEP", length=70, nullable=true, unique=false)
     private String contactoSep;
     
@@ -133,7 +136,7 @@ public class Socio {
     @Column(name="ANOTACIONES", length=250, nullable=true, unique=false)
     private String anotaciones;
     
-    @Column(name="TEXTO_MARCADOR", length=30, nullable=true, unique=false)
+    @Column(name="TEXTO_MARCADOR", length=50, nullable=true, unique=false)
     private String marcador;
     
     @Column(name="IBAN_CCC", length=30, nullable=true, unique=false)
@@ -335,6 +338,14 @@ public class Socio {
 
 	public void setMotivoBaja(MotivoBaja motivoBaja) {
 		this.motivoBaja = motivoBaja;
+	}
+
+	public String getNotasmbaja() {
+		return notasmbaja;
+	}
+
+	public void setNotasmbaja(String notasmbaja) {
+		this.notasmbaja = notasmbaja;
 	}
 
 	public boolean isLopd() {

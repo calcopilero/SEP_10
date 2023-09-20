@@ -41,6 +41,9 @@ public class SerieFacturas {
     @Column(name="TEXTO_PARA", length=70, nullable=true, unique=true)
     private String textoPara;
     
+    @Column(name="FACTURAS_PROFORMA", nullable=false, unique=false)
+    private boolean facturasProforma;
+    
     @ManyToOne
 	@JoinColumn(name="TIPOIVA_ID", nullable=true)
     private TipoIVA tipoIVA;
@@ -53,13 +56,14 @@ public class SerieFacturas {
 	}
 
 	public SerieFacturas(String descripcion, String textoInicioNumeracion, boolean rectificativas,
-			String textoRectificativa, boolean facturacionAutomatica, String textoPara, TipoIVA tipoIVA) {
+			String textoRectificativa, boolean facturacionAutomatica, String textoPara, boolean facturasProforma, TipoIVA tipoIVA) {
 		super();
 		this.descripcion = descripcion;
 		this.textoInicioNumeracion = textoInicioNumeracion;
 		this.rectificativas = rectificativas;
 		this.textoRectificativa = textoRectificativa;
 		this.facturacionAutomatica = facturacionAutomatica;
+		this.facturasProforma = facturasProforma;
 		this.textoPara = textoPara;
 		this.tipoIVA = tipoIVA;
 	}
@@ -110,6 +114,14 @@ public class SerieFacturas {
 
 	public void setTextoPara(String textoPara) {
 		this.textoPara = textoPara;
+	}
+
+	public boolean isFacturasProforma() {
+		return facturasProforma;
+	}
+
+	public void setFacturasProforma(boolean facturasProforma) {
+		this.facturasProforma = facturasProforma;
 	}
 
 	public TipoIVA getTipoIVA() {

@@ -35,9 +35,9 @@ public class SerieFacturasRunner implements CommandLineRunner {
 		sfactRepository.deleteAll();
 
     	List<TipoIVA> tiva = tivaRepository.findByDescripcion("IVA 0%");
-			if (tiva.size() == 1) {sfactRepository.save(new SerieFacturas("Facturas automáticas", "", false, "Factura rectificativa de ", true, "", tiva.get(0)));}
+			if (tiva.size() == 1) {sfactRepository.save(new SerieFacturas("Facturas automáticas", "", false, "Factura rectificativa de ", true, "", false, tiva.get(0)));}
 	    tiva = tivaRepository.findByDescripcion("IVA 16%");
-			if (tiva.size() == 1) {sfactRepository.save(new SerieFacturas("Facturas congresos", "CONG", false, "Factura Congreso rectificativa de ", false, "Factura Cuota asistencia a congreso para ", tiva.get(0)));}
+			if (tiva.size() == 1) {sfactRepository.save(new SerieFacturas("Facturas congresos", "CONG", false, "Factura Congreso rectificativa de ", false, "Factura Cuota asistencia a congreso para ", false, tiva.get(0)));}
 
 		logger.info("# of series de facturas: {}", sfactRepository.count());
 		logger.info("------------------------");

@@ -11,6 +11,7 @@ public abstract class SerieFacturas_ {
 
 	public static volatile SingularAttribute<SerieFacturas, String> descripcion;
 	public static volatile SingularAttribute<SerieFacturas, Boolean> facturacionAutomatica;
+	public static volatile SingularAttribute<SerieFacturas, Boolean> facturasProforma;
 	public static volatile SingularAttribute<SerieFacturas, String> textoRectificativa;
 	public static volatile SingularAttribute<SerieFacturas, String> textoInicioNumeracion;
 	public static volatile SingularAttribute<SerieFacturas, Boolean> rectificativas;
@@ -21,6 +22,7 @@ public abstract class SerieFacturas_ {
 
 	public static final String DESCRIPCION = "descripcion";
 	public static final String FACTURACION_AUTOMATICA = "facturacionAutomatica";
+	public static final String FACTURAS_PROFORMA = "facturasProforma";
 	public static final String TEXTO_RECTIFICATIVA = "textoRectificativa";
 	public static final String TEXTO_INICIO_NUMERACION = "textoInicioNumeracion";
 	public static final String RECTIFICATIVAS = "rectificativas";
