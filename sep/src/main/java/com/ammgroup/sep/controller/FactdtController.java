@@ -447,7 +447,7 @@ public class FactdtController implements Initializable {
 		            	    	frect.getItemsFactura().add(itfact);
 	        				}
 		        			
-		        			frect.setImpGastosEnvio(x.getImpGastosEnvio() * (-1));
+		        			frect.setImporteGastosEnvio(x.getImporteGastosEnvio() * (-1));
 		        			
 		        			frect.recalculate();
 		        			
@@ -728,7 +728,7 @@ public class FactdtController implements Initializable {
 				x.setDescuento(cbdesc.getValue());
 				x.setTipoIVA(cbtiva.getValue());
 				
-				x.setImpGastosEnvio(Double.parseDouble(obtainText(txgenv)));
+				x.setImporteGastosEnvio(Double.parseDouble(obtainText(txgenv)));
 				
 				//To set the rest of values
 				x.recalculate();
@@ -987,7 +987,7 @@ public class FactdtController implements Initializable {
 				lbiva.setText(mutils.CURRENCY_ZERO);
 			});
 		
-		optDou = Optional.ofNullable(pfac.getImpGastosEnvio());
+		optDou = Optional.ofNullable(pfac.getImporteGastosEnvio());
 			optDou.ifPresentOrElse((y) -> {
 				txgenv.setText(Double.toString(y));
 			}, () -> {
@@ -1048,7 +1048,7 @@ public class FactdtController implements Initializable {
 				Optional<TipoIVA> optTiva = Optional.ofNullable(cbtiva.getValue());
 					optTiva.ifPresent((y) -> factwrapper.fact.setTipoIVA(y));
 				
-				factwrapper.fact.setImpGastosEnvio(Double.parseDouble(obtainText(txgenv)));
+				factwrapper.fact.setImporteGastosEnvio(Double.parseDouble(obtainText(txgenv)));
 			
 				factwrapper.fact.recalculate();
 				

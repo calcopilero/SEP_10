@@ -109,6 +109,7 @@ com\ammgroup\sep\controller\config\filter\FacturaFilter$1.class
 com\ammgroup\sep\controller\ProvdtController$2.class
 com\ammgroup\sep\controller\SfactlController$1.class
 com\ammgroup\sep\controller\SfactlController$2.class
+com\ammgroup\sep\controller\dao\PaFactura.class
 com\ammgroup\sep\controller\AgencdtController$5.class
 com\ammgroup\sep\model\Socio_.class
 com\ammgroup\sep\controller\HfactController$7.class
@@ -178,6 +179,7 @@ com\ammgroup\sep\model\ItemFactura.class
 com\ammgroup\sep\runners\data\EstadoFacturaRunner.class
 com\ammgroup\sep\model\Oldsocio.class
 com\ammgroup\sep\controller\SfactdtController$1.class
+com\ammgroup\sep\controller\SfactlController$3.class
 com\ammgroup\sep\controller\FacagesoclController.class
 com\ammgroup\sep\controller\ReclamlController$2.class
 com\ammgroup\sep\controller\AgencdtController$2.class
@@ -249,11 +251,13 @@ com\ammgroup\sep\repository\DescuentoRepository.class
 com\ammgroup\sep\controller\config\crud\CrudDAOSoc.class
 com\ammgroup\sep\runners\data\OldagenciaRunner$3.class
 com\ammgroup\sep\controller\FactdtController$2.class
+com\ammgroup\sep\controller\PafactController$1.class
 com\ammgroup\sep\controller\ReclamdtController.class
 com\ammgroup\sep\controller\DescudtController$4.class
 com\ammgroup\sep\controller\config\crud\CrudDAORecl.class
 com\ammgroup\sep\runners\data\FacturaRunner$2.class
 com\ammgroup\sep\controller\config\filter\AgenciaFilter$1.class
+com\ammgroup\sep\controller\FacagesoclController$3.class
 com\ammgroup\sep\controller\MbajadtController$2.class
 com\ammgroup\sep\controller\config\filter\AgenciaFilter.class
 com\ammgroup\sep\controller\SocioslController$10.class
@@ -268,6 +272,8 @@ com\ammgroup\sep\model\Oldagencia.class
 com\ammgroup\sep\controller\SociosfiController.class
 com\ammgroup\sep\model\Socio.class
 com\ammgroup\sep\runners\data\EstadoReclamacionRunner.class
+com\ammgroup\sep\controller\FacagesoclController$2.class
+com\ammgroup\sep\controller\PafactController.class
 com\ammgroup\sep\controller\MbajadtController$3.class
 com\ammgroup\sep\runners\data\FacturaRunner$1.class
 com\ammgroup\sep\controller\SociosfiController$1.class

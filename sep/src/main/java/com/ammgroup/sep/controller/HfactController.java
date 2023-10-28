@@ -776,7 +776,7 @@ public class HfactController implements Initializable {
 	    		() -> fdatawrapper.genv =  Double.parseDouble(obtainText(txgenv)));
 					
 	    	//In automatic generation Gastos envio = 0
-	    	fact.setImpGastosEnvio(fdatawrapper.genv);
+	    	fact.setImporteGastosEnvio(fdatawrapper.genv);
 			
 	    	Optional<FormaPago> opPfpag = Optional.ofNullable(pfpago);
     			opPfpag.ifPresentOrElse((y) -> { fdatawrapper.fpago = pfpago; },

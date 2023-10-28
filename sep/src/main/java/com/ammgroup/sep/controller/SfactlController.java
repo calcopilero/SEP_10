@@ -51,6 +51,9 @@ public class SfactlController implements Initializable {
 	private TableColumn<SerieFacturas, String> tcrect;
 	
 	@FXML
+	private TableColumn<SerieFacturas, String> tcprof;
+	
+	@FXML
 	private Label lbmsg;
 	
 	@FXML
@@ -182,8 +185,8 @@ public class SfactlController implements Initializable {
 			
 			var strwrapper = new Object(){ String rect; };
 			
-			Optional<Boolean> fautoOpt = Optional.ofNullable(c.getValue().isRectificativas());
-				fautoOpt.ifPresentOrElse((x) -> {
+			Optional<Boolean> rectOpt = Optional.ofNullable(c.getValue().isRectificativas());
+				rectOpt.ifPresentOrElse((x) -> {
 					if (x) {
 						strwrapper.rect = "SI" ;	
 					} else {
@@ -194,6 +197,25 @@ public class SfactlController implements Initializable {
 				} );
 			
 			return new ReadOnlyStringWrapper(strwrapper.rect);
+				
+		});
+		
+		tcprof.setCellValueFactory(c-> {
+			
+			var strwrapper = new Object(){ String prof; };
+			
+			Optional<Boolean> profOpt = Optional.ofNullable(c.getValue().isFacturasProforma());
+				profOpt.ifPresentOrElse((x) -> {
+					if (x) {
+						strwrapper.prof = "SI" ;	
+					} else {
+						strwrapper.prof = "NO" ;	
+					}
+				}, () -> {
+					strwrapper.prof = "";
+				} );
+			
+			return new ReadOnlyStringWrapper(strwrapper.prof);
 				
 		});
 		
@@ -217,7 +239,7 @@ public class SfactlController implements Initializable {
 		//To count the items in list
 		int items = tsfact.getItems().size();
 		
-		lbmsg.setText("Encontrado" + ((items > 1)?"s" : "") + " " + items + " serie" + ((items > 1)?"s" : "") + " de facturas");
+		lbmsg.setText("Encontrada" + ((items > 1)?"s" : "") + " " + items + " serie" + ((items > 1)?"s" : "") + " de facturas");
 
 	}
 

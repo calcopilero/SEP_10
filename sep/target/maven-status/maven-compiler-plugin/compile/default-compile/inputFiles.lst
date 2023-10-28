@@ -10,6 +10,7 @@ C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\Reclages
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\ModoAccesoRepository.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\AgenclController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\runners\data\ZonaPostalRunner.java
+C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\dao\PaFactura.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\SEPJavaFXApplication.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\config\filter\SocioFilter.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\TipoIVARepository.java
@@ -78,6 +79,7 @@ C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\jreports\service\JR
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\FactfiController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\ProvslController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\config\filter\AgenciaFilter.java
+C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\PafactController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\controller\SociosfiController.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\model\FormaPago.java
 C:\Users\ammog\git\SEP_10\sep\src\main\java\com\ammgroup\sep\repository\MotivoBajaRepository.java

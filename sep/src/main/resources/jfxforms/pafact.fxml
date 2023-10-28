@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="362.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.ammgroup.sep.controller.PafactController">
+   <children>
+      <Label fx:id="lbffact_" layoutX="21.0" layoutY="20.0" text="Fecha de factura:" />
+      <DatePicker fx:id="dpffact" layoutX="21.0" layoutY="39.0" prefHeight="25.0" prefWidth="162.0" />
+      <Label fx:id="lbagencia_" layoutX="20.0" layoutY="81.0" prefHeight="17.0" prefWidth="109.0" text="Serie de factura:" />
+      <ComboBox fx:id="cbsfact" layoutX="20.0" layoutY="99.0" prefHeight="25.0" prefWidth="318.0" stylesheets="@sep.css" />
+      <Button fx:id="bselect" layoutX="20.0" layoutY="187.0" mnemonicParsing="false" onAction="#bselectOnAction" prefHeight="25.0" prefWidth="97.0" text="Seleccionar" />
+      <Button fx:id="bclose" layoutX="263.0" layoutY="187.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Label fx:id="lbmsg1" layoutX="20.0" layoutY="151.0" minWidth="318.0" prefHeight="17.0" prefWidth="318.0" />
+   </children>
+</AnchorPane>

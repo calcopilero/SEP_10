@@ -1210,6 +1210,22 @@ public class SociosdtController implements Initializable {
 				checkwrapper.errorstext += "Debe especificar una forma de pago. ";
 				checkwrapper.checks = false;
 			}
+
+		//Whe baja is selected fecha baja y motivo baja son obligatorios
+    	if (chbaja.isSelected()) {
+    		
+        		Optional<LocalDate> fbOpt = Optional.ofNullable(dpfbaja.getValue());
+	    			if (fbOpt.isEmpty()) {
+	    				checkwrapper.errorstext += "Debe especificar una fecha de baja. ";
+	    				checkwrapper.checks = false;  
+	    			}
+				
+				Optional<MotivoBaja> mbOpt = Optional.ofNullable(cbmbaja.getValue());
+					if (mbOpt.isEmpty()) {
+						checkwrapper.errorstext += "Debe especificar un motivo de baja. ";
+						checkwrapper.checks = false;
+					}
+    	}
 		
 		lbmsg1.setText(checkwrapper.errorstext);
 		

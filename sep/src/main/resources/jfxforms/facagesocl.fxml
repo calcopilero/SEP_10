@@ -15,16 +15,18 @@
             <TableColumn fx:id="tccifnif" minWidth="0.0" prefWidth="119.0" text="CIF/NIF" />
             <TableColumn fx:id="tcffactura" prefWidth="113.0" text="Fecha factura" />
             <TableColumn fx:id="tcimporte" prefWidth="101.0" text="Importe" />
+            <TableColumn fx:id="tcsfact" prefWidth="130.0" text="Serie de facturas" />
          </columns>
       </TableView>
       <Label fx:id="lbmsg" layoutX="19.0" layoutY="414.0" prefHeight="17.0" prefWidth="591.0" />
-      <Button fx:id="bedit" layoutX="19.0" layoutY="450.0" mnemonicParsing="false" onAction="#beditOnAction" prefWidth="75.0" text="Editar" />
-      <Button fx:id="bdelete" layoutX="100.0" layoutY="450.0" mnemonicParsing="false" onAction="#bdeleteOnAction" prefWidth="75.0" text="Borrar" />
-      <Button fx:id="bview" layoutX="181.0" layoutY="450.0" mnemonicParsing="false" onAction="#bviewOnAction" prefWidth="75.0" text="Ver" />
-      <Button fx:id="bprint" layoutX="371.0" layoutY="450.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="101.0" text="Imprimir factura" />
-      <Button fx:id="bplist" layoutX="261.0" layoutY="450.0" mnemonicParsing="false" onAction="#bplistOnAction" prefHeight="25.0" prefWidth="105.0" text="Imprimir listado" />
-      <Button fx:id="bpdf" layoutX="477.0" layoutY="450.0" mnemonicParsing="false" onAction="#bpdfOnAction" prefHeight="25.0" prefWidth="94.0" text="Generar PDF" />
-      <Button fx:id="bhfact" layoutX="576.0" layoutY="450.0" mnemonicParsing="false" onAction="#bhfactOnAction" prefHeight="25.0" prefWidth="94.0" text="Hacer factura" />
-      <Button fx:id="bclose" layoutX="774.0" layoutY="450.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="75.0" text="Cerrar" />
+      <Button fx:id="bedit" layoutX="19.0" layoutY="450.0" mnemonicParsing="false" onAction="#beditOnAction" prefWidth="70.0" text="Editar" />
+      <Button fx:id="bdelete" layoutX="95.0" layoutY="450.0" mnemonicParsing="false" onAction="#bdeleteOnAction" prefWidth="70.0" text="Borrar" />
+      <Button fx:id="bview" layoutX="171.0" layoutY="450.0" mnemonicParsing="false" onAction="#bviewOnAction" prefWidth="70.0" text="Ver" />
+      <Button fx:id="bprint" layoutX="358.0" layoutY="450.0" mnemonicParsing="false" onAction="#bprintOnAction" prefHeight="25.0" prefWidth="101.0" text="Imprimir factura" />
+      <Button fx:id="bplist" layoutX="247.0" layoutY="450.0" mnemonicParsing="false" onAction="#bplistOnAction" prefHeight="25.0" prefWidth="105.0" text="Imprimir listado" />
+      <Button fx:id="bpdf" layoutX="466.0" layoutY="450.0" mnemonicParsing="false" onAction="#bpdfOnAction" prefHeight="25.0" prefWidth="85.0" text="Generar PDF" />
+      <Button fx:id="bhfact" layoutX="557.0" layoutY="450.0" mnemonicParsing="false" onAction="#bhfactOnAction" prefHeight="25.0" prefWidth="90.0" text="Hacer factura" />
+      <Button fx:id="bpafact" layoutX="654.0" layoutY="450.0" mnemonicParsing="false" onAction="#bpafactOnAction" prefHeight="25.0" prefWidth="115.0" text="Proforma a factura" />
+      <Button fx:id="bclose" layoutX="776.0" layoutY="450.0" mnemonicParsing="false" onAction="#bcloseOnAction" prefWidth="71.0" text="Cerrar" />
    </children>
 </AnchorPane>

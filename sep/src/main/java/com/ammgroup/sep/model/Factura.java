@@ -266,6 +266,10 @@ public class Factura {
 		return importeTotalItems;
 	}
 
+	public void setImporteTotalItems(Double importeTotalItems) {
+		this.importeTotalItems = importeTotalItems;
+	}
+
 	public Descuento getDescuento() {
 		return descuento;
 	}
@@ -278,7 +282,7 @@ public class Factura {
 		return porcentajeDescuento;
 	}
 
-	private void setPorcentajeDescuento(Double porcDescuento) {
+	public void setPorcentajeDescuento(Double porcDescuento) {
 		this.porcentajeDescuento = porcDescuento;
 	}
 
@@ -286,12 +290,16 @@ public class Factura {
 		return importeDescuento;
 	}
 
-	private void setImporteDescuento(Double impDescuento) {
+	public void setImporteDescuento(Double impDescuento) {
 		this.importeDescuento = impDescuento;
 	}
 
 	public Double getImporteBaseImponible() {
 		return importeBaseImponible;
+	}
+	
+	public void setImporteBaseImponible(Double impBaseImp) {
+		this.importeBaseImponible = impBaseImp;
 	}
 
 	public TipoIVA getTipoIVA() {
@@ -306,7 +314,7 @@ public class Factura {
 		return porcentajeTipoIVA;
 	}
 
-	private void setPorcentajeTipoIVA(Double porcTipoIVA) {
+	public void setPorcentajeTipoIVA(Double porcTipoIVA) {
 		this.porcentajeTipoIVA = porcTipoIVA;
 	}
 
@@ -314,18 +322,22 @@ public class Factura {
 		return importeTipoIVA;
 	}
 
-	private void setImporteTipoIVA(Double impTipoIVA) {
+	public void setImporteTipoIVA(Double impTipoIVA) {
 		this.importeTipoIVA = impTipoIVA;
 	}
 
-	public Double getImpGastosEnvio() {
-		return importeGastosEnvio;
-	}
+//	public Double getImpGastosEnvio() {
+//		return importeGastosEnvio;
+//	}
+//
+//	public void setImpGastosEnvio(Double impGastosEnvio) {
+//		this.importeGastosEnvio = impGastosEnvio;
+//	}
 
-	public void setImpGastosEnvio(Double impGastosEnvio) {
-		this.importeGastosEnvio = impGastosEnvio;
+	public void setImporteTotal(Double impTotal) {
+		this.importeTotal = impTotal;
 	}
-
+	
 	public Double getImporteTotal() {
 		return importeTotal;
 	}

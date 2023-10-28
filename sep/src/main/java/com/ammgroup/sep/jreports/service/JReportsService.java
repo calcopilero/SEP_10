@@ -100,7 +100,7 @@ public class JReportsService {
 				map.put("pmTextoDescuento", x.getTextoFactura());
 			});
 
-		map.put("pmGastosEnvio", fact.getImpGastosEnvio());
+		map.put("pmGastosEnvio", fact.getImporteGastosEnvio());
 		
 		map.put("pmBaseImponible", fact.getImporteBaseImponible());
 		

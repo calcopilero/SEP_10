@@ -25,6 +25,14 @@ public interface SerieFacturasRepository extends JpaRepository<SerieFacturas, Lo
 	@Query(value = "SELECT DISTINCT(i) FROM SerieFacturas i WHERE i.rectificativas = false ORDER BY descripcion")
 	List<SerieFacturas> findByNotRectificativas();
 	
+	//To search for serie facturas used to generate facturas from facturas proforma
+	@Query(value = "SELECT DISTINCT(i) FROM SerieFacturas i WHERE i.facturasProforma = false ORDER BY descripcion")
+	List<SerieFacturas> findByNotProforma();
+	
+	//To search for serie facturas used to generate facturas from facturas proforma
+	@Query(value = "SELECT DISTINCT(i) FROM SerieFacturas i WHERE i.facturasProforma = false AND i.rectificativas = false AND i.facturacionAutomatica = false ORDER BY descripcion")
+	List<SerieFacturas> findByNotProformaNotRectificativaNotAutomatica();
+	
 	//To search by descripcion (exact match)
 	@Query(value = "SELECT COUNT(i) FROM SerieFacturas i WHERE i.descripcion LIKE ?1")
 	long countExistingSeriesFacturas(String desc);

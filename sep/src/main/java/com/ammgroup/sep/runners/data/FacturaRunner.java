@@ -292,7 +292,7 @@ public class FacturaRunner implements CommandLineRunner {
    			Optional<TipoIVA> tiSf = Optional.ofNullable(sf.getTipoIVA());
 				tiSf.ifPresent((x) -> fact.setTipoIVA(x));
 			
-		    fact.setImpGastosEnvio(gEnv);
+		    fact.setImporteGastosEnvio(gEnv);
 		    
    			Optional<List<FormaPago>> optFpag = Optional.ofNullable(fpago);
    				optFpag.ifPresent((x) -> {

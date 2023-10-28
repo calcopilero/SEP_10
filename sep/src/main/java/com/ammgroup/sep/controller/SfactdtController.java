@@ -117,8 +117,9 @@ public class SfactdtController implements Initializable {
 	        		efacRepo.save(sf);
 	        	} else {
 	        		if (cont1 > 0) lbmsg.setText("Existen " + String.valueOf(cont1) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas con esa descripción.");
-	        		if ((cont2 > 0) && chfauto.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont2) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas de fact. automática.");
-	        		if ((cont3 > 0) && chfrect.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont3) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas rectificativas.");
+	        		if ((cont2 > 0) && chfauto.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont2) + " serie" + ((cont2 > 1)?"s" : "") + " de facturas de fact. automática.");
+	        		if ((cont3 > 0) && chfrect.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont3) + " serie" + ((cont3 > 1)?"s" : "") + " de facturas rectificativas.");
+	        		if ((cont4 > 0) && chfprof.isSelected()) lbmsg.setText("Existen " + String.valueOf(cont4) + " serie" + ((cont4 > 1)?"s" : "") + " de facturas proforma.");
 	        		cform = false;
 	        	}
 	            break;
@@ -223,6 +224,7 @@ public class SfactdtController implements Initializable {
         case ADD :
         	
     		tdesc.setText("");
+    		tininum.setText("");
     		
             break;
             
