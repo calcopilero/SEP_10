@@ -26,6 +26,7 @@
 	<parameter name="pmSepDireccion" class="java.lang.String"/>
 	<parameter name="pmSepNif" class="java.lang.String"/>
 	<parameter name="pmSepNombre" class="java.lang.String"/>
+	<parameter name="pmProforma" class="java.lang.Boolean"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -207,6 +208,15 @@
 					<font fontName="Calibri" size="9" isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{pmSepNombre}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="260" y="94" width="88" height="20" uuid="feec4607-fc70-4fc9-8f0f-b63e8efed8ec">
+					<printWhenExpression><![CDATA[$P{pmProforma} == true]]></printWhenExpression>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Calibri" size="14" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA["PROFORMA"]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageHeader>

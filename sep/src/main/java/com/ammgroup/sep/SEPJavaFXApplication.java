@@ -38,7 +38,9 @@ public class SEPJavaFXApplication extends Application {
 	    //Parent root = loader.load();
 	    //TTTrackerMainController controller = loader.getController();
 	    
-        primaryStage.setTitle("Gestión SEP 1.1");
+        //Gestión SEP 1.1
+        //Gestión SEP 1.2 from 20231104
+        //primaryStage.setTitle("Gestión SEP 1.2");
 	    primaryStage.setMaximized(true);
 	    primaryStage.setOnCloseRequest(evt -> {
 	        // allow user to decide between yes and no

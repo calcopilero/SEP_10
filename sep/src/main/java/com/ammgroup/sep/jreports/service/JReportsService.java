@@ -19,6 +19,7 @@ import com.ammgroup.sep.jreports.config.enums.ReportFormat;
 import com.ammgroup.sep.model.Descuento;
 import com.ammgroup.sep.model.Factura;
 import com.ammgroup.sep.model.ItemFactura;
+import com.ammgroup.sep.model.SerieFacturas;
 import com.ammgroup.sep.model.TipoIVA;
 import com.ammgroup.sep.repository.FacturaRepository;
 import com.ammgroup.sep.service.ModuloUtilidades;
@@ -61,7 +62,7 @@ public class JReportsService {
 		
 		Optional<String> optStr = Optional.ofNullable(fact.getNumeroCompuesto());
 			optStr.ifPresentOrElse((x) -> map.put("pmNumFactura", x), () -> map.put("pmNumFactura", ""));
-		optStr = Optional.ofNullable(fact.getTitular());
+			optStr = Optional.ofNullable(fact.getTitular());
 			optStr.ifPresentOrElse((x) -> {
 				//New lines codes are replaced by <br> when markup is html and are multiline sections 
 				String htmlText = x.replace(mutils.NL_TEXT, mutils.NL_HTML);
@@ -130,6 +131,9 @@ public class JReportsService {
 			Optional<Factura> optFact = Optional.ofNullable(fact.getFacturaRectificada());
 				optFact.ifPresent((y) -> map.put("pmTextoRectificativa", "Rectifica la factura " + y.getNumeroCompuesto()));
 		}
+		
+		Optional<SerieFacturas> optSfact = Optional.ofNullable(fact.getSerie());
+			optSfact.ifPresentOrElse((x) ->	map.put("pmProforma", x.isFacturasProforma()), () -> map.put("pmProforma", false));
 
 		//TODO Check if file exists 
 		File logofile = ResourceUtils.getFile(System.getenv("SEP_DIR") + mutils.RESOURCE_IMAGES_DIR + sepprop.getFacturasImageFilename());
