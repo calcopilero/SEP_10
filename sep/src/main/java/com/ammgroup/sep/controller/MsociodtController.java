@@ -3,7 +3,6 @@ package com.ammgroup.sep.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +14,6 @@ import com.ammgroup.sep.repository.ModalidadSocioRepository;
 import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -25,9 +23,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -50,7 +45,6 @@ public class MsociodtController implements Initializable {
 
 	@FXML
 	private Label lbconceplen;
-	int maxconcepchars = 180;
 	
 	@FXML
 	private TextArea taconcep;
@@ -79,10 +73,10 @@ public class MsociodtController implements Initializable {
 		    switch (msoccrud.getAction()) {
 	        case ADD :
 	        	
-	        	cont = msocRepo.countExistingModalidadesSocios(obtainText(tdesc));
+	        	cont = msocRepo.countExistingModalidadesSocios(mutils.obtainText(tdesc));
 	        	
 	        	if (cont == 0) {
-	        		ms = new ModalidadSocio(obtainText(tdesc), Double.parseDouble(obtainText(tcuota)), obtainText(taconcep), obtainText(ttpara));
+	        		ms = new ModalidadSocio(mutils.obtainText(tdesc), mutils.getDoubleFromCurrency(mutils.obtainText(tcuota)), mutils.obtainText(taconcep), mutils.obtainText(ttpara));
 	        		msocRepo.save(ms);
 	        	} else {
 	        		lbmsg.setText("Existen " + String.valueOf(cont) + " modalidades de socios con esa descripción.");
@@ -97,10 +91,10 @@ public class MsociodtController implements Initializable {
 	        	//Check if there are no coincidences
 	        	if (cont == 0) {        		
 	        		ms = msoccrud.getDao();
-	        		ms.setDescripcion(obtainText(tdesc));
-	        		ms.setCuota(Double.parseDouble(obtainText(tcuota)));
-	        		ms.setConcepto(obtainText(taconcep));
-	        		ms.setTextoPara(obtainText(ttpara));
+	        		ms.setDescripcion(mutils.obtainText(tdesc));
+	        		ms.setCuota(mutils.getDoubleFromCurrency(mutils.obtainText(tcuota)));
+	        		ms.setConcepto(mutils.obtainText(taconcep));
+	        		ms.setTextoPara(mutils.obtainText(ttpara));
 	        		msocRepo.save(ms);
 	        	} else {
 	        		lbmsg.setText("Existen " + String.valueOf(cont) + " modalidades de socios con esa descripción.");
@@ -152,31 +146,20 @@ public class MsociodtController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 	    //Setting the maximum number of characters
-	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    ttpara.addEventFilter(KeyEvent.KEY_TYPED, maxLength(95));
+	    mutils.configureTextField(tdesc, 60);
+	    mutils.configureTextField(ttpara, 95);
 	    
 		//To check concepto maximum number of chars and show the number of chars
-		UnaryOperator<Change> concepFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxconcepchars) {
-		    	
-				showConceptoChars(change.getControlNewText().length(), maxconcepchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-	    taconcep.setTextFormatter(new TextFormatter<String>(concepFilter));
+	    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, 180);
 	    
 	    //Setting the formatter for numbers
-	    tcuota.addEventFilter(KeyEvent.KEY_TYPED, maxLength(6));
-	    tcuota.setTextFormatter(mutils.getTextFormatterForDecimal());
+	    mutils.configCurrencyTextField(tcuota, 6);
 		
 	    switch (msoccrud.getAction()) {
         case ADD :
         	
     		tdesc.setText("");
-    		tcuota.setText("0.00");
+    		tcuota.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
     		ttpara.setText("");
     		
             break;
@@ -216,22 +199,6 @@ public class MsociodtController implements Initializable {
 	    
 	}
 
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-            }
-        };
-    }
-
 	private void closeForm() {
 		
 		// get a handle to the stage
@@ -255,9 +222,9 @@ public class MsociodtController implements Initializable {
 					
 				Optional<Double> optDou = Optional.ofNullable(x.getCuota());
 					optDou.ifPresentOrElse((y) -> {
-						tcuota.setText(Double.toString(y));
+						tcuota.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
 					}, () -> {
-						tcuota.setText(mutils.CURRENCY_ZERO);
+						tcuota.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 					});
 					
 				optStr = Optional.ofNullable(x.getConcepto());
@@ -310,38 +277,12 @@ public class MsociodtController implements Initializable {
 			
 	}
 	
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-    	strOpt.ifPresent((x) -> {
-    		strwrapper.str = tx.getText();
-    	});
-    		
-    	return strwrapper.str;
-    }
-    
-    private String obtainText(TextArea tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
-    
 	private boolean checkControls() {
 		
 		var boolwrapper = new Object(){ boolean checks = true; };
 		
 		
-		if (obtainText(tdesc).length() == 0) {
+		if (mutils.obtainText(tdesc).length() == 0) {
 			lbmsg.setText("La descripción no puede quedar en blanco");
 			boolwrapper.checks = false;  
 		}
@@ -349,8 +290,4 @@ public class MsociodtController implements Initializable {
 		return boolwrapper.checks;
 	}
 	
-	private void showConceptoChars(int numchars, int maxchars) {
-		
-		lbconceplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
 }

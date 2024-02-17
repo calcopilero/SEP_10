@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -34,7 +33,6 @@ import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -47,9 +45,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -111,14 +106,12 @@ public class FactdtController implements Initializable {
 	
 	@FXML
 	private Label lbtitlen;
-	int maxtitchars = 350;
 	
 	@FXML
 	private TextArea tatitular;
 	
 	@FXML
 	private Label lbdirlen;
-	int maxdirchars = 350;
 	
 	@FXML
 	private TextArea tadirec;
@@ -131,21 +124,18 @@ public class FactdtController implements Initializable {
 	
 	@FXML
 	private Label lbtfpaglen;
-	int maxtfpagchars = 150;
 	
 	@FXML
 	private TextField txfpago;
 	
 	@FXML
 	private Label lbtcomplen;
-	int maxtcompchars = 350;
 	
 	@FXML
 	private TextArea tatcomp;
 	
 	@FXML
 	private Label lbconceplen;
-	int maxconcepchars = 400;
 
 	@FXML
 	private TextArea taconcep;
@@ -188,7 +178,6 @@ public class FactdtController implements Initializable {
 	
 	@FXML
 	private Label lbanotlen;
-	int maxanotchars = 500;
 	
 	@FXML
 	private TextArea taanot;
@@ -221,7 +210,16 @@ public class FactdtController implements Initializable {
 	private Button bfrect;
 
 	@FXML
-	private Button bclose;    
+	private Button bclose;
+	
+	//To set titular, direccion, forma pago, texto complem, anotaciones,  
+    //concepto maximum number of chars
+    int mcdirec = 350;
+    int mctitular = 350;
+    int mctfpag = 150;
+    int mctcomplen = 350;
+    int mcanot = 500;
+    int mcconcep = 400;
 
 	@FXML
     void cbdescOnAction(ActionEvent event) {
@@ -521,10 +519,10 @@ public class FactdtController implements Initializable {
 		cbefact.setItems(FXCollections.observableList(efactRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbefact.getItems().add(null);
 
-	    //Set the format of decimal fields
-	    tximpitems.setTextFormatter(mutils.getTextFormatterForDecimal());
-	    txgenv.setTextFormatter(mutils.getTextFormatterForDecimal());
-	    
+	    //Set the format of currency text fields fields
+	    mutils.configCurrencyTextField(tximpitems);
+	    mutils.configCurrencyTextField(txgenv);
+
 	    switch (factcrud.getAction()) {
         case ADD :
         	
@@ -576,102 +574,21 @@ public class FactdtController implements Initializable {
 	    }
 	    
 	    //Setting the maximum number of characters of TextField
-	    txrefer.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
-	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(25));
-	    //txfpago.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
-	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
-	    tximpitems.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
-	    txgenv.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
+	    mutils.configureTextField(txrefer, 30);
+	    mutils.configureTextField(txcifnif, 25);
+	    mutils.configureTextField(txmarc, 30);
 	    
 	    //Setting the maximum number of characters of TextArea (another way)
 //	    tatitular.setTextFormatter(new TextFormatter<String>(change -> 
 //    		change.getControlNewText().length() <= 250 ? change : null));
-//	    tadirec.setTextFormatter(new TextFormatter<String>(change -> 
-//			change.getControlNewText().length() <= 250 ? change : null));
-//	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
-//	    	change.getControlNewText().length() <= 180 ? change : null));
-//	    tatcomp.setTextFormatter(new TextFormatter<String>(change -> 
-//			change.getControlNewText().length() <= 300 ? change : null));
-//	    taanot.setTextFormatter(new TextFormatter<String>(change -> 
-//			change.getControlNewText().length() <= 250 ? change : null));
 	    
-		//To check direccion maximum number of chars and show the number of chars
-		UnaryOperator<Change> titFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxtitchars) {
-		    	
-				showTitularChars(change.getControlNewText().length(), maxtitchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		tatitular.setTextFormatter(new TextFormatter<String>(titFilter));
-		
-		//To check direccion maximum number of chars and show the number of chars
-		UnaryOperator<Change> dirFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxdirchars) {
-		    	
-				showDireccionChars(change.getControlNewText().length(), maxdirchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		tadirec.setTextFormatter(new TextFormatter<String>(dirFilter));
-	    
-		//To check direccion maximum number of chars and show the number of chars
-		UnaryOperator<Change> tfpagoFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxtfpagchars) {
-		    	
-				showFormaPagoChars(change.getControlNewText().length(), maxtfpagchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txfpago.setTextFormatter(new TextFormatter<String>(tfpagoFilter));
-		
-		//To check texto complementario maximum number of chars and show the number of chars
-		UnaryOperator<Change> tcompFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxtcompchars) {
-		    	
-				showTextoComplementarioChars(change.getControlNewText().length(), maxtcompchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		tatcomp.setTextFormatter(new TextFormatter<String>(tcompFilter));
-		
-		//To check anotaciones maximum number of chars and show the number of chars
-		UnaryOperator<Change> anotFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxanotchars) {
-		    	
-				showTextoComplementarioChars(change.getControlNewText().length(), maxanotchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		taanot.setTextFormatter(new TextFormatter<String>(anotFilter));
-		
-		//To check concepto maximum number of chars and show the number of chars
-		UnaryOperator<Change> concepFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxconcepchars) {
-		    	
-				showConceptoChars(change.getControlNewText().length(), maxconcepchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		taconcep.setTextFormatter(new TextFormatter<String>(concepFilter));
+	    //To conmfigure text area and text fields with maximum chars and show number of chars
+	    mutils.configureTextAreaWithLabel(tatitular, lbtitlen, mctitular);
+	    mutils.configureTextAreaWithLabel(tadirec, lbdirlen, mcdirec);
+	    mutils.configureTextFieldWithLabel(txfpago, lbtfpaglen, mctfpag);
+	    mutils.configureTextAreaWithLabel(tatcomp, lbtcomplen, mctcomplen);
+	    mutils.configureTextAreaWithLabel(taanot, lbanotlen, mcanot);
+	    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, mcconcep);
 	    
 	    //Check the visible buttons
 	    //Facturas rectificadas and rectificativas can not be recalculated
@@ -684,25 +601,6 @@ public class FactdtController implements Initializable {
 	    	});
 	}
 	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-
-            }
-
-        };
-
-    }
-	
 	private void saveDataToFactura(Factura fact) {
 		
 		Optional<Factura> factOpt = Optional.ofNullable(factcrud.getDao());
@@ -712,23 +610,23 @@ public class FactdtController implements Initializable {
 					optDate.ifPresent((y) -> fact.setFechaFactura(Date.from(y.atStartOfDay(mutils.getDefaultZoneId()).toInstant())));
 				
 				x.setFacturaFirmada(chffirm.isSelected());
-				x.setReferencia(obtainText(txrefer));
+				x.setReferencia(mutils.obtainText(txrefer));
 				x.setTitular(tatitular.getText());
-				x.setDireccion(obtainText(tadirec));
-				x.setCifnif(obtainText(txcifnif));
-				x.setTextoFormaPago(obtainText(txfpago));
-				x.setTextoComplementario(obtainText(tatcomp));
-				x.setMarcador(obtainText(txmarc));
+				x.setDireccion(mutils.obtainText(tadirec));
+				x.setCifnif(mutils.obtainText(txcifnif));
+				x.setTextoFormaPago(mutils.obtainText(txfpago));
+				x.setTextoComplementario(mutils.obtainText(tatcomp));
+				x.setMarcador(mutils.obtainText(txmarc));
 				
 				for (ItemFactura item : x.getItemsFactura()) {
-					item.setConcepto(obtainText(taconcep));
-					item.setImporte(Double.parseDouble(obtainText(tximpitems)));
+					item.setConcepto(mutils.obtainText(taconcep));
+					item.setImporte(mutils.getDoubleFromCurrency(mutils.obtainText(tximpitems)));
 				}
 				
 				x.setDescuento(cbdesc.getValue());
 				x.setTipoIVA(cbtiva.getValue());
 				
-				x.setImporteGastosEnvio(Double.parseDouble(obtainText(txgenv)));
+				x.setImporteGastosEnvio(mutils.getDoubleFromCurrency(mutils.obtainText(txgenv)));
 				
 				//To set the rest of values
 				x.recalculate();
@@ -736,7 +634,7 @@ public class FactdtController implements Initializable {
 				x.setFormaPago(cbfpago.getValue());
 				x.setEstadoFactura(cbefact.getValue());
 				
-				x.setAnotaciones(obtainText(taanot));
+				x.setAnotaciones(mutils.obtainText(taanot));
 				
 				x.setUltimaActualizacion(new Date());
 				
@@ -839,16 +737,16 @@ public class FactdtController implements Initializable {
 				tatitular.setText("");
 			});
 		
-		showTitularChars(tatitular.getLength(), maxtitchars);
-			
-		optStr = Optional.ofNullable(factwrapper.fact.getDireccion());
+	    lbtitlen.setText("(" + mutils.obtainText(tatitular).length() + "/" + mctitular + " caracteres)");
+
+	    optStr = Optional.ofNullable(factwrapper.fact.getDireccion());
 			optStr.ifPresentOrElse((y) -> {
 				tadirec.setText(y);
 			}, () -> {
 				tadirec.setText("");
 			});
 		
-		showDireccionChars(tadirec.getLength(), maxdirchars);
+		lbdirlen.setText("(" + mutils.obtainText(tadirec).length() + "/" + mcdirec + " caracteres)");
 			
 		optStr = Optional.ofNullable(factwrapper.fact.getTextoFormaPago());
 			optStr.ifPresentOrElse((y) -> {
@@ -857,8 +755,11 @@ public class FactdtController implements Initializable {
 				txfpago.setText("");
 			});
 		
-		showFormaPagoChars(txfpago.getLength(), maxtfpagchars);
-			
+		lbtfpaglen.setText("(" + mutils.obtainText(txfpago).length() + "/" + mctfpag + " caracteres)");
+
+		    mutils.configureTextAreaWithLabel(taanot, lbanotlen, mcanot);
+		    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, mcconcep);
+		    
 		optStr = Optional.ofNullable(factwrapper.fact.getTextoComplementario());
 			optStr.ifPresentOrElse((y) -> {
 				tatcomp.setText(y);
@@ -866,7 +767,7 @@ public class FactdtController implements Initializable {
 				tatcomp.setText("");
 			});
 			
-		showTextoComplementarioChars(tatcomp.getLength(), maxtcompchars);
+		lbtcomplen.setText("(" + mutils.obtainText(tatcomp).length() + "/" + mctcomplen + " caracteres)");
 			
 		optStr = Optional.ofNullable(factwrapper.fact.getMarcador());
 			optStr.ifPresentOrElse((y) -> {
@@ -886,7 +787,7 @@ public class FactdtController implements Initializable {
 				});
 		}
 		
-		showConceptoChars(taconcep.getLength(), maxconcepchars);
+		lbconceplen.setText("(" + mutils.obtainText(taconcep).length() + "/" + mcconcep + " caracteres)");
 
 		fillImporteControls(factwrapper.fact);
 			
@@ -897,7 +798,7 @@ public class FactdtController implements Initializable {
 				taanot.setText("");
 			});
 			
-		showAnotacionesChars(taanot.getLength(), maxanotchars);
+		lbanotlen.setText("(" + mutils.obtainText(taanot).length() + "/" + mcanot + " caracteres)");
 		
 		Optional<FormaPago> optFpag = Optional.ofNullable(factwrapper.fact.getFormaPago());
 		optFpag.ifPresent((y) -> {
@@ -918,18 +819,18 @@ public class FactdtController implements Initializable {
 	}
 	
 	private void fillImporteControls(Factura pfac) {
-	
+
 		List<ItemFactura> items = new ArrayList<>(pfac.getItemsFactura());
-		
+	
 		if (items.size() > 0) {
 				
 			Optional<Double> optDou3 = Optional.ofNullable(items.get(0).getImporte());
 				optDou3.ifPresentOrElse((y) -> {
-					tximpitems.setText(Double.toString(y));
+					tximpitems.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
 				}, () -> {
-					tximpitems.setText("");
+					//Set the amount to 0
+					tximpitems.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 				});
-				
 		}
 
 		Optional<Descuento> optDesc = Optional.ofNullable(pfac.getDescuento());
@@ -939,28 +840,36 @@ public class FactdtController implements Initializable {
 
 				Optional<Double> optDou2 = Optional.ofNullable(y.getPorcentaje());
 					optDou2.ifPresentOrElse((z) -> {
-						lbporcdesc.setText(String.format("%.2f", z));
+						//lbporcdesc.setText(String.format("%.2f", z));
+						lbporcdesc.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
 					}, () -> {
-						lbporcdesc.setText(mutils.CURRENCY_ZERO);
+						//lbporcdesc.setText(mutils.CURRENCY_ZERO);
+						lbporcdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 					});
 					
 				optDou2 = Optional.ofNullable(pfac.getImporteDescuento());
 					optDou2.ifPresentOrElse((z) -> {
-						lbdesc.setText(String.format("%.2f", z));
+						//lbdesc.setText(String.format("%.2f", z));
+						lbdesc.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
 					}, () -> {
-						lbdesc.setText(mutils.CURRENCY_ZERO);
+						//lbdesc.setText(mutils.CURRENCY_ZERO);
+						lbdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 					});
 				
 			}, () -> {
-				lbporcdesc.setText(mutils.CURRENCY_ZERO);
-				lbdesc.setText(mutils.CURRENCY_ZERO);
+				//lbporcdesc.setText(mutils.CURRENCY_ZERO);
+				//lbdesc.setText(mutils.CURRENCY_ZERO);
+				lbporcdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
+				lbdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 			});
 		
 		Optional<Double> optDou = Optional.ofNullable(pfac.getImporteBaseImponible());
 			optDou.ifPresentOrElse((y) -> {
-				lbbimp.setText(String.format("%.2f", y));
+				//lbbimp.setText(String.format("%.2f", y));
+				lbbimp.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
 			}, () -> {
-				lbbimp.setText(mutils.CURRENCY_ZERO);
+				//lbbimp.setText(mutils.CURRENCY_ZERO);
+				lbbimp.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 			});
 			
 		Optional<TipoIVA> optTiva = Optional.ofNullable(pfac.getTipoIVA());
@@ -970,64 +879,47 @@ public class FactdtController implements Initializable {
 
 				Optional<Double> optDou2 = Optional.ofNullable(y.getPorcentaje());
 					optDou2.ifPresentOrElse((z) -> {
-						lbporciva.setText(String.format("%.2f", z));
+						//lbporciva.setText(String.format("%.2f", z));
+						lbporciva.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
 					}, () -> {
-						lbporciva.setText(mutils.CURRENCY_ZERO);
+						//lbporciva.setText(mutils.CURRENCY_ZERO);
+						lbporciva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 					});
 				
 				optDou2 = Optional.ofNullable(pfac.getImporteTipoIVA());
 					optDou2.ifPresentOrElse((z) -> {
-						lbiva.setText(String.format("%.2f", z));
+						//lbiva.setText(String.format("%.2f", z));
+						lbiva.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
 					}, () -> {
-						lbiva.setText(mutils.CURRENCY_ZERO);
+						//lbiva.setText(mutils.CURRENCY_ZERO);
+						lbiva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 					});
 			
 			}, () -> {
-				lbporciva.setText(mutils.CURRENCY_ZERO);
-				lbiva.setText(mutils.CURRENCY_ZERO);
+				//lbporciva.setText(mutils.CURRENCY_ZERO);
+				//lbiva.setText(mutils.CURRENCY_ZERO);
+				lbporciva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
+				lbiva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 			});
 		
 		optDou = Optional.ofNullable(pfac.getImporteGastosEnvio());
 			optDou.ifPresentOrElse((y) -> {
-				txgenv.setText(Double.toString(y));
+				txgenv.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
 			}, () -> {
-				txgenv.setText(mutils.CURRENCY_ZERO);
+				//Set the amount to 0
+				txgenv.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 			});
 		
 		optDou = Optional.ofNullable(pfac.getImporteTotal());
 			optDou.ifPresentOrElse((y) -> {
-				lbtfact.setText(String.format("%.2f", y));
+				//lbtfact.setText(String.format("%.2f", y));
+				lbtfact.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
 			}, () -> {
-				lbtfact.setText(mutils.CURRENCY_ZERO);
+				//lbtfact.setText(mutils.CURRENCY_ZERO);
+				lbtfact.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 			});
 
 	}
-	
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-	    		
-    	return strwrapper.str;
-    }
-    
-    private String obtainText(TextArea tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
     
     private void recalculateFromControls() {
     	
@@ -1039,7 +931,8 @@ public class FactdtController implements Initializable {
 				factwrapper.fact = x;
 				
 				for (ItemFactura item : factwrapper.fact.getItemsFactura()) {
-					item.setImporte(Double.parseDouble(obtainText(tximpitems)));
+					//Commas are eliminated to avoid exceptions
+					item.setImporte(mutils.getDoubleFromCurrency(mutils.obtainText(tximpitems)));
 				}
 				
 				Optional<Descuento> optDesc = Optional.ofNullable(cbdesc.getValue());
@@ -1048,7 +941,7 @@ public class FactdtController implements Initializable {
 				Optional<TipoIVA> optTiva = Optional.ofNullable(cbtiva.getValue());
 					optTiva.ifPresent((y) -> factwrapper.fact.setTipoIVA(y));
 				
-				factwrapper.fact.setImporteGastosEnvio(Double.parseDouble(obtainText(txgenv)));
+				factwrapper.fact.setImporteGastosEnvio(mutils.getDoubleFromCurrency(mutils.obtainText(txgenv)));
 			
 				factwrapper.fact.recalculate();
 				
@@ -1100,34 +993,5 @@ public class FactdtController implements Initializable {
 		//We can add a CSS file to a Scene in code or using Scenebuilder
 		
 	}
-	
-	private void showTextoComplementarioChars(int numchars, int maxchars) {
-		
-		lbtcomplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showAnotacionesChars(int numchars, int maxchars) {
-		
-		lbanotlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showConceptoChars(int numchars, int maxchars) {
-		
-		lbconceplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showTitularChars(int numchars, int maxchars) {
-		
-		lbtitlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showDireccionChars(int numchars, int maxchars) {
-		
-		lbdirlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showFormaPagoChars(int numchars, int maxchars) {
-		
-		lbtfpaglen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
+
 }

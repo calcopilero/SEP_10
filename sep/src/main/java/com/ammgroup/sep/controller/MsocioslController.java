@@ -44,6 +44,9 @@ public class MsocioslController implements Initializable {
 	private TableColumn<ModalidadSocio, String> tcdescripcion;
 	
 	@FXML
+	private TableColumn<ModalidadSocio, String> tcconcepto;
+	
+	@FXML
 	private TableColumn<ModalidadSocio, Double> tccuota;
 
 	@FXML
@@ -155,6 +158,7 @@ public class MsocioslController implements Initializable {
 		
 		// Set up the columns in the table
 		tcdescripcion.setCellValueFactory(new PropertyValueFactory<ModalidadSocio, String>("descripcion"));
+		tcconcepto.setCellValueFactory(new PropertyValueFactory<ModalidadSocio, String>("concepto"));
 		tccuota.setCellValueFactory(new PropertyValueFactory<ModalidadSocio, Double>("cuota"));
 		mutils.configureColumnForDecimal(tccuota);
 		

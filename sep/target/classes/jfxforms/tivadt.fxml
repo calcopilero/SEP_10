@@ -10,7 +10,7 @@
       <Label fx:id="ldesc" layoutX="20.0" layoutY="23.0" text="Descripción:" />
       <TextField fx:id="tdesc" layoutX="20.0" layoutY="40.0" prefHeight="25.0" prefWidth="350.0" />
       <Label fx:id="lporc" layoutX="20.0" layoutY="77.0" text="Porcentaje:" />
-      <TextField fx:id="tporc" layoutX="20.0" layoutY="94.0" prefHeight="25.0" prefWidth="113.0" />
+      <TextField fx:id="tporc" alignment="CENTER_RIGHT" layoutX="20.0" layoutY="94.0" prefHeight="25.0" prefWidth="113.0" />
       <Label fx:id="ltfact" layoutX="20.0" layoutY="136.0" text="Texto en factura:" />
       <TextField fx:id="ttfact" layoutX="20.0" layoutY="153.0" prefHeight="25.0" prefWidth="350.0" />
       <Label fx:id="lbmsg1" layoutX="20.0" layoutY="205.0" minWidth="350.0" prefHeight="17.0" prefWidth="350.0" />

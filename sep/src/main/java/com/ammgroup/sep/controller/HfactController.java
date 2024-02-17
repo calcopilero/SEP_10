@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -38,7 +37,6 @@ import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -48,9 +46,6 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -121,7 +116,6 @@ public class HfactController implements Initializable {
 	
 	@FXML
 	private Label lbconceplen;
-	int maxconcepchars = 400;
     
 	@FXML
 	private Label lbtaconcep;
@@ -170,7 +164,6 @@ public class HfactController implements Initializable {
 	
 	@FXML
 	private Label lbdafactlen;
-	int maxdafactchars = 200;
 	
 	@FXML
 	private TextArea txardafact;
@@ -279,7 +272,7 @@ public class HfactController implements Initializable {
 					fdatawrapper.errors++;
 				});
 				
-			Optional<Double> impOpt = Optional.ofNullable(Double.parseDouble(obtainText(tximpitems)));
+			Optional<Double> impOpt = Optional.ofNullable(mutils.getDoubleFromCurrency(mutils.obtainText(tximpitems)));
 				impOpt.ifPresentOrElse((y) -> {
 					fdatawrapper.impitems = y;
 				}, () -> {
@@ -300,7 +293,7 @@ public class HfactController implements Initializable {
 					fdatawrapper.errors++;
 				});
 			
-			Optional<Double> genOpt = Optional.ofNullable(Double.parseDouble(obtainText(txgenv)));
+			Optional<Double> genOpt = Optional.ofNullable(mutils.getDoubleFromCurrency(mutils.obtainText(txgenv)));
 				genOpt.ifPresent((y) -> {
 					fdatawrapper.genv = y;
 				});
@@ -354,19 +347,6 @@ public class HfactController implements Initializable {
 
     }
     
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-    	strOpt.ifPresent((x) -> {
-    		strwrapper.str = tx.getText();
-    	});
-    		
-    	return strwrapper.str;
-    }
-    
 	private void closeForm() {
 		
 		// get a handle to the stage
@@ -391,39 +371,16 @@ public class HfactController implements Initializable {
 		cbfpago.setItems(FXCollections.observableList(fpagoRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbfpago.getItems().add(null);
 		
-	    //Set the format of decimal fields
-	    tximpitems.setTextFormatter(mutils.getTextFormatterForDecimal());
-	    txgenv.setTextFormatter(mutils.getTextFormatterForDecimal());
-	    
-	    //Setting the maximum number of characters of TextField
-	    tximpitems.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
-	    txgenv.addEventFilter(KeyEvent.KEY_TYPED, maxLength(9));
-	    
+	    //Set the format of decimal fields and set initial amount to 0
+	    mutils.configCurrencyTextField(tximpitems);
+	    tximpitems.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
+	    mutils.configCurrencyTextField(txgenv);
+	    txgenv.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
+
 		//To check concepto maximum number of chars and show the number of chars
-		UnaryOperator<Change> concepFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxconcepchars) {
-		    	
-				showConceptoChars(change.getControlNewText().length(), maxconcepchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		taconcep.setTextFormatter(new TextFormatter<String>(concepFilter));
-		
+	    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, 400);
 		//To check datos auxiliares facturacion maximum number of chars and show the number of chars
-		UnaryOperator<Change> dafactFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxdafactchars) {
-		    	
-				showDatosAuxiliaresChars(change.getControlNewText().length(), maxdafactchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txardafact.setTextFormatter(new TextFormatter<String>(dafactFilter));
+	    mutils.configureTextAreaWithLabel(txardafact, lbdafactlen, 200);
 		
 	    //Setting the maximum number of characters of TextArea (another way)
 //	    taconcep.setTextFormatter(new TextFormatter<String>(change -> 
@@ -441,7 +398,6 @@ public class HfactController implements Initializable {
 						lbcsoc.setText("0");
 					});
 				
-				
 		    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
 		    	var strwrapper = new Object(){ String str = ""; };
 
@@ -455,25 +411,6 @@ public class HfactController implements Initializable {
 			});
 
 	}
-	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-
-            }
-
-        };
-
-    }
 	
 	private void generateFactura(Date pffact, boolean pffirm, SerieFacturas psfact, Agencia page, String pref, String pconcep, Double pimpitems, Descuento pdesc, TipoIVA ptiva, Double pgenv, FormaPago pfpago, String pmarc, String dafact) {
 		
@@ -773,7 +710,7 @@ public class HfactController implements Initializable {
     		
     		Optional<Double> opGenv = Optional.ofNullable(pgenv);
 	    		opGenv.ifPresentOrElse((y) -> fdatawrapper.genv = pgenv,
-	    		() -> fdatawrapper.genv =  Double.parseDouble(obtainText(txgenv)));
+	    		() -> fdatawrapper.genv = mutils.getDoubleFromCurrency(mutils.obtainText(txgenv)));
 					
 	    	//In automatic generation Gastos envio = 0
 	    	fact.setImporteGastosEnvio(fdatawrapper.genv);
@@ -839,15 +776,5 @@ public class HfactController implements Initializable {
 				}
 			}
 		});
-	}
-	
-	private void showConceptoChars(int numchars, int maxchars) {
-		
-		lbconceplen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showDatosAuxiliaresChars(int numchars, int maxchars) {
-		
-		lbdafactlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
 	}
 }

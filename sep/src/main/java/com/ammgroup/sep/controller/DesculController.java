@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 import com.ammgroup.sep.controller.config.crud.CrudDAO;
 import com.ammgroup.sep.controller.config.crud.enums.CrudAction;
 import com.ammgroup.sep.model.Descuento;
+import com.ammgroup.sep.model.TipoIVA;
 import com.ammgroup.sep.repository.DescuentoRepository;
 import com.ammgroup.sep.service.ModuloUtilidades;
 
@@ -42,6 +43,9 @@ public class DesculController implements Initializable {
 	
 	@FXML
 	private TableColumn<Descuento, String> tcdescripcion;
+	
+	@FXML
+	private TableColumn<TipoIVA, String> tctfact;
 	
 	@FXML
 	private TableColumn<Descuento, Double> tcporcentaje;
@@ -156,6 +160,8 @@ public class DesculController implements Initializable {
 		// Set up the columns in the table
 		tcdescripcion.setCellValueFactory(new PropertyValueFactory<Descuento, String>("descripcion"));
 		tcporcentaje.setCellValueFactory(new PropertyValueFactory<Descuento, Double>("porcentaje"));
+		tctfact.setCellValueFactory(new PropertyValueFactory<TipoIVA, String>("textoFactura"));
+		
 		mutils.configureColumnForDecimal(tcporcentaje);
 		
 		// Populating the table manually

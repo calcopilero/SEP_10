@@ -24,13 +24,19 @@ import org.springframework.stereotype.Component;
 import com.ammgroup.sep.config.SEPPropertiesFile;
 
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
+import javafx.scene.control.TextFormatter.Change;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
@@ -45,7 +51,10 @@ public class ModuloUtilidades {
 	
 	public final String CURRENCY_FORMAT = "#,##0.00";
 	public final String CURRENCY_ZERO = "0.00";
-	public final String CURRENCY_PATTERN = "-?\\d*(\\.\\d{0,2})?";
+	//public final String CURRENCY_PATTERN = "-?\\d*(\\,\\d{0,2})?";
+	//public final String CURRENCY_PATTERN = "(?:-?)?\\d{1,3}(?:\\.\\d{3})*(?:,\\d+)?";
+	//public final String CURRENCY_PATTERN = "(?:-?)?(?<!\\d[.,]?)(?:\\d{4,}|\\d{1,3}(?:\\.\\d{3})*)(?:,\\d+)?(?![.,]?\\d{0,2})";
+	public final String CURRENCY_PATTERN = "-?\\d*(\\.?\\d{0,3})?(\\,\\d{0,2})?";
 	public final String INTEGER_PATTERN = "-?([1-9][0-9]*)?";
 	public final String CP_PATTERN = "([0-9]*)?";
 	
@@ -207,17 +216,21 @@ public class ModuloUtilidades {
 	
 	public String getStringFromDouble(Double db, String decfmt) {
 		
-    	Locale locale = new Locale("en", "UK");
+    	//Locale locale = new Locale("en", "UK");
+    	Locale locale = new Locale("es", "ES");
     	
     	DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
-    	symbols.setDecimalSeparator('.');
-    	symbols.setGroupingSeparator(',');
+    	//symbols.setDecimalSeparator('.');
+    	//symbols.setGroupingSeparator(',');
+    	symbols.setDecimalSeparator(',');
+    	symbols.setGroupingSeparator('.');
     	
     	DecimalFormat format = new DecimalFormat(decfmt, symbols);
     	
 		return format.format(db);
 	}
 	
+	//TODO Convert to private
 	public TextFormatter<Double> getTextFormatterForDecimal() {
 		
 	    //Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
@@ -225,42 +238,61 @@ public class ModuloUtilidades {
 	    Pattern validEditingState = Pattern.compile(CURRENCY_PATTERN);
 
 	    UnaryOperator<TextFormatter.Change> filter = c -> {
+
+	    	//Gets the changes in the text field
 	        String text = c.getControlNewText();
+	        
 	        if (validEditingState.matcher(text).matches()) {
 	        	//System.out.println("4" + " - " + c);
 	            return c ;
 	        } else {
-	        	//System.out.println("5");
+	        	//System.out.println("5 text: " + text + " - " + c);
 	            return null ;
 	        }
 	    };
+	    
+//	    StringConverter<Double> converter = new StringConverter<Double>() {
+//
+//	        @Override
+//	        public Double fromString(String s) {
+//	            if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
+//	            	System.out.println("1" + " - " + s);
+//	                return 0.00D ;
+//	            } else {
+//	            	System.out.println("3" + " - " + Double.valueOf(s));
+//	                return Double.valueOf(deformatNumber(s));
+//	            }
+//	        }
+//
+//	        @Override
+//	        public String toString(Double db) {
+//	        	
+//	            System.out.println("2" + " - " + Double.toString(db));
+//	            return getStringFromDouble(db, CURRENCY_FORMAT);
+//	        }
+//	    };
 
-	    StringConverter<Double> converter = new StringConverter<Double>() {
-
-	        @Override
-	        public Double fromString(String s) {
-	            if (s.isEmpty() || "-".equals(s) || ".".equals(s) || "-.".equals(s)) {
-	            	//System.out.println("1" + " - " + s);
-	                return 0.00D ;
-	            } else {
-	            	//System.out.println("3" + " - " + Double.valueOf(s));
-	                return Double.valueOf(s);
-	            }
-	        }
-
-	        @Override
-	        public String toString(Double db) {
-	        	
-	            //System.out.println("2" + " - " + format.format(d));
-	            
-	            return getStringFromDouble(db, CURRENCY_FORMAT);
-	        }
-	    };
-
-	    TextFormatter<Double> textFormatter = new TextFormatter<>(converter, 0.00D, filter);
+//	    TextFormatter<Double> textFormatter = new TextFormatter<>(converter, 0.00D, filter);
+	    TextFormatter<Double> textFormatter = new TextFormatter<>(filter);
 	    
 	    return textFormatter;
 	}
+	
+	private EventHandler<KeyEvent> maxLength(final Integer i) {
+        return new EventHandler<KeyEvent>() {
+
+            @Override
+            public void handle(KeyEvent arg0) {
+
+                TextField tx = (TextField) arg0.getSource();
+                
+            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
+            	strOpt.ifPresent((x) -> {
+            		if (tx.getText().length() >= i) arg0.consume();
+                });
+            }
+        };
+    }
 	
 	public LocalDate obtainLocalDate(Date dt) {
 		
@@ -399,4 +431,108 @@ public class ModuloUtilidades {
 	    
 	    return true;
 	}
+	
+	public String deformatNumber(String strnumber) {
+		
+		//First eliminate the grouping symbols
+		strnumber = strnumber.replace(".", "");
+		//Second replace the commas with dots to get a string with the format 0000.00
+		strnumber = strnumber.replace(",", ".");
+		
+		return strnumber;
+		
+	}
+	
+	public Double getDoubleFromCurrency(String curr) {
+		
+		Double db = Double.parseDouble(deformatNumber(curr));
+		
+		return db;
+		
+	}
+
+	//Using the default max length of 10 for 999.999,00
+	public void configCurrencyTextField(TextField tf) {
+		
+		configCurrencyTextField(tf, 10);
+	}
+
+	public void configCurrencyTextField(TextField tf, int ml) {
+		
+		tf.setTextFormatter(getTextFormatterForDecimal());
+		tf.focusedProperty().addListener((ov, oldV, newV) -> {
+	        	if (!newV) { // focus lost
+	        		tf.setText(getStringFromDouble(getDoubleFromCurrency(tf.getText()), CURRENCY_FORMAT));
+	            }
+	    	});
+		tf.addEventFilter(KeyEvent.KEY_TYPED, maxLength(ml));
+		
+	}
+	
+	public void configureTextField(TextField tf, int ml) {
+		
+		tf.addEventFilter(KeyEvent.KEY_TYPED, maxLength(ml));
+	}
+	
+	public void configureTextFieldWithLabel(TextField tf, Label lb, int ml) {
+		
+		//To check maximum number of chars and show the number of chars
+		UnaryOperator<Change> concepFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= ml) {
+		    	
+				lb.setText("(" + change.getControlNewText().length() + "/" + ml + " caracteres)");
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		
+	    tf.setTextFormatter(new TextFormatter<String>(concepFilter));
+
+	}
+	
+	public void configureTextAreaWithLabel(TextArea ta, Label lb, int ml) {
+		
+		//To check maximum number of chars and show the number of chars
+		UnaryOperator<Change> concepFilter = (change -> {
+			
+			if (change.getControlNewText().length() <= ml) {
+		    	
+				lb.setText("(" + change.getControlNewText().length() + "/" + ml + " caracteres)");
+		    	
+		        return change;
+		    }
+		    return null;
+		});
+		
+	    ta.setTextFormatter(new TextFormatter<String>(concepFilter));
+
+	}
+	
+    public String obtainText(TextField tx) {
+    	
+    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
+    	var strwrapper = new Object(){ String str = ""; };
+    	
+		Optional<String> strOpt = Optional.ofNullable(tx.getText());
+	    	strOpt.ifPresent((x) -> {
+	    		strwrapper.str = tx.getText();
+	    	});
+    		
+    	return strwrapper.str;
+    }
+    
+    public String obtainText(TextArea tx) {
+    	
+    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
+    	var strwrapper = new Object(){ String str = ""; };
+    	
+		Optional<String> strOpt = Optional.ofNullable(tx.getText());
+	    	strOpt.ifPresent((x) -> {
+	    		strwrapper.str = tx.getText();
+	    	});
+    		
+    	return strwrapper.str;
+    }
 }

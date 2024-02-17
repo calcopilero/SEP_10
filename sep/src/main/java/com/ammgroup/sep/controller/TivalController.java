@@ -49,6 +49,9 @@ public class TivalController implements Initializable {
 	
 	@FXML
 	private TableColumn<TipoIVA, Double> tcporcentaje;
+	
+	@FXML
+	private TableColumn<TipoIVA, String> tctfact;
 
 	@FXML
 	private Button badd;
@@ -161,6 +164,8 @@ public class TivalController implements Initializable {
 		// Set up the columns in the table
 		tcdescripcion.setCellValueFactory(new PropertyValueFactory<TipoIVA, String>("descripcion"));
 		tcporcentaje.setCellValueFactory(new PropertyValueFactory<TipoIVA, Double>("porcentaje"));
+		tctfact.setCellValueFactory(new PropertyValueFactory<TipoIVA, String>("textoFactura"));
+		
 		mutils.configureColumnForDecimal(tcporcentaje);
 		
 		// Populating the table manually

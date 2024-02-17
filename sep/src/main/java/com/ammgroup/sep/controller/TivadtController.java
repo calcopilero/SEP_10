@@ -14,7 +14,6 @@ import com.ammgroup.sep.repository.TipoIVARepository;
 import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -23,7 +22,6 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -71,10 +69,10 @@ public class TivadtController implements Initializable {
 		    switch (tivacrud.getAction()) {
 	        case ADD :
 	        	
-	        	cont = tivaRepo.countExistingTiposIVA(obtainText(tdesc));
+	        	cont = tivaRepo.countExistingTiposIVA(mutils.obtainText(tdesc));
 	        	
 	        	if (cont == 0) {
-	        		ti = new TipoIVA(obtainText(tdesc), Double.parseDouble(obtainText(tporc)), obtainText(ttfact));
+	        		ti = new TipoIVA(mutils.obtainText(tdesc), mutils.getDoubleFromCurrency(mutils.obtainText(tporc)), mutils.obtainText(ttfact));
 	        		tivaRepo.save(ti);
 	        	} else {
 	        		lbmsg1.setText("Existen " + String.valueOf(cont) + " tipos de IVA con esa descripción.");
@@ -84,14 +82,14 @@ public class TivadtController implements Initializable {
 	
 	        case EDIT:
 	        	
-	        	cont = tivaRepo.countExistingTiposIVA(obtainText(tdesc), tivacrud.getDao().getId());
+	        	cont = tivaRepo.countExistingTiposIVA(mutils.obtainText(tdesc), tivacrud.getDao().getId());
 	        	
 	        	//Check if there are no coincidences
 	        	if (cont == 0) {
 	        		ti = tivacrud.getDao();
-	        		ti.setDescripcion(obtainText(tdesc));
-	        		ti.setPorcentaje(Double.parseDouble(obtainText(tporc)));
-	        		ti.setTextoFactura(obtainText(ttfact));
+	        		ti.setDescripcion(mutils.obtainText(tdesc));
+	        		ti.setPorcentaje(mutils.getDoubleFromCurrency(mutils.obtainText(tporc)));
+	        		ti.setTextoFactura(mutils.obtainText(ttfact));
 	        		tivaRepo.save(ti);
 	        	} else {
 	        		lbmsg1.setText("Existen " + String.valueOf(cont) + " tipos de IVA con esa descripción.");
@@ -143,18 +141,17 @@ public class TivadtController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		
 	    //Setting the maximum number of characters
-	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    ttfact.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    mutils.configureTextField(tdesc, 60);
+	    mutils.configureTextField(ttfact, 70);
 	    
 	    //Setting the formatter for numbers
-	    tporc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(6));
-	    tporc.setTextFormatter(mutils.getTextFormatterForDecimal());
+	    mutils.configCurrencyTextField(tporc, 6);
 
 	    switch (tivacrud.getAction()) {
         case ADD :
         	
     		tdesc.setText("");
-    		tporc.setText("0.00");
+    		tporc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
     		ttfact.setText("");
     		
             break;
@@ -201,24 +198,6 @@ public class TivadtController implements Initializable {
 	    
 	}
 	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-
-            }
-
-        };
-    }
-
 	private void closeForm() {
 		
 		// get a handle to the stage
@@ -228,19 +207,6 @@ public class TivadtController implements Initializable {
 		
 	}
 	
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
-    
 	private void fillControls() {
 		
 		Optional<TipoIVA> descOpt = Optional.ofNullable(tivacrud.getDao());
@@ -255,9 +221,9 @@ public class TivadtController implements Initializable {
 				
 			Optional<Double> optDou = Optional.ofNullable(x.getPorcentaje());
 				optDou.ifPresentOrElse((y) -> {
-					tporc.setText(Double.toString(y));
+					tporc.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
 				}, () -> {
-					tporc.setText(mutils.CURRENCY_ZERO);
+					tporc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 				});
 			
 			optStr = Optional.ofNullable(x.getTextoFactura());
@@ -316,12 +282,12 @@ public class TivadtController implements Initializable {
 		
 		var boolwrapper = new Object(){ boolean checks = true; };
 		
-		if (obtainText(tdesc).length() == 0) {
+		if (mutils.obtainText(tdesc).length() == 0) {
 			lbmsg1.setText("La descripción no puede quedar en blanco");
 			boolwrapper.checks = false;  
 		}
 		
-		Optional<Double> genOpt = Optional.ofNullable(Double.parseDouble(obtainText(tporc)));
+		Optional<Double> genOpt = Optional.ofNullable(mutils.getDoubleFromCurrency(mutils.obtainText(tporc)));
 			genOpt.ifPresent((y) -> {
 				
 				if (y > 100) {
