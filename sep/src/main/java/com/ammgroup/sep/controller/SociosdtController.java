@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.util.Date;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
+//import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -36,7 +36,7 @@ import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+//import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -49,11 +49,11 @@ import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.scene.input.KeyEvent;
+//import javafx.scene.control.TextFormatter;
+//import javafx.scene.control.TextFormatter.Change;
+//import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
+//import javafx.util.converter.IntegerStringConverter;
 
 @Component
 public class SociosdtController implements Initializable {
@@ -111,14 +111,12 @@ public class SociosdtController implements Initializable {
 	
 	@FXML
 	private Label lbnomlen;
-	int maxnomchars = 150;
 	
 	@FXML
 	private TextField txnombre;
 	
 	@FXML
 	private Label lbapelen;
-	int maxapechars = 60;
 	
 	@FXML
 	private TextField txapell;
@@ -128,7 +126,6 @@ public class SociosdtController implements Initializable {
 	
 	@FXML
 	private Label lbdomlen;
-	int maxdomchars = 100;
 	
 	@FXML
 	private TextArea txardomic;
@@ -138,7 +135,6 @@ public class SociosdtController implements Initializable {
 
 	@FXML
 	private Label lblocalen;
-	int maxlocachars = 70;
 	
 	@FXML
 	private TextField txlocal;
@@ -190,7 +186,6 @@ public class SociosdtController implements Initializable {
 	
 	@FXML
 	private Label lbnmbajalen;
-	int maxnmbajachars = 500;
 	
 	@FXML
 	private TextArea txarnmbaja;
@@ -221,8 +216,7 @@ public class SociosdtController implements Initializable {
 	
 	@FXML
 	private Label lbdafactlen;
-	int maxdafactchars = 200;
-	
+
 	@FXML
 	private TextArea txardafact;
 	
@@ -234,7 +228,6 @@ public class SociosdtController implements Initializable {
 
 	@FXML
 	private Label lbanotlen;
-	int maxanotchars = 500;
 	
 	@FXML
 	private TextArea txaranot;
@@ -438,7 +431,7 @@ public class SociosdtController implements Initializable {
 			socOpt.ifPresent((x) -> {
 				
 				x.setFechaAlta(Date.from(dpfalta.getValue().atStartOfDay(mutils.getDefaultZoneId()).toInstant()));
-				x.setCodigoSocio(Integer.parseInt(obtainText(txcod)));
+				x.setCodigoSocio(Integer.parseInt(mutils.obtainText(txcod)));
 				
 				Optional<ModalidadSocio> optMod = Optional.ofNullable(cbmod.getSelectionModel().getSelectedItem());
 					optMod.ifPresentOrElse((y) -> {
@@ -454,13 +447,13 @@ public class SociosdtController implements Initializable {
 						x.setModoAcceso(null);
 					});
 				
-				x.setOjs(obtainText(txojs));
-				x.setNombre(obtainText(txnombre));
-				x.setApellidos(obtainText(txapell));
-				x.setCifnif(obtainText(txcifnif));
-				x.setDomicilio(obtainText(txardomic));
-				x.setCp(obtainText(txcp));
-				x.setLocalidad(obtainText(txlocal));
+				x.setOjs(mutils.obtainText(txojs));
+				x.setNombre(mutils.obtainText(txnombre));
+				x.setApellidos(mutils.obtainText(txapell));
+				x.setCifnif(mutils.obtainText(txcifnif));
+				x.setDomicilio(mutils.obtainText(txardomic));
+				x.setCp(mutils.obtainText(txcp));
+				x.setLocalidad(mutils.obtainText(txlocal));
 				
 				Optional<Provincia> optPro = Optional.ofNullable(cbprov.getSelectionModel().getSelectedItem());
 					optPro.ifPresentOrElse((y) -> {
@@ -483,16 +476,16 @@ public class SociosdtController implements Initializable {
 						x.setZonaPostal(null);
 					});
 
-				x.setEmail(obtainText(txemail));
-				x.setTelefono(obtainText(txtelefono));
-				x.setMovil(obtainText(txtelmovil));
-				x.setCentroTrabajo(obtainText(txctrab));
-				x.setAreaTrabajo(obtainText(txatrab));
-				x.setTitulacion(obtainText(txtitul));
-				x.setContactoSep(obtainText(txcsep));
+				x.setEmail(mutils.obtainText(txemail));
+				x.setTelefono(mutils.obtainText(txtelefono));
+				x.setMovil(mutils.obtainText(txtelmovil));
+				x.setCentroTrabajo(mutils.obtainText(txctrab));
+				x.setAreaTrabajo(mutils.obtainText(txatrab));
+				x.setTitulacion(mutils.obtainText(txtitul));
+				x.setContactoSep(mutils.obtainText(txcsep));
 				x.setLopd(chlopd.isSelected());
 				x.setListaDistribucion(chldist.isSelected());
-				x.setMarcador(obtainText(txmarc));
+				x.setMarcador(mutils.obtainText(txmarc));
 
 				Optional<FormaPago> optFpa = Optional.ofNullable(cbfpago.getSelectionModel().getSelectedItem());
 					optFpa.ifPresentOrElse((y) -> {
@@ -501,7 +494,7 @@ public class SociosdtController implements Initializable {
 						x.setFormaPago(null);
 					});
 					
-				x.setIbanccc(obtainText(txdbanc));
+				x.setIbanccc(mutils.obtainText(txdbanc));
 				
 				Optional<Descuento> optDes = Optional.ofNullable(cbdesc.getSelectionModel().getSelectedItem());
 					optDes.ifPresentOrElse((y) -> {
@@ -513,7 +506,7 @@ public class SociosdtController implements Initializable {
 				x.setFactura(chfact.isSelected());
 				x.setFirmarFactura(chfirfact.isSelected());
 				
-				x.setDatosAdicionalesFactura(obtainText(txardafact));
+				x.setDatosAdicionalesFactura(mutils.obtainText(txardafact));
 				
 				Optional<Agencia> optAge = Optional.ofNullable(cbagencia.getSelectionModel().getSelectedItem());
 					optAge.ifPresentOrElse((y) -> {
@@ -522,7 +515,7 @@ public class SociosdtController implements Initializable {
 						x.setAgencia(null);
 					});
 				
-				x.setReferencia(obtainText(txref));
+				x.setReferencia(mutils.obtainText(txref));
 				x.setBaja(chbaja.isSelected());
 				
 				Optional<LocalDate> optDate = Optional.ofNullable(dpfbaja.getValue());
@@ -539,11 +532,11 @@ public class SociosdtController implements Initializable {
 						x.setMotivoBaja(null);
 					});
 				
-				x.setNotasmbaja(obtainText(txarnmbaja));
-				x.setCargosJuntaDirectiva(obtainText(txcjdir));
+				x.setNotasmbaja(mutils.obtainText(txarnmbaja));
+				x.setCargosJuntaDirectiva(mutils.obtainText(txcjdir));
 				x.setJuntaDirectivaActual(chjdiract.isSelected());
 
-				x.setAnotaciones(obtainText(txaranot));
+				x.setAnotaciones(mutils.obtainText(txaranot));
 				
 				x.setUltimaActualizacion(new Date());
 			
@@ -556,32 +549,6 @@ public class SociosdtController implements Initializable {
 
     	closeForm();
 
-    }
-    
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-    	strOpt.ifPresent((x) -> {
-    		strwrapper.str = tx.getText();
-    	});
-    		
-    	return strwrapper.str;
-    }
-	
-    private String obtainText(TextArea tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-    	strOpt.ifPresent((x) -> {
-    		strwrapper.str = tx.getText();
-    	});
-    		
-    	return strwrapper.str;
     }
     
 	@Override
@@ -615,39 +582,37 @@ public class SociosdtController implements Initializable {
 		cbmbaja.setItems(FXCollections.observableList(mbajaRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbmbaja.getItems().add(null);
 	    
-		final String ipattern = mutils.INTEGER_PATTERN;
-		final String cppattern = mutils.CP_PATTERN;
-	    
-		//Setting a filter to allow only numbers
-		UnaryOperator<Change> integerFilter = (change -> {
-		    String newText = change.getControlNewText();
-
-		    if (newText.matches(ipattern)) {
-		        return change;
-		    }
-		    return null;
-		});
-		
-		//Setting a filter to allow only numbers (the first number could be a 0)
-		UnaryOperator<Change> cpFilter = (change -> {
-		    String newText = change.getControlNewText();
-
-		    if (newText.matches(cppattern)) {
-		        return change;
-		    }
-		    return null;
-		});
-		
-		//Setting the formatters
-		txcod.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter));
-		txcp.setTextFormatter(new TextFormatter<String>(cpFilter));
-		txtelefono.setTextFormatter(new TextFormatter<String>(integerFilter));
+		//Configuring the text and numeric fields
+		mutils.configNumericTextField(txcod, 6, mutils.INTEGER_PATTERN);
+		mutils.configNumericTextField(txcp, 5, mutils.INTEGER_PATTERN);
+		mutils.configNumericTextField(txtelefono, 12, mutils.INTEGER_PATTERN);
+		mutils.configureTextField(txojs, 50);
+		mutils.configureTextField(txcifnif, 25);
+		mutils.configureTextField(txlocal, 70);
+		mutils.configureTextField(txemail, 80);
+		mutils.configureTextField(txtelmovil, 12);
+		mutils.configureTextField(txctrab, 70);
+		mutils.configureTextField(txatrab, 70);
+		mutils.configureTextField(txtitul, 90);
+		mutils.configureTextField(txcsep, 70);
+		mutils.configureTextField(txmarc, 50);
+		mutils.configureTextField(txdbanc, 30);
+		mutils.configureTextField(txref, 30);
+		mutils.configureTextField(txcjdir, 60);
+		mutils.configureTextFieldWithLabel(txnombre, lbnomlen, 150);
+		mutils.configureTextFieldWithLabel(txapell, lbapelen, 60);
+		mutils.configureTextFieldWithLabel(txlocal, lblocalen, 70);
+		mutils.configureTextAreaWithLabel(txardomic, lbdomlen, 100);
+		mutils.configureTextAreaWithLabel(txarnmbaja, lbnmbajalen, 500);
+		mutils.configureTextAreaWithLabel(txardafact, lbdafactlen, 200);
+		mutils.configureTextAreaWithLabel(txaranot, lbanotlen, 500);
 
 		switch (socrud.getAction()) {
         case ADD :
 
         	dpfalta.setValue(LocalDate.now());
-    		txcod.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), (socioRepository.getHigherCodigoSocio()+1), integerFilter));
+    		//txcod.setTextFormatter(new TextFormatter<Integer>(new IntegerStringConverter(), (socioRepository.getHigherCodigoSocio()+1), integerFilter));
+        	txcod.setText(String.valueOf(socioRepository.getHigherCodigoSocio()+1));
     		txnombre.setText("");
     		txcifnif.setText("");
     		txardomic.setText("");
@@ -708,138 +673,11 @@ public class SociosdtController implements Initializable {
 			break;
 	    }
 		
-	    //Setting the maximum number of characters of TextField
-		txojs.addEventFilter(KeyEvent.KEY_TYPED, maxLength(50));
-	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(25));
-	    txcp.addEventFilter(KeyEvent.KEY_TYPED, maxLength(5));
-	    txlocal.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txemail.addEventFilter(KeyEvent.KEY_TYPED, maxLength(80));
-	    txtelefono.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-	    txtelmovil.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-	    txctrab.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txatrab.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txtitul.addEventFilter(KeyEvent.KEY_TYPED, maxLength(90));
-	    txcsep.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txmarc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(50));
-	    txdbanc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
-	    txref.addEventFilter(KeyEvent.KEY_TYPED, maxLength(30));
-	    txcjdir.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    
-		//To check nombre maximum number of chars and show the number of chars
-		UnaryOperator<Change> nomFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxnomchars) {
-		    	
-				showNombreChars(change.getControlNewText().length(), maxnomchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txnombre.setTextFormatter(new TextFormatter<String>(nomFilter));
-		
-		//To check Apellidos maximum number of chars and show the number of chars
-		UnaryOperator<Change> apellFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxapechars) {
-		    	
-				showApellidosChars(change.getControlNewText().length(), maxapechars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txapell.setTextFormatter(new TextFormatter<String>(apellFilter));
-
-		//To check localidad maximum number of chars and show the number of chars
-		UnaryOperator<Change> localFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxlocachars) {
-		    	
-				showLocalidadChars(change.getControlNewText().length(), maxlocachars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txlocal.setTextFormatter(new TextFormatter<String>(localFilter));
-		
-		//To check domicilio maximum number of chars and show the number of chars
-		UnaryOperator<Change> domicFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxdomchars) {
-		    	
-				showDomicilioChars(change.getControlNewText().length(), maxdomchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txardomic.setTextFormatter(new TextFormatter<String>(domicFilter));
-		
-		//To check notasmbaja maximum number of chars and show the number of chars
-		UnaryOperator<Change> nmbajaFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxnmbajachars) {
-		    	
-				showNotasmbajaChars(change.getControlNewText().length(), maxnmbajachars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txarnmbaja.setTextFormatter(new TextFormatter<String>(nmbajaFilter));
-		
-		//To check Datos auxiliares facturacion maximum number of chars and show the number of chars
-		UnaryOperator<Change> dafactFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxdafactchars) {
-		    	
-				showDafactChars(change.getControlNewText().length(), maxdafactchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txardafact.setTextFormatter(new TextFormatter<String>(dafactFilter));
-	    
-		//To check Anotaciones maximum number of chars and show the number of chars
-		UnaryOperator<Change> anotFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxanotchars) {
-		    	
-				showAnotacionesChars(change.getControlNewText().length(), maxanotchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txaranot.setTextFormatter(new TextFormatter<String>(anotFilter));
-		
 	    //Setting the maximum number of characters of TextArea (a different way)
 	    //txaranot.setTextFormatter(new TextFormatter<String>(change -> 
 	    //	change.getControlNewText().length() <= 250 ? change : null));
 	    
 	}
-	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-
-            }
-
-        };
-
-    }
 	
 	private void closeForm() {
 		
@@ -889,16 +727,12 @@ public class SociosdtController implements Initializable {
 						txnombre.setText("");
 					});
 					
-				showNombreChars(txnombre.getLength(), maxnomchars);
-					
 				optStr = Optional.ofNullable(x.getApellidos());
 					optStr.ifPresentOrElse((y) -> {
 						txapell.setText(y);
 					}, () -> {
 						txapell.setText("");
 					});
-					
-				showApellidosChars(txapell.getLength(), maxapechars);
 
 				optStr = Optional.ofNullable(x.getCifnif());
 					optStr.ifPresentOrElse((y) -> {
@@ -913,8 +747,6 @@ public class SociosdtController implements Initializable {
 					}, () -> {
 						txardomic.setText("");
 					});
-				
-				showDomicilioChars(txardomic.getLength(), maxdomchars);
 					
 				optStr = Optional.ofNullable(x.getCp());
 					optStr.ifPresentOrElse((y) -> {
@@ -929,8 +761,6 @@ public class SociosdtController implements Initializable {
 					}, () -> {
 						txlocal.setText("");
 					});
-				
-				showLocalidadChars(txlocal.getLength(), maxlocachars);
 					
 		    	Optional<Provincia> provOpt = Optional.ofNullable(x.getProvincia());
 		    		provOpt.ifPresent((y) -> cbprov.getSelectionModel().select(mutils.searchIdInCombo(cbprov, y)));
@@ -1041,8 +871,6 @@ public class SociosdtController implements Initializable {
 						txardafact.setText("");
 					});
 				
-				showDafactChars(txardafact.getLength(), maxdafactchars);
-				
 				Optional<Agencia> optAge = Optional.ofNullable(x.getAgencia());
 					optAge.ifPresent((y) -> {
 						cbagencia.getSelectionModel().select(mutils.searchIdInCombo(cbagencia, y));
@@ -1096,8 +924,6 @@ public class SociosdtController implements Initializable {
 					}, () -> {
 						txaranot.setText("");
 					});
-					
-				showAnotacionesChars(txaranot.getLength(), maxanotchars);
 				
 				optDate = Optional.ofNullable(x.getUltimaActualizacion());
 					optDate.ifPresent((y) -> lbultact.setText(mutils.getStringFromDate(y, mutils.DATE_FORMAT)));
@@ -1175,14 +1001,14 @@ public class SociosdtController implements Initializable {
 		
 		var checkwrapper = new Object(){ String errorstext = ""; boolean checks = true; };
 		
-		if (obtainText(txnombre).length() == 0) {
+		if (mutils.obtainText(txnombre).length() == 0) {
 			checkwrapper.errorstext += "El nombre no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}
 		
 		//CIF is not mandatory when an Agencia is selected
 		Optional<Agencia> ageOpt = Optional.ofNullable(cbagencia.getValue());
-		if ((obtainText(txcifnif).length() == 0) && (ageOpt.isEmpty())) {
+		if ((mutils.obtainText(txcifnif).length() == 0) && (ageOpt.isEmpty())) {
 			checkwrapper.errorstext += "El NIF/VAT no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}
@@ -1239,38 +1065,4 @@ public class SociosdtController implements Initializable {
 		
 	}
 
-	private void showNotasmbajaChars(int numchars, int maxchars) {
-		
-		lbnmbajalen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showDomicilioChars(int numchars, int maxchars) {
-		
-		lbdomlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showNombreChars(int numchars, int maxchars) {
-		
-		lbnomlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showApellidosChars(int numchars, int maxchars) {
-		
-		lbapelen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showDafactChars(int numchars, int maxchars) {
-		
-		lbdafactlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showLocalidadChars(int numchars, int maxchars) {
-		
-		lblocalen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showAnotacionesChars(int numchars, int maxchars) {
-		
-		lbanotlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
 }

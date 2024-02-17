@@ -40,6 +40,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.StringConverter;
+import javafx.util.converter.IntegerStringConverter;
 
 @SuppressWarnings(value = { "unused" })
 @Component
@@ -51,6 +52,8 @@ public class ModuloUtilidades {
 	
 	public final String CURRENCY_FORMAT = "#,##0.00";
 	public final String CURRENCY_ZERO = "0.00";
+	public final String NUMBER_GROUPING_FORMAT = "###,###,##0";
+	public final String NUMBER_SIMPLE_FORMAT = "#########0";
 	//public final String CURRENCY_PATTERN = "-?\\d*(\\,\\d{0,2})?";
 	//public final String CURRENCY_PATTERN = "(?:-?)?\\d{1,3}(?:\\.\\d{3})*(?:,\\d+)?";
 	//public final String CURRENCY_PATTERN = "(?:-?)?(?<!\\d[.,]?)(?:\\d{4,}|\\d{1,3}(?:\\.\\d{3})*)(?:,\\d+)?(?![.,]?\\d{0,2})";
@@ -216,22 +219,45 @@ public class ModuloUtilidades {
 	
 	public String getStringFromDouble(Double db, String decfmt) {
 		
-    	//Locale locale = new Locale("en", "UK");
-    	Locale locale = new Locale("es", "ES");
-    	
-    	DecimalFormatSymbols symbols = new DecimalFormatSymbols(locale);
-    	//symbols.setDecimalSeparator('.');
-    	//symbols.setGroupingSeparator(',');
-    	symbols.setDecimalSeparator(',');
-    	symbols.setGroupingSeparator('.');
+		//By default the locale is ES
+		return getStringFromDouble(db, decfmt, "ES");
+		
+	}
+	
+	public String getStringFromDouble(Double db, String decfmt, String locale) {
+		
+    	DecimalFormatSymbols symbols = new DecimalFormatSymbols(getLocale(locale));
+
+    	//symbols.setDecimalSeparator(',');
+    	//symbols.setGroupingSeparator('.');
     	
     	DecimalFormat format = new DecimalFormat(decfmt, symbols);
     	
 		return format.format(db);
+		
+	}
+
+	private Locale getLocale(String loc) {
+		
+		Locale locale;
+		
+		switch (loc) {
+        case "ES":
+        	locale = new Locale("es", "ES");
+            break;
+        case "UK":
+        	locale = new Locale("en", "UK");
+            break;
+        default:
+        	locale = new Locale("es", "ES");
+        	break;
+		}
+		
+		return locale;
+		
 	}
 	
-	//TODO Convert to private
-	public TextFormatter<Double> getTextFormatterForDecimal() {
+	private TextFormatter<Double> getTextFormatterForDecimal() {
 		
 	    //Pattern validEditingState = Pattern.compile("-?(([1-9][0-9]*)|0)?(\\.[0-9]*)?");
 		//Pattern validEditingState = Pattern.compile("-?\\d+\\.\\d+");
@@ -276,6 +302,21 @@ public class ModuloUtilidades {
 	    TextFormatter<Double> textFormatter = new TextFormatter<>(filter);
 	    
 	    return textFormatter;
+	}
+	
+	private TextFormatter<Integer> getTextFormatterForNumber(String pattern) {
+		
+		//Setting a filter to allow only numbers
+		UnaryOperator<Change> integerFilter = (change -> {
+		    String newText = change.getControlNewText();
+
+		    if (newText.matches(pattern)) {
+		        return change;
+		    }
+		    return null;
+		});
+		
+		return new TextFormatter<Integer>(new IntegerStringConverter(), 0, integerFilter);
 	}
 	
 	private EventHandler<KeyEvent> maxLength(final Integer i) {
@@ -468,6 +509,19 @@ public class ModuloUtilidades {
 		tf.addEventFilter(KeyEvent.KEY_TYPED, maxLength(ml));
 		
 	}
+	
+	public void configNumericTextField(TextField tf, int ml, String pattern) {
+		
+		tf.setTextFormatter(getTextFormatterForNumber(pattern));
+//		tf.focusedProperty().addListener((ov, oldV, newV) -> {
+//	        	if (!newV) { // focus lost
+//	        		tf.setText(getStringFromDouble(getDoubleFromCurrency(tf.getText()), NUMBER_SIMPLE_FORMAT));
+//	            }
+//	    	});
+		tf.addEventFilter(KeyEvent.KEY_TYPED, maxLength(ml));
+	
+	}
+
 	
 	public void configureTextField(TextField tf, int ml) {
 		

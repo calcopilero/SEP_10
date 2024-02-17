@@ -11,9 +11,9 @@ import com.ammgroup.sep.controller.config.crud.CrudDAO;
 import com.ammgroup.sep.controller.config.crud.enums.CrudAction;
 import com.ammgroup.sep.model.ModoAcceso;
 import com.ammgroup.sep.repository.ModoAccesoRepository;
+import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -22,12 +22,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
 public class MaccesdtController implements Initializable {
 
+	@Autowired
+	private ModuloUtilidades mutils;
+	
 	@Autowired
 	private CrudDAO<ModoAcceso> macrud;
 	
@@ -58,10 +60,10 @@ public class MaccesdtController implements Initializable {
 		    switch (macrud.getAction()) {
 	        case ADD :
 	        	
-	        	cont = maRepo.countExistingModosAcceso(obtainText(tdesc));
+	        	cont = maRepo.countExistingModosAcceso(mutils.obtainText(tdesc));
 	        	
 	        	if (cont == 0) {
-	        		ma = new ModoAcceso(obtainText(tdesc));
+	        		ma = new ModoAcceso(mutils.obtainText(tdesc));
 	        		maRepo.save(ma);
 	        	} else {
 	        		lbmsg.setText("Existen " + String.valueOf(cont) + " modos de acceso con esa descripción.");
@@ -71,12 +73,12 @@ public class MaccesdtController implements Initializable {
 	
 	        case EDIT:
 	        	
-	        	cont = maRepo.countExistingModosAcceso(obtainText(tdesc), macrud.getDao().getId());
+	        	cont = maRepo.countExistingModosAcceso(mutils.obtainText(tdesc), macrud.getDao().getId());
 	        	
 	        	//Check if there are no coincidences
 	        	if (cont == 0) {
 	        		ma = macrud.getDao();
-	        		ma.setDescripcion(obtainText(tdesc));
+	        		ma.setDescripcion(mutils.obtainText(tdesc));
 	        		maRepo.save(ma);
 	        	} else {
 	        		lbmsg.setText("Existen " + String.valueOf(cont) + " modos de acceso con esa descripción.");
@@ -128,8 +130,8 @@ public class MaccesdtController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-	    //Setting the maximum number of characters of TextField
-	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
+	    //Configuring TextFields
+		mutils.configureTextField(tdesc, 60);
 
 	    switch (macrud.getAction()) {
         case ADD :
@@ -172,35 +174,6 @@ public class MaccesdtController implements Initializable {
 	    }
 
 	}
-	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-            }
-        };
-    }
-	
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
     
 	private void fillControls() {
 		
@@ -260,7 +233,7 @@ public class MaccesdtController implements Initializable {
 		
 		boolean checks = true;
 		
-		if (obtainText(tdesc).length() == 0) {
+		if (mutils.obtainText(tdesc).length() == 0) {
 			lbmsg.setText("La descripción no puede quedar en blanco");
 			checks = false;  
 		}

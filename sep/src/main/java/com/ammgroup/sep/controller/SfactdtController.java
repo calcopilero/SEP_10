@@ -18,7 +18,6 @@ import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -29,7 +28,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -92,7 +90,7 @@ public class SfactdtController implements Initializable {
 		    switch (sfaccrud.getAction()) {
 	        case ADD :
 	        	
-	        	cont1 = efacRepo.countExistingSeriesFacturas(obtainText(tdesc));
+	        	cont1 = efacRepo.countExistingSeriesFacturas(mutils.obtainText(tdesc));
 	        	
 	        	if (chfauto.isSelected()) {
 	        		cont2 = efacRepo.countExistingSeriesAutomaticas();
@@ -113,7 +111,7 @@ public class SfactdtController implements Initializable {
 	        	}
 	        	
 	        	if ((cont1 == 0) && (cont2 == 0) && (cont3 == 0) && (cont4 == 0)) {
-	        		sf = new SerieFacturas(obtainText(tdesc), obtainText(tininum), chfrect.isSelected(), obtainText(ttfrect), chfauto.isSelected(), obtainText(ttpara), chfprof.isSelected(), cbtiva.getValue());
+	        		sf = new SerieFacturas(mutils.obtainText(tdesc), mutils.obtainText(tininum), chfrect.isSelected(), mutils.obtainText(ttfrect), chfauto.isSelected(), mutils.obtainText(ttpara), chfprof.isSelected(), cbtiva.getValue());
 	        		efacRepo.save(sf);
 	        	} else {
 	        		if (cont1 > 0) lbmsg.setText("Existen " + String.valueOf(cont1) + " serie" + ((cont1 > 1)?"s" : "") + " de facturas con esa descripción.");
@@ -126,7 +124,7 @@ public class SfactdtController implements Initializable {
 	
 	        case EDIT:
 	        	
-	        	cont1 = efacRepo.countExistingSeriesFacturas(obtainText(tdesc), sfaccrud.getDao().getId());
+	        	cont1 = efacRepo.countExistingSeriesFacturas(mutils.obtainText(tdesc), sfaccrud.getDao().getId());
 	        	
 	        	if (chfauto.isSelected()) {
 	        		cont2 = efacRepo.countExistingSeriesAutomaticas(sfaccrud.getDao().getId());
@@ -149,12 +147,12 @@ public class SfactdtController implements Initializable {
 	        	//Check if there are no coincidences
 	        	if ((cont1 == 0) && (cont2 == 0) && (cont3 == 0) && (cont4 == 0)) {
 	        		sf = sfaccrud.getDao();
-	        		sf.setDescripcion(obtainText(tdesc));
+	        		sf.setDescripcion(mutils.obtainText(tdesc));
 	        		sf.setAutomatica(chfauto.isSelected());
-	        		sf.setTextoInicioNumeracion(obtainText(tininum));
+	        		sf.setTextoInicioNumeracion(mutils.obtainText(tininum));
 	        		sf.setRectificativas(chfrect.isSelected());
-	        		sf.setTextoRectificativa(obtainText(ttfrect));
-	        		sf.setTextoPara(obtainText(ttpara));
+	        		sf.setTextoRectificativa(mutils.obtainText(ttfrect));
+	        		sf.setTextoPara(mutils.obtainText(ttpara));
 	        		sf.setTipoIVA(cbtiva.getValue());
 	        		sf.setFacturasProforma(chfprof.isSelected());
 	        		efacRepo.save(sf);
@@ -214,11 +212,11 @@ public class SfactdtController implements Initializable {
 		cbtiva.setItems(FXCollections.observableList(tivaRepo.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbtiva.getItems().add(null);
 		
-	    //Setting the maximum number of characters of TextField
-	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    tininum.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-	    ttfrect.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    ttpara.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
+	    //Configuring TextFields
+		mutils.configureTextField(tdesc, 60);
+		mutils.configureTextField(tininum, 12);
+		mutils.configureTextField(ttfrect, 70);
+		mutils.configureTextField(ttpara, 70);
 
 	    switch (sfaccrud.getAction()) {
         case ADD :
@@ -262,35 +260,6 @@ public class SfactdtController implements Initializable {
 	    }
 
 	}
-	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-            }
-        };
-    }
-	
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
     
 	private void fillControls() {
 		
@@ -398,11 +367,11 @@ public class SfactdtController implements Initializable {
 		
 		boolean checks = true;
 		
-		if (obtainText(tininum).length() == 0) {
+		if (mutils.obtainText(tininum).length() == 0) {
 			lbmsg.setText("El texto de inicio de numeración no puede quedar en blanco");
 			checks = false;  
 		}
-		if (obtainText(tdesc).length() == 0) {
+		if (mutils.obtainText(tdesc).length() == 0) {
 			lbmsg.setText("La descripción no puede quedar en blanco");
 			checks = false;  
 		}

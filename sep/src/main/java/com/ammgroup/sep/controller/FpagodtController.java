@@ -11,9 +11,9 @@ import com.ammgroup.sep.controller.config.crud.CrudDAO;
 import com.ammgroup.sep.controller.config.crud.enums.CrudAction;
 import com.ammgroup.sep.model.FormaPago;
 import com.ammgroup.sep.repository.FormaPagoRepository;
+import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
@@ -22,12 +22,14 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
 public class FpagodtController implements Initializable {
 
+	@Autowired
+	private ModuloUtilidades mutils;
+	
 	@Autowired
 	private CrudDAO<FormaPago> fpagcrud;
 	
@@ -61,10 +63,10 @@ public class FpagodtController implements Initializable {
 		    switch (fpagcrud.getAction()) {
 	        case ADD :
 	        	
-	        	cont = fpagRepo.countExistingFormasPago(obtainText(tdesc));
+	        	cont = fpagRepo.countExistingFormasPago(mutils.obtainText(tdesc));
 	        	
 	        	if (cont == 0) {
-	        		fp = new FormaPago(obtainText(tdesc), obtainText(ttfact));
+	        		fp = new FormaPago(mutils.obtainText(tdesc), mutils.obtainText(ttfact));
 	        		fpagRepo.save(fp);
 	        	} else {
 	        		lbmsg.setText("Existen " + String.valueOf(cont) + " formas de pago con esa descripción.");
@@ -74,13 +76,13 @@ public class FpagodtController implements Initializable {
 	
 	        case EDIT:
 	        	
-	        	cont = fpagRepo.countExistingFormasPago(obtainText(tdesc), fpagcrud.getDao().getId());
+	        	cont = fpagRepo.countExistingFormasPago(mutils.obtainText(tdesc), fpagcrud.getDao().getId());
 	        	
 	        	//Check if there are no coincidences
 	        	if (cont == 0) {
 	        		fp = fpagcrud.getDao();
-	        		fp.setDescripcion(obtainText(tdesc));
-	        		fp.setTextoFactura(obtainText(ttfact));
+	        		fp.setDescripcion(mutils.obtainText(tdesc));
+	        		fp.setTextoFactura(mutils.obtainText(ttfact));
 	        		fpagRepo.save(fp);
 	        	} else {
 	        		lbmsg.setText("Existen " + String.valueOf(cont) + " formas de pago con esa descripción.");
@@ -132,9 +134,9 @@ public class FpagodtController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-	    //Setting the maximum number of characters of TextField
-	    tdesc.addEventFilter(KeyEvent.KEY_TYPED, maxLength(60));
-	    ttfact.addEventFilter(KeyEvent.KEY_TYPED, maxLength(150));
+	    //Configuring TextFields
+		mutils.configureTextField(tdesc, 60);
+		mutils.configureTextField(ttfact, 150);
 
 	    switch (fpagcrud.getAction()) {
         case ADD :
@@ -177,35 +179,6 @@ public class FpagodtController implements Initializable {
 			break;
 	    }
 	}
-	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-            }
-        };
-    }
-	
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = tx.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
 	
 	private void fillControls() {
 		
@@ -274,7 +247,7 @@ public class FpagodtController implements Initializable {
 		
 		boolean checks = true;
 		
-		if (obtainText(tdesc).length() == 0) {
+		if (mutils.obtainText(tdesc).length() == 0) {
 			lbmsg.setText("La descripción no puede quedar en blanco");
 			checks = false;  
 		}

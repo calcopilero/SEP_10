@@ -3,7 +3,6 @@ package com.ammgroup.sep.controller;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.function.UnaryOperator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
@@ -23,7 +22,6 @@ import com.ammgroup.sep.service.ModuloUtilidades;
 
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -33,9 +31,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TextFormatter;
-import javafx.scene.control.TextFormatter.Change;
-import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
 @Component
@@ -61,7 +56,6 @@ public class AgencdtController implements Initializable {
 
 	@FXML
 	private Label lbnomlen;
-	int maxnomchars = 120;
 	
 	@FXML
 	private TextArea txarnombre;
@@ -74,7 +68,6 @@ public class AgencdtController implements Initializable {
 	
 	@FXML
 	private Label lbdomlen;
-	int maxdomchars = 100;
 	
 	@FXML
 	private TextArea txardomic;
@@ -84,7 +77,6 @@ public class AgencdtController implements Initializable {
 
 	@FXML
 	private Label lbloclen;
-	int maxlocchars = 70;
 	
 	@FXML
 	private TextField txlocal;
@@ -109,14 +101,12 @@ public class AgencdtController implements Initializable {
 	
 	@FXML
 	private Label lbdafactlen;
-	int maxdafactchars = 250;
 	
 	@FXML
 	private TextArea txardafact;
 	
 	@FXML
 	private Label lbanotlen;
-	int maxanotchars = 500;
 	
 	@FXML
 	private TextArea txaranot;
@@ -263,20 +253,20 @@ public class AgencdtController implements Initializable {
 	
 	private void saveDataToAgencia(Agencia ag) {
 		
-		ag.setNombre(obtainText(txarnombre));
+		ag.setNombre(mutils.obtainText(txarnombre));
 		ag.setActiva(chactiva.isSelected());
-		ag.setCifnif(obtainText(txcifnif));
-		ag.setDomicilio(obtainText(txardomic));
-		ag.setCp(obtainText(txcp));
-		ag.setLocalidad(obtainText(txlocal));
+		ag.setCifnif(mutils.obtainText(txcifnif));
+		ag.setDomicilio(mutils.obtainText(txardomic));
+		ag.setCp(mutils.obtainText(txcp));
+		ag.setLocalidad(mutils.obtainText(txlocal));
 		ag.setProvincia((Provincia) cbprov.getSelectionModel().getSelectedItem());
 		ag.setPais((Pais) cbpais.getSelectionModel().getSelectedItem());
 		ag.setZonaPostal((ZonaPostal) cbzpost.getSelectionModel().getSelectedItem());
-		ag.setEmail(obtainText(txemail));
-		ag.setTelefono(obtainText(txtelefono));
-		ag.setPersonaContacto(obtainText(txpcont));
-		ag.setDatosAdicionalesFactura(obtainText(txardafact));
-		ag.setAnotaciones(obtainText(txaranot));
+		ag.setEmail(mutils.obtainText(txemail));
+		ag.setTelefono(mutils.obtainText(txtelefono));
+		ag.setPersonaContacto(mutils.obtainText(txpcont));
+		ag.setDatosAdicionalesFactura(mutils.obtainText(txardafact));
+		ag.setAnotaciones(mutils.obtainText(txaranot));
 		
 	}
 	
@@ -285,32 +275,6 @@ public class AgencdtController implements Initializable {
 
     	closeForm();
 
-    }
-    
-    private String obtainText(TextField tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-    	strOpt.ifPresent((x) -> {
-    		strwrapper.str = tx.getText();
-    	});
-    		
-    	return strwrapper.str;
-    }
-	
-    private String obtainText(TextArea tx) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(tx.getText());
-    	strOpt.ifPresent((x) -> {
-    		strwrapper.str = tx.getText();
-    	});
-    		
-    	return strwrapper.str;
     }
     
 	@Override
@@ -323,32 +287,18 @@ public class AgencdtController implements Initializable {
 		cbpais.getItems().add(null);
 		cbzpost.setItems(FXCollections.observableList(zpostRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbzpost.getItems().add(null);
-		
-	    final String ipattern = mutils.INTEGER_PATTERN;
-	    final String cppattern = mutils.CP_PATTERN;
 	    
-		//Setting a filter to allow only numbers
-		UnaryOperator<Change> integerFilter = (change -> {
-		    String newText = change.getControlNewText();
-
-		    if (newText.matches(ipattern)) {
-		        return change;
-		    }
-		    return null;
-		});
-	    
-		//Setting a filter to allow only numbers (the first number could be a 0)
-		UnaryOperator<Change> cpFilter = (change -> {
-		    String newText = change.getControlNewText();
-
-		    if (newText.matches(cppattern)) {
-		        return change;
-		    }
-		    return null;
-		});
-		
-		txcp.setTextFormatter(new TextFormatter<String>(cpFilter));
-		txtelefono.setTextFormatter(new TextFormatter<String>(integerFilter));
+		//Configuring the TextField and TextArea controls
+		mutils.configNumericTextField(txcp, 5, mutils.INTEGER_PATTERN);
+		mutils.configNumericTextField(txtelefono, 12, mutils.INTEGER_PATTERN);
+		mutils.configureTextField(txcifnif, 25);
+		mutils.configureTextField(txemail, 80);
+		mutils.configureTextField(txpcont, 70);
+		mutils.configureTextAreaWithLabel(txarnombre, lbnomlen, 120);
+		mutils.configureTextAreaWithLabel(txardomic, lbdomlen, 100);
+		mutils.configureTextFieldWithLabel(txlocal, lbloclen, 70);
+		mutils.configureTextAreaWithLabel(txardafact, lbdafactlen, 250);
+		mutils.configureTextAreaWithLabel(txaranot, lbanotlen, 500);
 
 	    switch (agcrud.getAction()) {
         case ADD :
@@ -398,85 +348,11 @@ public class AgencdtController implements Initializable {
 			break;
 	    }
 	    
-	    //Setting the maximum number of characters
-	    //txnombre.addEventFilter(KeyEvent.KEY_TYPED, maxLength(95));
-	    txcifnif.addEventFilter(KeyEvent.KEY_TYPED, maxLength(25));
-	    txcp.addEventFilter(KeyEvent.KEY_TYPED, maxLength(5));
-	    //txlocal.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    txemail.addEventFilter(KeyEvent.KEY_TYPED, maxLength(80));
-	    txtelefono.addEventFilter(KeyEvent.KEY_TYPED, maxLength(12));
-	    txpcont.addEventFilter(KeyEvent.KEY_TYPED, maxLength(70));
-	    
 	    //Setting the maximum number of characters of TextArea (another way)
 //	    txardomic.setTextFormatter(new TextFormatter<String>(change -> 
 //	    	change.getControlNewText().length() <= 100 ? change : null));
 //	    txaranot.setTextFormatter(new TextFormatter<String>(change -> 
 //    		change.getControlNewText().length() <= 250 ? change : null));
-	    
-		//To check nombre maximum number of chars and show the number of chars
-		UnaryOperator<Change> nomFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxnomchars) {
-		    	
-				showNombreChars(change.getControlNewText().length(), maxnomchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txarnombre.setTextFormatter(new TextFormatter<String>(nomFilter));
-		
-		//To check domicilio maximum number of chars and show the number of chars
-		UnaryOperator<Change> domicFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxdomchars) {
-		    	
-				showDomicilioChars(change.getControlNewText().length(), maxdomchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txardomic.setTextFormatter(new TextFormatter<String>(domicFilter));
-	    
-		//To check localidad maximum number of chars and show the number of chars
-		UnaryOperator<Change> localFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxlocchars) {
-		    	
-				showLocalidadChars(change.getControlNewText().length(), maxlocchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txlocal.setTextFormatter(new TextFormatter<String>(localFilter));
-	    
-		//To check datos adicionales facturacion maximum number of chars and show the number of chars
-		UnaryOperator<Change> dafactFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxdafactchars) {
-		    	
-				showDafactChars(change.getControlNewText().length(), maxdafactchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txardafact.setTextFormatter(new TextFormatter<String>(dafactFilter));
-		
-		//To check anotaciones maximum number of chars and show the number of chars
-		UnaryOperator<Change> anotFilter = (change -> {
-			
-			if (change.getControlNewText().length() <= maxanotchars) {
-		    	
-				showAnotacionesChars(change.getControlNewText().length(), maxanotchars);
-		    	
-		        return change;
-		    }
-		    return null;
-		});
-		txaranot.setTextFormatter(new TextFormatter<String>(anotFilter));
 
 	}
 	
@@ -491,22 +367,6 @@ public class AgencdtController implements Initializable {
 		//Disable execute button
 		if (((rsoc > 0)  || (rfac > 0)) && agcrud.getAction().equals(CrudAction.DELETE)) bexec.setDisable(true);
 	}
-	
-	private EventHandler<KeyEvent> maxLength(final Integer i) {
-        return new EventHandler<KeyEvent>() {
-
-            @Override
-            public void handle(KeyEvent arg0) {
-
-                TextField tx = (TextField) arg0.getSource();
-                
-            	Optional<String> strOpt = Optional.ofNullable(tx.getText());
-            	strOpt.ifPresent((x) -> {
-            		if (tx.getText().length() >= i) arg0.consume();
-                });
-            }
-        };
-    }
 
 	private void closeForm() {
 		
@@ -529,7 +389,7 @@ public class AgencdtController implements Initializable {
 						txarnombre.setText("");
 					});
 
-				showNombreChars(txarnombre.getLength(), maxnomchars);
+				//showNombreChars(txarnombre.getLength(), maxnomchars);
 				
 				Optional<Boolean> optBool = Optional.ofNullable(x.isActiva());
 					optBool.ifPresent((y) -> {
@@ -550,7 +410,7 @@ public class AgencdtController implements Initializable {
 						txardomic.setText("");
 					});
 
-				showDomicilioChars(txardomic.getLength(), maxdomchars);
+				//showDomicilioChars(txardomic.getLength(), maxdomchars);
 				
 				optStr = Optional.ofNullable(x.getCp());
 					optStr.ifPresentOrElse((y) -> {
@@ -566,7 +426,7 @@ public class AgencdtController implements Initializable {
 						txlocal.setText("");
 					});
 
-				showLocalidadChars(txlocal.getLength(), maxlocchars);
+				//showLocalidadChars(txlocal.getLength(), maxlocchars);
 				
 		    	Optional<Provincia> provOpt = Optional.ofNullable(x.getProvincia());
 		    		provOpt.ifPresent((y) -> cbprov.getSelectionModel().select(mutils.searchIdInCombo(cbprov, y)));
@@ -603,7 +463,7 @@ public class AgencdtController implements Initializable {
 						txardafact.setText("");
 					});
 				
-				showDafactChars(txardafact.getLength(), maxdafactchars);
+				//showDafactChars(txardafact.getLength(), maxdafactchars);
 				
 				optStr = Optional.ofNullable(x.getAnotaciones());
 					optStr.ifPresentOrElse((y) -> {
@@ -612,7 +472,7 @@ public class AgencdtController implements Initializable {
 						txaranot.setText("");
 					});	
 				
-				showAnotacionesChars(txaranot.getLength(), maxanotchars);
+				//showAnotacionesChars(txaranot.getLength(), maxanotchars);
 			});
 	}
 	
@@ -656,12 +516,12 @@ public class AgencdtController implements Initializable {
 		
 		var checkwrapper = new Object(){ String errorstext = ""; boolean checks = true; };
 		
-		if (obtainText(txarnombre).length() == 0) {
+		if (mutils.obtainText(txarnombre).length() == 0) {
 			checkwrapper.errorstext += "El nombre no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}
 		
-		if (obtainText(txcifnif).length() == 0) {
+		if (mutils.obtainText(txcifnif).length() == 0) {
 			checkwrapper.errorstext += "El NIF/VAT no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}
@@ -671,28 +531,4 @@ public class AgencdtController implements Initializable {
 		return checkwrapper.checks;
 	}
 
-	private void showNombreChars(int numchars, int maxchars) {
-		
-		lbnomlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showDomicilioChars(int numchars, int maxchars) {
-		
-		lbdomlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showLocalidadChars(int numchars, int maxchars) {
-		
-		lbloclen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showDafactChars(int numchars, int maxchars) {
-		
-		lbdafactlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
-	
-	private void showAnotacionesChars(int numchars, int maxchars) {
-		
-		lbanotlen.setText("(" + numchars + "/" + maxchars + " caracteres)");
-	}
 }

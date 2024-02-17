@@ -34,7 +34,6 @@ import javafx.scene.control.Control;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
 
 @Component
@@ -71,11 +70,17 @@ public class ReclamdtController implements Initializable {
     private ComboBox<Agencia> cbagen;
 
     @FXML
+    private Label lbreccomlen;
+	
+    @FXML
     private TextArea tareccom;
 
     @FXML
     private DatePicker dpfresp;
 
+    @FXML
+    private Label lbanotlen;
+    
     @FXML
     private TextArea taanot;
     
@@ -184,6 +189,10 @@ public class ReclamdtController implements Initializable {
 		cbestrec.setItems(FXCollections.observableList(estrecRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbestrec.getItems().add(null);
 		
+		//Configure the TextField and TextArea controls
+		mutils.configureTextAreaWithLabel(tareccom, lbreccomlen,250);
+		mutils.configureTextAreaWithLabel(taanot, lbanotlen,250);
+		
 	    switch (reclamCrud.getAction()) {
         case ADD :
         	
@@ -226,12 +235,6 @@ public class ReclamdtController implements Initializable {
 			
 			break;
 	    }
-	    
-	    //Setting the maximum number of characters of TextArea
-	    tareccom.setTextFormatter(new TextFormatter<String>(change -> 
-    		change.getControlNewText().length() <= 250 ? change : null));
-	    taanot.setTextFormatter(new TextFormatter<String>(change -> 
-	    	change.getControlNewText().length() <= 250 ? change : null));
 
 	}
     
@@ -276,7 +279,7 @@ public class ReclamdtController implements Initializable {
 				reclam.setAgencia(null);
 			});
 
-		reclam.setReclamacionComentario(obtainText(tareccom));
+		reclam.setReclamacionComentario(mutils.obtainText(tareccom));
 		
 		optDate = Optional.ofNullable(dpfresp.getValue());
 			optDate.ifPresentOrElse((y) -> {
@@ -288,26 +291,13 @@ public class ReclamdtController implements Initializable {
 				reclam.setFechaRespuesta(null);
 			});
 				
-		reclam.setAnotaciones(obtainText(taanot));
+		reclam.setAnotaciones(mutils.obtainText(taanot));
 		
 		Optional<EstadoReclamacion> erecOpt = Optional.ofNullable(cbestrec.getValue());
 			erecOpt.ifPresent((y) -> reclam.setEstadoReclamacion(y));
 
 	}
 	
-	private String obtainText(TextArea ta) {
-    	
-    	//To check null values we use optional and to avoid the block scope of variables we use a wrapper
-    	var strwrapper = new Object(){ String str = ""; };
-    	
-		Optional<String> strOpt = Optional.ofNullable(ta.getText());
-	    	strOpt.ifPresent((x) -> {
-	    		strwrapper.str = ta.getText();
-	    	});
-    		
-    	return strwrapper.str;
-    }
-    
 	private void closeForm() {
 		
 		// get a handle to the stage
@@ -398,7 +388,7 @@ public class ReclamdtController implements Initializable {
 				checkwrapper.checks = false;  
 			}
 		
-		if (obtainText(tareccom).length() == 0) {
+		if (mutils.obtainText(tareccom).length() == 0) {
 			checkwrapper.errorstext += "El concepto de la reclamación no puede quedar en blanco. ";
 			checkwrapper.checks = false;  
 		}
