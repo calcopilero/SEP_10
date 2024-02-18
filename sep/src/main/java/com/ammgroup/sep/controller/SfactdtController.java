@@ -266,53 +266,20 @@ public class SfactdtController implements Initializable {
 		Optional<SerieFacturas> sfacOpt = Optional.ofNullable(sfaccrud.getDao());
 			sfacOpt.ifPresent((x) -> {
 				
-					Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-						optStr.ifPresentOrElse((y) -> {
-							tdesc.setText(y);
-						}, () -> {
-							tdesc.setText("");
-						});
-						
-					Optional<Boolean> optBool = Optional.ofNullable(x.isAutomatica());
-						optBool.ifPresent((y) -> {
-							chfauto.setSelected(y);
-						});
-						
-					optStr = Optional.ofNullable(x.getTextoInicioNumeracion());
-						optStr.ifPresentOrElse((y) -> {
-							tininum.setText(y);
-						}, () -> {
-							tininum.setText("");
-						});
-						
-					optBool = Optional.ofNullable(x.isRectificativas());
-						optBool.ifPresent((y) -> {
-							chfrect.setSelected(y);
-						});
-						
-					optStr = Optional.ofNullable(x.getTextoRectificativa());
-						optStr.ifPresentOrElse((y) -> {
-							ttfrect.setText(y);
-						}, () -> {
-							ttfrect.setText("");
-						});
-						
-					optStr = Optional.ofNullable(x.getTextoPara());
-						optStr.ifPresentOrElse((y) -> {
-							ttpara.setText(y);
-						}, () -> {
-							ttpara.setText("");
-						});
+					mutils.fillTextControl(tdesc, x.getDescripcion());
+					mutils.fillTextControl(tininum, x.getTextoInicioNumeracion());
+					mutils.fillTextControl(ttfrect, x.getTextoRectificativa());
+					mutils.fillTextControl(ttpara, x.getTextoPara());
+					
+					mutils.fillCheckBoxControl(chfauto, x.isAutomatica());
+					mutils.fillCheckBoxControl(chfrect, x.isRectificativas());
+					mutils.fillCheckBoxControl(chfprof, x.isFacturasProforma());
 						
 					Optional<TipoIVA> optTiva = Optional.ofNullable(x.getTipoIVA());
 						optTiva.ifPresent((y) -> {
 							cbtiva.getSelectionModel().select(mutils.searchIdInCombo(cbtiva, y));
 						});
-						
-					optBool = Optional.ofNullable(x.isFacturasProforma());
-						optBool.ifPresent((y) -> {
-							chfprof.setSelected(y);
-						});
+
 				});
 		}
 	

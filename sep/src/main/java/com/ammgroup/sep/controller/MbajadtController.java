@@ -179,12 +179,7 @@ public class MbajadtController implements Initializable {
 		Optional<MotivoBaja> mbajaOpt = Optional.ofNullable(mbcrud.getDao());
 			mbajaOpt.ifPresent((x) -> {
 			
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
 			});
 	}
 	

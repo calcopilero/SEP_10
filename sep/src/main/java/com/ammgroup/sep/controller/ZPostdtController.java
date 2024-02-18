@@ -188,13 +188,7 @@ public class ZPostdtController implements Initializable {
 		
 		Optional<ZonaPostal> zpOpt = Optional.ofNullable(zpcrud.getDao());
 			zpOpt.ifPresent((x) -> {
-			
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
 			});
 	}
 

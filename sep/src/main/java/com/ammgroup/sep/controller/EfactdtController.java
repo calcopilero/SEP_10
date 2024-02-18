@@ -189,23 +189,11 @@ public class EfactdtController implements Initializable {
 		Optional<EstadoFactura> efacOpt = Optional.ofNullable(efaccrud.getDao());
 			efacOpt.ifPresent((x) -> {
 				
-					Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-						optStr.ifPresentOrElse((y) -> {
-							tdesc.setText(y);
-						}, () -> {
-							tdesc.setText("");
-						});
-						
-					Optional<Boolean> optBool = Optional.ofNullable(x.isEstadoPorDefecto());
-						optBool.ifPresent((y) -> {
-							chedef.setSelected(y);
-						});
-						
-					optBool = Optional.ofNullable(x.isEstadoRectificativas());
-						optBool.ifPresent((y) -> {
-							cherect.setSelected(y);
-						});
-				});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
+				
+				mutils.fillCheckBoxControl(chedef, x.isEstadoPorDefecto());
+				mutils.fillCheckBoxControl(cherect, x.isEstadoRectificativas());
+			});
 		}
 	
 	private void disableControls() {

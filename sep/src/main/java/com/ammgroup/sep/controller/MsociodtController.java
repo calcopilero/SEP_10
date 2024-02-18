@@ -145,14 +145,12 @@ public class MsociodtController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
-	    //Setting the maximum number of characters
+	    //Configure TextField and TextArea controls
 	    mutils.configureTextField(tdesc, 60);
 	    mutils.configureTextField(ttpara, 95);
-	    
-		//To check concepto maximum number of chars and show the number of chars
 	    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, 180);
 	    
-	    //Setting the formatter for numbers
+	    //Configure Currency controls
 	    mutils.configCurrencyTextField(tcuota, 6);
 		
 	    switch (msoccrud.getAction()) {
@@ -161,6 +159,7 @@ public class MsociodtController implements Initializable {
     		tdesc.setText("");
     		tcuota.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
     		ttpara.setText("");
+    		taconcep.setText("");
     		
             break;
             
@@ -196,7 +195,6 @@ public class MsociodtController implements Initializable {
 			
 			break;
 	    }
-	    
 	}
 
 	private void closeForm() {
@@ -213,33 +211,11 @@ public class MsociodtController implements Initializable {
 		Optional<ModalidadSocio> msocOpt = Optional.ofNullable(msoccrud.getDao());
 			msocOpt.ifPresent((x) -> {
 		
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
+				mutils.fillTextControl(taconcep, x.getConcepto());
+				mutils.fillCurrencyControl(tcuota, x.getCuota());
+				mutils.fillTextControl(ttpara, x.getTextoPara());
 					
-				Optional<Double> optDou = Optional.ofNullable(x.getCuota());
-					optDou.ifPresentOrElse((y) -> {
-						tcuota.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
-					}, () -> {
-						tcuota.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-					});
-					
-				optStr = Optional.ofNullable(x.getConcepto());
-					optStr.ifPresentOrElse((y) -> {
-						taconcep.setText(y);
-					}, () -> {
-						taconcep.setText("");
-					});
-				
-				optStr = Optional.ofNullable(x.getTextoPara());
-					optStr.ifPresentOrElse((y) -> {
-						ttpara.setText(y);
-					}, () -> {
-						ttpara.setText("");
-					});
 			});
 	}
 
@@ -281,7 +257,6 @@ public class MsociodtController implements Initializable {
 		
 		var boolwrapper = new Object(){ boolean checks = true; };
 		
-		
 		if (mutils.obtainText(tdesc).length() == 0) {
 			lbmsg.setText("La descripción no puede quedar en blanco");
 			boolwrapper.checks = false;  
@@ -289,5 +264,4 @@ public class MsociodtController implements Initializable {
 		
 		return boolwrapper.checks;
 	}
-	
 }

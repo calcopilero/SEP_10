@@ -187,13 +187,7 @@ public class ProvdtController implements Initializable {
 		
 		Optional<Provincia> provOpt = Optional.ofNullable(provcrud.getDao());
 			provOpt.ifPresent((x) -> {
-			
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
 			});
 	}
 	

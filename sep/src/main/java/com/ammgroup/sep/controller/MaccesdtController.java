@@ -179,13 +179,7 @@ public class MaccesdtController implements Initializable {
 		
 		Optional<ModoAcceso> maccOpt = Optional.ofNullable(macrud.getDao());
 			maccOpt.ifPresent((x) -> {
-			
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
 			});
 	}
 	

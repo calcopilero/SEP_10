@@ -178,13 +178,7 @@ public class ErecdtController implements Initializable {
 		
 		Optional<EstadoReclamacion> erecOpt = Optional.ofNullable(ereccrud.getDao());
 			erecOpt.ifPresent((x) -> {
-			
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
 			});
 	}
 	

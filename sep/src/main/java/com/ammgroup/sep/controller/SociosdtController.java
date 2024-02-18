@@ -712,55 +712,28 @@ public class SociosdtController implements Initializable {
 				optMac.ifPresent((y) -> {
 						cbmacceso.getSelectionModel().select(mutils.searchIdInCombo(cbmacceso, y));
 					});
-					
-				Optional<String> optStr = Optional.ofNullable(x.getOjs());
-					optStr.ifPresentOrElse((y) -> {
-						txojs.setText(y);
-					}, () -> {
-						txojs.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getNombre());
-					optStr.ifPresentOrElse((y) -> {
-						txnombre.setText(y);
-					}, () -> {
-						txnombre.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getApellidos());
-					optStr.ifPresentOrElse((y) -> {
-						txapell.setText(y);
-					}, () -> {
-						txapell.setText("");
-					});
-
-				optStr = Optional.ofNullable(x.getCifnif());
-					optStr.ifPresentOrElse((y) -> {
-						txcifnif.setText(y);
-					}, () -> {
-						txcifnif.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getDomicilio());
-					optStr.ifPresentOrElse((y) -> {
-						txardomic.setText(y);
-					}, () -> {
-						txardomic.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getCp());
-					optStr.ifPresentOrElse((y) -> {
-						txcp.setText(y);
-					}, () -> {
-						txcp.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getLocalidad());
-					optStr.ifPresentOrElse((y) -> {
-						txlocal.setText(y);
-					}, () -> {
-						txlocal.setText("");
-					});
+				
+				mutils.fillTextControl(txojs, x.getOjs());
+				mutils.fillTextControl(txnombre, x.getNombre());
+				mutils.fillTextControl(txapell, x.getApellidos());
+				mutils.fillTextControl(txcifnif, x.getCifnif());
+				mutils.fillTextControl(txardomic, x.getDomicilio());
+				mutils.fillTextControl(txcp, x.getCp());
+				mutils.fillTextControl(txlocal, x.getLocalidad());
+				mutils.fillTextControl(txemail, x.getEmail());
+				mutils.fillTextControl(txtelefono, x.getTelefono());
+				mutils.fillTextControl(txtelmovil, x.getMovil());
+				mutils.fillTextControl(txctrab, x.getCentroTrabajo());
+				mutils.fillTextControl(txatrab, x.getAreaTrabajo());
+				mutils.fillTextControl(txtitul, x.getTitulacion());
+				mutils.fillTextControl(txcsep, x.getContactoSep());
+				mutils.fillTextControl(txmarc, x.getMarcador());
+				mutils.fillTextControl(txdbanc, x.getIbanccc());
+				mutils.fillTextControl(txardafact, x.getDatosAdicionalesFactura());
+				mutils.fillTextControl(txref, x.getReferencia());
+				mutils.fillTextControl(txarnmbaja, x.getNotasmbaja());
+				mutils.fillTextControl(txcjdir, x.getCargosJuntaDirectiva());
+				mutils.fillTextControl(txaranot, x.getAnotaciones());
 					
 		    	Optional<Provincia> provOpt = Optional.ofNullable(x.getProvincia());
 		    		provOpt.ifPresent((y) -> cbprov.getSelectionModel().select(mutils.searchIdInCombo(cbprov, y)));
@@ -770,122 +743,27 @@ public class SociosdtController implements Initializable {
 		       	
 		    	Optional<ZonaPostal> zpostOpt = Optional.ofNullable(x.getZonaPostal());
 		    		zpostOpt.ifPresent((y) -> cbzpost.getSelectionModel().select(mutils.searchIdInCombo(cbzpost, y)));
-				
-				optStr = Optional.ofNullable(x.getEmail());
-					optStr.ifPresentOrElse((y) -> {
-						txemail.setText(y);
-					}, () -> {
-						txemail.setText("");
-					});
 
-				optStr = Optional.ofNullable(x.getTelefono());
-					optStr.ifPresentOrElse((y) -> {
-						txtelefono.setText(y);
-					}, () -> {
-						txtelefono.setText("");
-					});
-
-				optStr = Optional.ofNullable(x.getMovil());
-					optStr.ifPresentOrElse((y) -> {
-						txtelmovil.setText(y);
-					}, () -> {
-						txtelmovil.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getCentroTrabajo());
-					optStr.ifPresentOrElse((y) -> {
-						txctrab.setText(y);
-					}, () -> {
-						txctrab.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getAreaTrabajo());
-					optStr.ifPresentOrElse((y) -> {
-						txatrab.setText(y);
-					}, () -> {
-						txatrab.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getTitulacion());
-					optStr.ifPresentOrElse((y) -> {
-						txtitul.setText(y);
-					}, () -> {
-						txtitul.setText("");
-					});
-					
-				optStr = Optional.ofNullable(x.getContactoSep());
-					optStr.ifPresentOrElse((y) -> {
-						txcsep.setText(y);
-					}, () -> {
-						txcsep.setText("");
-					});
-
-				Optional<Boolean> optBool = Optional.ofNullable(x.isLopd());
-					optBool.ifPresent((y) -> {
-						chlopd.setSelected(y);
-					});
-				
-				optBool = Optional.ofNullable(x.isListaDistribucion());
-					optBool.ifPresent((y) -> {
-						chldist.setSelected(y);
-					});
-					
-				optStr = Optional.ofNullable(x.getMarcador());
-					optStr.ifPresentOrElse((y) -> {
-						txmarc.setText(y);
-					}, () -> {
-						txmarc.setText("");
-					});
-
+		    	mutils.fillCheckBoxControl(chlopd, x.isLopd());
+		    	mutils.fillCheckBoxControl(chldist, x.isListaDistribucion());
+		    	mutils.fillCheckBoxControl(chfact, x.isFactura());
+		    	mutils.fillCheckBoxControl(chfirfact, x.isFirmarFactura());
+		    	mutils.fillCheckBoxControl(chbaja, x.isBaja());
+		    	mutils.fillCheckBoxControl(chjdiract, x.isJuntaDirectivaActual());
+		    	
 				Optional<FormaPago> optFpag = Optional.ofNullable(x.getFormaPago());
 					optFpag.ifPresent((y) -> {
 						cbfpago.getSelectionModel().select(mutils.searchIdInCombo(cbfpago, y));
-					});
-
-				optStr = Optional.ofNullable(x.getIbanccc());
-					optStr.ifPresentOrElse((y) -> {
-						txdbanc.setText(y);
-					}, () -> {
-						txdbanc.setText("");
 					});
 					
 				Optional<Descuento> optDesc = Optional.ofNullable(x.getDescuento());
 					optDesc.ifPresent((y) -> {
 						cbdesc.getSelectionModel().select(mutils.searchIdInCombo(cbdesc, y));
 					});
-					
-				optBool = Optional.ofNullable(x.isFactura());
-					optBool.ifPresent((y) -> {
-						chfact.setSelected(y);
-					});
-					
-				optBool = Optional.ofNullable(x.isFirmarFactura());
-					optBool.ifPresent((y) -> {
-						chfirfact.setSelected(y);
-					});
-					
-				optStr = Optional.ofNullable(x.getDatosAdicionalesFactura());
-					optStr.ifPresentOrElse((y) -> {
-						txardafact.setText(y);
-					}, () -> {
-						txardafact.setText("");
-					});
 				
 				Optional<Agencia> optAge = Optional.ofNullable(x.getAgencia());
 					optAge.ifPresent((y) -> {
 						cbagencia.getSelectionModel().select(mutils.searchIdInCombo(cbagencia, y));
-					});
-						
-				optStr = Optional.ofNullable(x.getReferencia());
-					optStr.ifPresentOrElse((y) -> {
-						txref.setText(y);
-					}, () -> {
-						txref.setText("");
-					});
-				
-				optBool = Optional.ofNullable(x.isBaja());
-					optBool.ifPresent((y) -> {
-						chbaja.setSelected(y);
 					});
 
 				optDate = Optional.ofNullable(x.getFechaBaja());
@@ -895,36 +773,10 @@ public class SociosdtController implements Initializable {
 					optMbaj.ifPresent((y) -> {
 						cbmbaja.getSelectionModel().select(mutils.searchIdInCombo(cbmbaja, y));
 					});
-					
-				optStr = Optional.ofNullable(x.getNotasmbaja());
-					optStr.ifPresentOrElse((y) -> {
-						txarnmbaja.setText(y);
-					}, () -> {
-						txarnmbaja.setText("");
-					});
 				
 				//Enable disable controls depending on chbaja
 				checkBaja();
 					
-				optStr = Optional.ofNullable(x.getCargosJuntaDirectiva());
-					optStr.ifPresentOrElse((y) -> {
-						txcjdir.setText(y);
-					}, () -> {
-						txcjdir.setText("");
-					});
-					
-				optBool = Optional.ofNullable(x.isJuntaDirectivaActual());
-					optBool.ifPresent((y) -> {
-						chjdiract.setSelected(y);
-					});
-					
-				optStr = Optional.ofNullable(x.getAnotaciones());
-					optStr.ifPresentOrElse((y) -> {
-						txaranot.setText(y);
-					}, () -> {
-						txaranot.setText("");
-					});
-				
 				optDate = Optional.ofNullable(x.getUltimaActualizacion());
 					optDate.ifPresent((y) -> lbultact.setText(mutils.getStringFromDate(y, mutils.DATE_FORMAT)));
 
@@ -1037,7 +889,7 @@ public class SociosdtController implements Initializable {
 				checkwrapper.checks = false;
 			}
 
-		//Whe baja is selected fecha baja y motivo baja son obligatorios
+		//When baja is selected fecha baja y motivo baja are mandatory
     	if (chbaja.isSelected()) {
     		
         		Optional<LocalDate> fbOpt = Optional.ofNullable(dpfbaja.getValue());
@@ -1064,5 +916,4 @@ public class SociosdtController implements Initializable {
 		breclam.setDisable(true);
 		
 	}
-
 }

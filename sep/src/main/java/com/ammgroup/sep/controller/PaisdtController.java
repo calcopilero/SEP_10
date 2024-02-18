@@ -188,13 +188,7 @@ public class PaisdtController implements Initializable {
 		
 		Optional<Pais> paisOpt = Optional.ofNullable(paiscrud.getDao());
 			paisOpt.ifPresent((x) -> {
-				
-					Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-						optStr.ifPresentOrElse((y) -> {
-							tdesc.setText(y);
-						}, () -> {
-							tdesc.setText("");
-						});
+					mutils.fillTextControl(tdesc, x.getDescripcion());
 				});
 		}
     

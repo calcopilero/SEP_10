@@ -28,6 +28,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
@@ -588,5 +589,70 @@ public class ModuloUtilidades {
 	    	});
     		
     	return strwrapper.str;
+    }
+    
+    public void fillTextControl(TextField tf, String textcontent) {
+    	
+    	//By default if numm the text to fill the control is ""
+    	fillTextControl(tf, textcontent, "");
+    }
+    
+    public void fillTextControl(TextField tf, String textcontent, String textifnull) {
+    	
+		Optional<String> optStr = Optional.ofNullable(textcontent);
+			optStr.ifPresentOrElse((y) -> {
+				tf.setText(y);
+			}, () -> {
+				tf.setText(textifnull);
+			});
+    }
+    
+    public void fillTextControl(TextArea ta, String textcontent) {
+    	
+    	//By default if content is null the text to fill the control is ""
+    	fillTextControl(ta, textcontent, "");
+    }
+    
+    public void fillTextControl(TextArea ta, String textcontent, String textifnull) {
+    	
+		Optional<String> optStr = Optional.ofNullable(textcontent);
+			optStr.ifPresentOrElse((y) -> {
+				ta.setText(y);
+			}, () -> {
+				ta.setText(textifnull);
+			});
+    }
+    
+    public void fillCurrencyControl(TextField tf, Double db) {
+    	
+    	//By default if the db to fill the control is null the content is 0D
+    	fillCurrencyControl(tf, db, 0D);
+    }
+    
+    public void fillCurrencyControl(TextField tf, Double db, Double dbifnull) {
+    	
+		Optional<Double> optDou = Optional.ofNullable(db);
+			optDou.ifPresentOrElse((y) -> {
+				tf.setText(getStringFromDouble(y, CURRENCY_FORMAT));
+			}, () -> {
+				tf.setText(getStringFromDouble(dbifnull, CURRENCY_FORMAT));
+			});
+    }
+    
+    public void fillCheckBoxControl(CheckBox cb, Boolean bo) {
+    	
+    	//By default if the bo to fill the control is null the content is False
+    	fillCheckBoxControl(cb, bo, false);
+
+    }
+    
+    public void fillCheckBoxControl(CheckBox cb, Boolean bo, Boolean boifnull) {
+    	
+		Optional<Boolean> optBool = Optional.ofNullable(bo);
+			optBool.ifPresentOrElse((y) -> {
+				cb.setSelected(y);
+			}, () -> {
+				cb.setSelected(boifnull);
+			});
     }
 }

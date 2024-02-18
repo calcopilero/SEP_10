@@ -185,19 +185,8 @@ public class FpagodtController implements Initializable {
 		Optional<FormaPago> fpagOpt = Optional.ofNullable(fpagcrud.getDao());
 			fpagOpt.ifPresent((x) -> {
 			
-				Optional<String> optStr = Optional.ofNullable(x.getDescripcion());
-					optStr.ifPresentOrElse((y) -> {
-						tdesc.setText(y);
-					}, () -> {
-						tdesc.setText("");
-					});
-				
-				optStr = Optional.ofNullable(x.getTextoFactura());
-					optStr.ifPresentOrElse((y) -> {
-						ttfact.setText(y);
-					}, () -> {
-						ttfact.setText("");
-					});
+				mutils.fillTextControl(tdesc, x.getDescripcion());
+				mutils.fillTextControl(ttfact, x.getTextoFactura());
 			
 			});
 	}

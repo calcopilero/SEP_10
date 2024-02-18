@@ -311,6 +311,7 @@ public class AgencdtController implements Initializable {
     		txemail.setText("");
     		txtelefono.setText("");
     		txpcont.setText("");
+    		txardafact.setText("");
     		txaranot.setText("");
     		
             break;
@@ -382,51 +383,18 @@ public class AgencdtController implements Initializable {
 		Optional<Agencia> ageOpt = Optional.ofNullable(agcrud.getDao());
 			ageOpt.ifPresent((x) -> {
 				
-				Optional<String> optStr = Optional.ofNullable(x.getNombre());
-					optStr.ifPresentOrElse((y) -> {
-						txarnombre.setText(y);
-					}, () -> {
-						txarnombre.setText("");
-					});
-
-				//showNombreChars(txarnombre.getLength(), maxnomchars);
+				mutils.fillTextControl(txarnombre, x.getNombre());
+				mutils.fillTextControl(txcifnif, x.getCifnif());
+				mutils.fillTextControl(txardomic, x.getDomicilio());
+				mutils.fillTextControl(txcp, x.getCp());
+				mutils.fillTextControl(txlocal, x.getLocalidad());
+				mutils.fillTextControl(txemail, x.getEmail());
+				mutils.fillTextControl(txtelefono, x.getTelefono());
+				mutils.fillTextControl(txpcont, x.getPersonaContacto());
+				mutils.fillTextControl(txardafact, x.getDatosAdicionalesFactura());
+				mutils.fillTextControl(txaranot, x.getAnotaciones());
 				
-				Optional<Boolean> optBool = Optional.ofNullable(x.isActiva());
-					optBool.ifPresent((y) -> {
-						chactiva.setSelected(y);
-					});
-				
-				optStr = Optional.ofNullable(x.getCifnif());
-					optStr.ifPresentOrElse((y) -> {
-						txcifnif.setText(y);
-					}, () -> {
-						txcifnif.setText("");
-					});
-
-				optStr = Optional.ofNullable(x.getDomicilio());
-					optStr.ifPresentOrElse((y) -> {
-						txardomic.setText(y);
-					}, () -> {
-						txardomic.setText("");
-					});
-
-				//showDomicilioChars(txardomic.getLength(), maxdomchars);
-				
-				optStr = Optional.ofNullable(x.getCp());
-					optStr.ifPresentOrElse((y) -> {
-						txcp.setText(y);
-					}, () -> {
-						txcp.setText("");
-					});
-
-				optStr = Optional.ofNullable(x.getLocalidad());
-					optStr.ifPresentOrElse((y) -> {
-						txlocal.setText(y);
-					}, () -> {
-						txlocal.setText("");
-					});
-
-				//showLocalidadChars(txlocal.getLength(), maxlocchars);
+				mutils.fillCheckBoxControl(chactiva, x.isActiva());
 				
 		    	Optional<Provincia> provOpt = Optional.ofNullable(x.getProvincia());
 		    		provOpt.ifPresent((y) -> cbprov.getSelectionModel().select(mutils.searchIdInCombo(cbprov, y)));
@@ -434,45 +402,6 @@ public class AgencdtController implements Initializable {
 		    		paisOpt.ifPresent((y) -> cbpais.getSelectionModel().select(mutils.searchIdInCombo(cbpais, y)));
 		       	Optional<ZonaPostal> zpostOpt = Optional.ofNullable(x.getZonaPostal());
 		    		zpostOpt.ifPresent((y) -> cbzpost.getSelectionModel().select(mutils.searchIdInCombo(cbzpost, y)));
-				
-				optStr = Optional.ofNullable(x.getEmail());
-					optStr.ifPresentOrElse((y) -> {
-						txemail.setText(y);
-					}, () -> {
-						txemail.setText("");
-					});	
-
-				optStr = Optional.ofNullable(x.getTelefono());
-					optStr.ifPresentOrElse((y) -> {
-						txtelefono.setText(y);
-					}, () -> {
-						txtelefono.setText("");
-					});	
-
-				optStr = Optional.ofNullable(x.getPersonaContacto());
-					optStr.ifPresentOrElse((y) -> {
-						txpcont.setText(y);
-					}, () -> {
-						txpcont.setText("");
-					});	
-				
-				optStr = Optional.ofNullable(x.getDatosAdicionalesFactura());
-					optStr.ifPresentOrElse((y) -> {
-						txardafact.setText(y);
-					}, () -> {
-						txardafact.setText("");
-					});
-				
-				//showDafactChars(txardafact.getLength(), maxdafactchars);
-				
-				optStr = Optional.ofNullable(x.getAnotaciones());
-					optStr.ifPresentOrElse((y) -> {
-						txaranot.setText(y);
-					}, () -> {
-						txaranot.setText("");
-					});	
-				
-				//showAnotacionesChars(txaranot.getLength(), maxanotchars);
 			});
 	}
 	
