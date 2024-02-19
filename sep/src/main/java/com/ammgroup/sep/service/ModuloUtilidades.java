@@ -623,6 +623,22 @@ public class ModuloUtilidades {
 			});
     }
     
+    public void fillTextControl(Label lb, String textcontent) {
+    	
+    	//By default if content is null the text to fill the control is ""
+    	fillTextControl(lb, textcontent, "");
+    }
+    
+    public void fillTextControl(Label lb, String textcontent, String textifnull) {
+    	
+		Optional<String> optStr = Optional.ofNullable(textcontent);
+			optStr.ifPresentOrElse((y) -> {
+				lb.setText(y);
+			}, () -> {
+				lb.setText(textifnull);
+			});
+    }
+    
     public void fillCurrencyControl(TextField tf, Double db) {
     	
     	//By default if the db to fill the control is null the content is 0D
@@ -636,6 +652,22 @@ public class ModuloUtilidades {
 				tf.setText(getStringFromDouble(y, CURRENCY_FORMAT));
 			}, () -> {
 				tf.setText(getStringFromDouble(dbifnull, CURRENCY_FORMAT));
+			});
+    }
+    
+    public void fillCurrencyControl(Label lb, Double db) {
+    	
+    	//By default if the db to fill the control is null the content is 0D
+    	fillCurrencyControl(lb, db, 0D);
+    }
+    
+    public void fillCurrencyControl(Label lb, Double db, Double dbifnull) {
+    	
+		Optional<Double> optDou = Optional.ofNullable(db);
+			optDou.ifPresentOrElse((y) -> {
+				lb.setText(getStringFromDouble(y, CURRENCY_FORMAT));
+			}, () -> {
+				lb.setText(getStringFromDouble(dbifnull, CURRENCY_FORMAT));
 			});
     }
     

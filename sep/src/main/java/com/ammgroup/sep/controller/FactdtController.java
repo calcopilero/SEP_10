@@ -509,17 +509,25 @@ public class FactdtController implements Initializable {
 		//Populate the combos
 		cbdesc.setItems(FXCollections.observableList(descRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbdesc.getItems().add(null);
-		
 		cbtiva.setItems(FXCollections.observableList(tivaRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbtiva.getItems().add(null);
-		
 		cbfpago.setItems(FXCollections.observableList(fpagoRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbfpago.getItems().add(null);
-		
 		cbefact.setItems(FXCollections.observableList(efactRepository.findAll(Sort.by(Sort.Direction.ASC, "descripcion"))));
 		cbefact.getItems().add(null);
 
-	    //Set the format of currency text fields fields
+	    //Configure the TextField and TextArea controls
+	    mutils.configureTextField(txrefer, 30);
+	    mutils.configureTextField(txcifnif, 25);
+	    mutils.configureTextField(txmarc, 30);
+	    mutils.configureTextAreaWithLabel(tatitular, lbtitlen, mctitular);
+	    mutils.configureTextAreaWithLabel(tadirec, lbdirlen, mcdirec);
+	    mutils.configureTextFieldWithLabel(txfpago, lbtfpaglen, mctfpag);
+	    mutils.configureTextAreaWithLabel(tatcomp, lbtcomplen, mctcomplen);
+	    mutils.configureTextAreaWithLabel(taanot, lbanotlen, mcanot);
+	    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, mcconcep);
+	    
+	    //Configure Currency controls
 	    mutils.configCurrencyTextField(tximpitems);
 	    mutils.configCurrencyTextField(txgenv);
 
@@ -572,23 +580,10 @@ public class FactdtController implements Initializable {
 			
 			break;
 	    }
-	    
-	    //Setting the maximum number of characters of TextField
-	    mutils.configureTextField(txrefer, 30);
-	    mutils.configureTextField(txcifnif, 25);
-	    mutils.configureTextField(txmarc, 30);
-	    
+
 	    //Setting the maximum number of characters of TextArea (another way)
 //	    tatitular.setTextFormatter(new TextFormatter<String>(change -> 
 //    		change.getControlNewText().length() <= 250 ? change : null));
-	    
-	    //To conmfigure text area and text fields with maximum chars and show number of chars
-	    mutils.configureTextAreaWithLabel(tatitular, lbtitlen, mctitular);
-	    mutils.configureTextAreaWithLabel(tadirec, lbdirlen, mcdirec);
-	    mutils.configureTextFieldWithLabel(txfpago, lbtfpaglen, mctfpag);
-	    mutils.configureTextAreaWithLabel(tatcomp, lbtcomplen, mctcomplen);
-	    mutils.configureTextAreaWithLabel(taanot, lbanotlen, mcanot);
-	    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, mcconcep);
 	    
 	    //Check the visible buttons
 	    //Facturas rectificadas and rectificativas can not be recalculated
@@ -653,13 +648,8 @@ public class FactdtController implements Initializable {
 			}, () -> {
 				factwrapper.fact = factcrud.getDao();
 			});
-			
-		Optional<String> optStr = Optional.ofNullable(factwrapper.fact.getNumeroCompuesto());
-			optStr.ifPresentOrElse((y) -> {
-				lbnfact.setText(y);
-			}, () -> {
-				lbnfact.setText("");
-			});
+		
+		mutils.fillTextControl(lbnfact, factwrapper.fact.getNumeroCompuesto());
 
 		Optional<SerieFacturas> optSf = Optional.ofNullable(factwrapper.fact.getSerie());
 			optSf.ifPresentOrElse((y) -> {
@@ -703,8 +693,7 @@ public class FactdtController implements Initializable {
 		Optional<Date> optDate = Optional.ofNullable(factwrapper.fact.getFechaFactura());
 			optDate.ifPresent((y) -> dpffact.setValue(mutils.obtainLocalDate(y)));
 
-		optBool = Optional.ofNullable(factwrapper.fact.isFacturaFirmada());
-			optBool.ifPresent((y) -> chffirm.setSelected(y));
+		mutils.fillCheckBoxControl(chffirm, factwrapper.fact.isFacturaFirmada());
 
 		Optional<Integer> optInt = Optional.ofNullable(factwrapper.fact.getSocio().getCodigoSocio());
 			optInt.ifPresent((y) -> lbcsoc.setText(Integer.toString(y)));
@@ -716,90 +705,23 @@ public class FactdtController implements Initializable {
 				lbagenc.setText("");
 			});
 		
-		optStr = Optional.ofNullable(factwrapper.fact.getReferencia());
-			optStr.ifPresentOrElse((y) -> {
-				txrefer.setText(y);
-			}, () -> {
-				txrefer.setText("");
-			});
-
-		optStr = Optional.ofNullable(factwrapper.fact.getCifnif());
-			optStr.ifPresentOrElse((y) -> {
-				txcifnif.setText(y);
-			}, () -> {
-				txcifnif.setText("");
-			});
+		mutils.fillTextControl(txrefer, factwrapper.fact.getReferencia());
+		mutils.fillTextControl(txcifnif, factwrapper.fact.getCifnif());
+		mutils.fillTextControl(tatitular, factwrapper.fact.getTitular());
+		mutils.fillTextControl(tadirec, factwrapper.fact.getDireccion());
+		mutils.fillTextControl(txfpago, factwrapper.fact.getTextoFormaPago());
+		mutils.fillTextControl(tatcomp, factwrapper.fact.getTextoComplementario());
+		mutils.fillTextControl(txmarc, factwrapper.fact.getMarcador());
+		mutils.fillTextControl(taanot, factwrapper.fact.getAnotaciones());
 		
-		optStr = Optional.ofNullable(factwrapper.fact.getTitular());
-			optStr.ifPresentOrElse((y) -> {
-				tatitular.setText(y);
-			}, () -> {
-				tatitular.setText("");
-			});
-		
-	    lbtitlen.setText("(" + mutils.obtainText(tatitular).length() + "/" + mctitular + " caracteres)");
-
-	    optStr = Optional.ofNullable(factwrapper.fact.getDireccion());
-			optStr.ifPresentOrElse((y) -> {
-				tadirec.setText(y);
-			}, () -> {
-				tadirec.setText("");
-			});
-		
-		lbdirlen.setText("(" + mutils.obtainText(tadirec).length() + "/" + mcdirec + " caracteres)");
-			
-		optStr = Optional.ofNullable(factwrapper.fact.getTextoFormaPago());
-			optStr.ifPresentOrElse((y) -> {
-				txfpago.setText(y);
-			}, () -> {
-				txfpago.setText("");
-			});
-		
-		lbtfpaglen.setText("(" + mutils.obtainText(txfpago).length() + "/" + mctfpag + " caracteres)");
-
-		    mutils.configureTextAreaWithLabel(taanot, lbanotlen, mcanot);
-		    mutils.configureTextAreaWithLabel(taconcep, lbconceplen, mcconcep);
-		    
-		optStr = Optional.ofNullable(factwrapper.fact.getTextoComplementario());
-			optStr.ifPresentOrElse((y) -> {
-				tatcomp.setText(y);
-			}, () -> {
-				tatcomp.setText("");
-			});
-			
-		lbtcomplen.setText("(" + mutils.obtainText(tatcomp).length() + "/" + mctcomplen + " caracteres)");
-			
-		optStr = Optional.ofNullable(factwrapper.fact.getMarcador());
-			optStr.ifPresentOrElse((y) -> {
-				txmarc.setText(y);
-			}, () -> {
-				txmarc.setText("");
-			});
-
 		List<ItemFactura> items = new ArrayList<>(factwrapper.fact.getItemsFactura());
 		
 		if (items.size() > 0) {
-			optStr = Optional.ofNullable(items.get(0).getConcepto());
-				optStr.ifPresentOrElse((y) -> {
-					taconcep.setText(y);
-				}, () -> {
-					taconcep.setText("");
-				});
+			mutils.fillTextControl(taconcep, items.get(0).getConcepto());
 		}
-		
-		lbconceplen.setText("(" + mutils.obtainText(taconcep).length() + "/" + mcconcep + " caracteres)");
 
 		fillImporteControls(factwrapper.fact);
 			
-		optStr = Optional.ofNullable(factwrapper.fact.getAnotaciones());
-			optStr.ifPresentOrElse((y) -> {
-				taanot.setText(y);
-			}, () -> {
-				taanot.setText("");
-			});
-			
-		lbanotlen.setText("(" + mutils.obtainText(taanot).length() + "/" + mcanot + " caracteres)");
-		
 		Optional<FormaPago> optFpag = Optional.ofNullable(factwrapper.fact.getFormaPago());
 		optFpag.ifPresent((y) -> {
 				cbfpago.getSelectionModel().select(mutils.searchIdInCombo(cbfpago, y));
@@ -823,14 +745,7 @@ public class FactdtController implements Initializable {
 		List<ItemFactura> items = new ArrayList<>(pfac.getItemsFactura());
 	
 		if (items.size() > 0) {
-				
-			Optional<Double> optDou3 = Optional.ofNullable(items.get(0).getImporte());
-				optDou3.ifPresentOrElse((y) -> {
-					tximpitems.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
-				}, () -> {
-					//Set the amount to 0
-					tximpitems.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-				});
+			mutils.fillCurrencyControl(tximpitems, items.get(0).getImporte());
 		}
 
 		Optional<Descuento> optDesc = Optional.ofNullable(pfac.getDescuento());
@@ -838,86 +753,35 @@ public class FactdtController implements Initializable {
 				
 				cbdesc.getSelectionModel().select(mutils.searchIdInCombo(cbdesc, y));
 
-				Optional<Double> optDou2 = Optional.ofNullable(y.getPorcentaje());
-					optDou2.ifPresentOrElse((z) -> {
-						//lbporcdesc.setText(String.format("%.2f", z));
-						lbporcdesc.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
-					}, () -> {
-						//lbporcdesc.setText(mutils.CURRENCY_ZERO);
-						lbporcdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-					});
-					
-				optDou2 = Optional.ofNullable(pfac.getImporteDescuento());
-					optDou2.ifPresentOrElse((z) -> {
-						//lbdesc.setText(String.format("%.2f", z));
-						lbdesc.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
-					}, () -> {
-						//lbdesc.setText(mutils.CURRENCY_ZERO);
-						lbdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-					});
+				mutils.fillCurrencyControl(lbporcdesc, y.getPorcentaje());
+				mutils.fillCurrencyControl(lbdesc, pfac.getImporteDescuento());
 				
 			}, () -> {
-				//lbporcdesc.setText(mutils.CURRENCY_ZERO);
-				//lbdesc.setText(mutils.CURRENCY_ZERO);
+
 				lbporcdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 				lbdesc.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
+
 			});
 		
-		Optional<Double> optDou = Optional.ofNullable(pfac.getImporteBaseImponible());
-			optDou.ifPresentOrElse((y) -> {
-				//lbbimp.setText(String.format("%.2f", y));
-				lbbimp.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
-			}, () -> {
-				//lbbimp.setText(mutils.CURRENCY_ZERO);
-				lbbimp.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-			});
+		mutils.fillCurrencyControl(lbbimp, pfac.getImporteBaseImponible());
 			
 		Optional<TipoIVA> optTiva = Optional.ofNullable(pfac.getTipoIVA());
 			optTiva.ifPresentOrElse((y) -> {
 				
 				cbtiva.getSelectionModel().select(mutils.searchIdInCombo(cbtiva, y));
 
-				Optional<Double> optDou2 = Optional.ofNullable(y.getPorcentaje());
-					optDou2.ifPresentOrElse((z) -> {
-						//lbporciva.setText(String.format("%.2f", z));
-						lbporciva.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
-					}, () -> {
-						//lbporciva.setText(mutils.CURRENCY_ZERO);
-						lbporciva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-					});
-				
-				optDou2 = Optional.ofNullable(pfac.getImporteTipoIVA());
-					optDou2.ifPresentOrElse((z) -> {
-						//lbiva.setText(String.format("%.2f", z));
-						lbiva.setText(mutils.getStringFromDouble(z, mutils.CURRENCY_FORMAT));
-					}, () -> {
-						//lbiva.setText(mutils.CURRENCY_ZERO);
-						lbiva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-					});
+				mutils.fillCurrencyControl(lbporciva, y.getPorcentaje());
+				mutils.fillCurrencyControl(lbiva, pfac.getImporteTipoIVA());
 			
 			}, () -> {
-				//lbporciva.setText(mutils.CURRENCY_ZERO);
-				//lbiva.setText(mutils.CURRENCY_ZERO);
+
 				lbporciva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
 				lbiva.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
+				
 			});
 		
-		optDou = Optional.ofNullable(pfac.getImporteGastosEnvio());
-			optDou.ifPresentOrElse((y) -> {
-				txgenv.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
-			}, () -> {
-				//Set the amount to 0
-				txgenv.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-			});
-		
-		optDou = Optional.ofNullable(pfac.getImporteTotal());
-			optDou.ifPresentOrElse((y) -> {
-				//lbtfact.setText(String.format("%.2f", y));
-				lbtfact.setText(mutils.getStringFromDouble(y, mutils.CURRENCY_FORMAT));
-			}, () -> {
-				//lbtfact.setText(mutils.CURRENCY_ZERO);
-				lbtfact.setText(mutils.getStringFromDouble(0D, mutils.CURRENCY_FORMAT));
-			});
+		mutils.fillCurrencyControl(txgenv, pfac.getImporteGastosEnvio());
+		mutils.fillCurrencyControl(lbtfact, pfac.getImporteTotal());
 
 	}
     
